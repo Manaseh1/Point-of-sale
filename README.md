@@ -1,1 +1,1 @@
-# pos
+create .env file
