@@ -1,4 +1,6 @@
 .env
+/env
+/accounts/*/migrations/
 venv/
 __pycache__/
 accounts/migrations
