@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
+from django.contrib.sites.shortcuts import get_current_site
 from .forms import *
 from django.contrib import messages
-
 # Create your views here.
 def home(request):
     form = SignupForm()
@@ -39,4 +39,4 @@ def signin(request):
                     messages.warning(request,'Login failed')    
             else:
                 messages.warning(request,'Login failed')    
-    return render(request,'login.html',{'form':form})                   
+    return render(request,'login.html',{'form':form})
