@@ -4,14 +4,6 @@ from django.contrib.sites.shortcuts import get_current_site
 from .forms import *
 from django.contrib import messages
 # Create your views here.
-def landingpage(request):
-    current_site = get_current_site(request)
-    context = {
-        'current_site': current_site,
-    }
-
-    return render(request, 'landingpage.html', context)
-# Create your views here.
 def home(request):
     form = SignupForm()
     if request.method == 'POST':  
