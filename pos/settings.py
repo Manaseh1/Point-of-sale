@@ -70,7 +70,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),  # Path to your 'base' directory
+            os.path.join(BASE_DIR, 'base'),  # Path to your 'base' directory
         ],
         'APP_DIRS': True,
         'OPTIONS': {
