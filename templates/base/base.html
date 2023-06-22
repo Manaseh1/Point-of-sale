@@ -1,8 +1,8 @@
-<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Point of Sale System{% endblock %}</title>
   <!-- Bootstrap CSS -->
@@ -16,29 +16,61 @@
       flex-direction: column;
       min-height: 100vh;
     }
+
     .wrapper {
       flex: 1;
     }
+
+    @keyframes scale {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .scaling {
+      animation: scale 3s infinite linear;
+    }
+
+    /* Adjustments for small screens */
+    @media (max-width: 576px) {
+      .navbar-collapse {
+        flex-basis: 100%;
+      }
+    }
   </style>
 </head>
+
 <body>
   <div class="wrapper">
     <!-- Main Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand ml-3" href="#"><strong><i class='bx bxs-vector'></i>&nbsp;POS</strong></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+      <div class="container">
+        <div class="navbar-brand ml-3 scaling">
+          <strong><i class='bx bxs-vector'></i>&nbsp;POS</strong>
+        </div>
+        <button class="navbar-toggler border" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon fs-5"><i class='text-black bx bx-menu'></i></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a href="{% url 'login' %}" class="nav-link"><i class='bx bx-log-in'></i> Login</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'home' %}" class="nav-link"><i class='bx bx-user-circle'></i> Register</a>
-                </li>
-            </ul>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a href="{% url 'login' %}" class="nav-link"><i class='bx bx-log-in'></i> Login</a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'home' %}" class="nav-link"><i class='bx bx-user-circle'></i> Register</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
     <!-- Content Wrapper. Contains page content -->
     <div class="container">
@@ -52,9 +84,14 @@
 
   <!-- Main Footer -->
   <footer class="footer p-3 bg-light mt-auto">
-    <strong>Manaseh&James &copy; 2023</strong>
-      Point of Sale System
+    <div class="container">
+      <strong>Manaseh&James &copy; 2023</strong> Point of Sale System
+    </div>
   </footer>
 
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
 </body>
+
 </html>
