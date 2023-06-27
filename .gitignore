@@ -1,7 +1,6 @@
 .env
-/env
 /accounts/*/migrations/
 venv/
 __pycache__/
-accounts/migrations
+accounts/migrations/
 db.sqlite3
