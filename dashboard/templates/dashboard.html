@@ -14,11 +14,164 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">Point of Sale System</h4>
                 </div>
-                <div class="panel-body">
-                    <img src="{% static 'images/posdb.jpeg' %}" alt="">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="card bg-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Default Card Example</h3>
+                                    <div class="card-tools">
+                                    <!-- Buttons, labels, and many other things can be placed here! -->
+                                    <!-- Here is a label for example -->
+                                    <span class="badge badge-primary">Label</span>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    The body of the card
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    The footer of the card
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                          <!-- /.card -->
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Default Card Example</h3>
+                                    <div class="card-tools">
+                                    <!-- Buttons, labels, and many other things can be placed here! -->
+                                    <!-- Here is a label for example -->
+                                    <span class="badge badge-primary">Label</span>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    The body of the card
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    The footer of the card
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                          <!-- /.card -->
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card bg-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Default Card Example</h3>
+                                    <div class="card-tools">
+                                    <!-- Buttons, labels, and many other things can be placed here! -->
+                                    <!-- Here is a label for example -->
+                                    <span class="badge badge-primary">Label</span>
+                                    </div>
+                                    <!-- /.card-tools -->
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    The body of the card
+                                </div>
+                                <!-- /.card-body -->
+                                <div class="card-footer">
+                                    The footer of the card
+                                </div>
+                                <!-- /.card-footer -->
+                            </div>
+                          <!-- /.card -->
+                        </div>
+                        <div class ="col-md-4">
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>150</h3>
+                                    <p>New Orders</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class ="col-md-4">
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>150</h3>
+                                    <p>Register employee</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">
+                                    More info <i class="fas fa-arrow-circle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p>Sales this year</p>
+                            <canvas id="myChart"></canvas>
+                        </div> 
+                        <div class="col-md-6">
+                            <canvas id="dough"></canvas>
+                        </div>                                                   
+                    </div>             
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %}
+
+
+
+     <script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    });
+    </script> 
+    <script>
+    const ctx = document.getElementById('dough');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [12, 19, 3, 5, 2, 3],
+            borderWidth: 1
+        }]
+        },
+        options: {
+        scales: {
+            y: {
+            beginAtZero: true
+            }
+        }
+        }
+    });
+    </script> 
+
+    
+{%endblock%}
