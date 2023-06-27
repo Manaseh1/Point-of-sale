@@ -1,109 +1,110 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Point of Sale System{% endblock %}</title>
   <link rel="icon" href="{% static 'images/posi.png' %}" type="image/png">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .wrapper {
-      flex: 1;
-    }
-
-    @keyframes scale {
-      0% {
-        transform: scale(1);
-      }
-
-      50% { 
-        transform: scale(1.2);
-      }
-
-      100% {
-        transform: scale(1);
-      }
-    }
-
-    .scaling {
-      animation: scale 3s infinite linear;
-    }
-
-    /* Adjustments for small screens */
-    @media (max-width: 576px) {
-      .navbar-collapse {
-        flex-basis: 100%;
-      }
-    }
-  </style>
-</head>
-
-<body>
+  </head>
+<body class="hold-transition sidebar-mini">
   <div class="wrapper">
-    <!-- Main Header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container">
-        <div class="navbar-brand ml-3 scaling">
-          <strong><i class='bx bxs-vector'></i>&nbsp;POS</strong>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a href="index3.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Help
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+            <a class="dropdown-item" href="#">FAQ</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Contact</a>
+          </div>
+        </li>
+        {% endif %}
+      </ul>
+      {% if user.is_authenticated %}
+      <form class="form-inline ml-3">
+        <div class="input-group input-group-sm">
+          <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-navbar" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
         </div>
-        <button class="navbar-toggler border" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon fs-5"><i class='text-black bx bx-menu'></i></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ml-auto">
-            {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a href="{% url 'dashboard:index' %}" class="nav-link"><i class='bx bxs-dashboard'></i>&nbsp; Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'dashboard:logout' %}" class="nav-link"><i class='bx bx-log-out'></i>&nbsp; Logout</a>
-              </li>
-            {% else %}
-              <li class="nav-item">
-                <a href="{% url 'accounts:login' %}" class="nav-link"><i class='bx bx-log-in'></i>&nbsp; Login</a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'accounts:home' %}" class="nav-link"><i class='bx bx-user-circle'></i>&nbsp; Register</a>
-              </li>
-            {% endif %}
-          </ul>
-        </div>
-        
-      </div>
+      </form>
+      {% endif %}
+      <ul class="navbar-nav ml-auto">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a href="{% url 'dashboard:index' %}" class="nav-link text-black"><i class='bx bxs-dashboard'></i>&nbsp; Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'dashboard:logout' %}" class="nav-link text-black"><i class='bx bx-log-out'></i>&nbsp; Logout</a>
+          </li>
+        {% else %}
+          <li class="nav-item">
+            <a href="{% url 'accounts:login' %}" class="nav-link text-black"><i class='bx bx-log-in'></i>&nbsp; Login</a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'accounts:home' %}" class="nav-link text-black"><i class='bx bx-user-circle'></i>&nbsp; Register</a>
+          </li>
+        {% endif %}
+      </ul>
     </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <a href="#" class="brand-link">
+        <span class="brand-text font-weight-light"><i class='bx bxs-vector'></i>&nbsp;POS</span>
+      </a>
+      <div class="sidebar">
+        {% if user.is_authenticated %}
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="{% url 'dashboard:index' %}" class="nav-link text-black">
+              <i class='bx bxs-dashboard'></i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'dashboard:logout' %}" class="nav-link text-black">
+              <i class='bx bx-log-out'></i>
+              <p>Logout</p>
+            </a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </aside>
+
     <!-- Content Wrapper. Contains page content -->
-    <div class="container">
-      <!-- Main content -->
+    <div class="content-wrapper">
       <section class="content">
         {% block content %}
         {% endblock %}
       </section>
     </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <div class="container">
+        <strong>Manaseh&James &copy; 2023</strong> Point of Sale System
+      </div>
+    </footer>
   </div>
-
-  <!-- Main Footer -->
-  <footer class="footer p-3 bg-light mt-auto">
-    <div class="container">
-      <strong>Manaseh&James &copy; 2023</strong> Point of Sale System
-    </div>
-  </footer>
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/js/adminlte.min.js"></script>
 </body>
-
 </html>
