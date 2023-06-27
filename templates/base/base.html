@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,6 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Point of Sale System{% endblock %}</title>
+  <link rel="icon" href="{% static 'images/posi.png' %}" type="image/png">
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1.0/dist/css/adminlte.min.css">
@@ -62,14 +64,24 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a href="{% url 'login' %}" class="nav-link"><i class='bx bx-log-in'></i> Login</a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'home' %}" class="nav-link"><i class='bx bx-user-circle'></i> Register</a>
-            </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a href="{% url 'dashboard:index' %}" class="nav-link"><i class='bx bxs-dashboard'></i>&nbsp; Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'dashboard:logout' %}" class="nav-link"><i class='bx bx-log-out'></i>&nbsp; Logout</a>
+              </li>
+            {% else %}
+              <li class="nav-item">
+                <a href="{% url 'login' %}" class="nav-link"><i class='bx bx-log-in'></i>&nbsp; Login</a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'home' %}" class="nav-link"><i class='bx bx-user-circle'></i>&nbsp; Register</a>
+              </li>
+            {% endif %}
           </ul>
         </div>
+        
       </div>
     </nav>
     <!-- Content Wrapper. Contains page content -->
