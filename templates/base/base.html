@@ -73,10 +73,10 @@
               </li>
             {% else %}
               <li class="nav-item">
-                <a href="{% url 'login' %}" class="nav-link"><i class='bx bx-log-in'></i>&nbsp; Login</a>
+                <a href="{% url 'accounts:login' %}" class="nav-link"><i class='bx bx-log-in'></i>&nbsp; Login</a>
               </li>
               <li class="nav-item">
-                <a href="{% url 'home' %}" class="nav-link"><i class='bx bx-user-circle'></i>&nbsp; Register</a>
+                <a href="{% url 'accounts:home' %}" class="nav-link"><i class='bx bx-user-circle'></i>&nbsp; Register</a>
               </li>
             {% endif %}
           </ul>

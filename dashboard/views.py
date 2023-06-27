@@ -21,4 +21,4 @@ def dashboard(request):
 @login_required
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('accounts:login')
