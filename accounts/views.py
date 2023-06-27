@@ -1,5 +1,5 @@
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.sites.shortcuts import get_current_site
 from .forms import *
 from django.contrib import messages
@@ -20,7 +20,8 @@ def home(request):
         if form.is_valid(): 
              
             form.save()
-            messages.success(request,"Successful Signup") 
+            messages.success(request,"Successful Signup. LOGIN!") 
+            return redirect('login')
 
     return render(request,'home.html',{'form':form})
 
@@ -34,7 +35,7 @@ def signin(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    messages.success(request,'Login successful')
+                    return redirect('dashboard:index')
                 else:
                     messages.warning(request,'Login failed')    
             else:
