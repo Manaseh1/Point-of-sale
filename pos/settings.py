@@ -46,6 +46,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 APPS = [
     'dashboard',
     'accounts',
+    'sales',
+    'inventory',
     
 ]
 
@@ -97,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '5432',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -141,6 +143,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+MEDIA_URL = '/Media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

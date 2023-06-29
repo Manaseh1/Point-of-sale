@@ -1,8 +1,11 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate,login
 from django.shortcuts import render,redirect
 from django.contrib.sites.shortcuts import get_current_site
 from .forms import *
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from datetime import datetime
+
 # Create your views here.
 def home(request):
     form = SignupForm()
@@ -21,7 +24,7 @@ def home(request):
              
             form.save()
             messages.success(request,"Successful Signup. LOGIN!") 
-            return redirect('login')
+            return redirect('accounts:login')
 
     return render(request,'home.html',{'form':form})
 
@@ -41,3 +44,46 @@ def signin(request):
             else:
                 messages.warning(request,'Login failed')    
     return render(request,'login.html',{'form':form})
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        address = request.POST.get('address')
+        full_name = f"{request.POST.get('first_name')} {request.POST.get('last_name')}"
+        city = request.POST.get('city')
+        profile_image = request.FILES.get('profile-user-img')
+        date_of_birth = request.POST.get('date_of_birth')
+        gender = request.POST.get('gender')
+        role = request.POST.get('role')
+
+        # Retrieve the user
+        user = request.user
+
+        # Update the user's profile fields
+        user.email = email
+        user.first_name = first_name
+        user.last_name = last_name
+        user.profile.first_name = first_name
+        user.profile.last_name = last_name
+        user.profile.full_name = full_name
+        user.profile.address = address
+        user.profile.city = city
+        user.profile.profile_image = profile_image
+        user.profile.date_of_birth = date_of_birth
+        user.profile.gender = gender
+        user.profile.role = role
+        user.profile.date_started = datetime.now()
+
+        # Save the changes
+        user.save()
+        user.profile.save()
+        messages.success(request, 'Profile updated successfully')
+        return redirect('accounts:profile')
+
+        # Redirect to a success page or display a success message
+
+    # Handle the GET request or display the form again
+    return render(request, 'profile.html')
