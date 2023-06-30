@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product
+from .models import Product,Supplier, Category
 
 class CreateProductForm(forms.ModelForm):
     class Meta:
@@ -17,3 +17,19 @@ class CreateProductForm(forms.ModelForm):
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = ('name', 'email', 'address', 'phone_number')
+
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'description', 'parent')
+
+class CategoryForm(forms.ModelForm):
+    class Meta:
+        model = Category
+        fields = ('name', 'description', 'parent')
