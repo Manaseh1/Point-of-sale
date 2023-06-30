@@ -5,25 +5,24 @@
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/style' %}" />
     <!-- Widgets  -->
-    <div class="row">
+    <div class="row justify-content-space-between">
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-body" style="background-color: blue">
+                <div class="card-body" style="background-color: gray">
                     <div class="stat-widget-five">
                         <div class="stat-icon dib flat-color-1">
                             <i class="fa fa-shopping-cart"></i>
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count" style="color: white">{{ order }}</span></div>
-                                <div class="stat-heading" style="color: white">Order</div>
+                                <div class="stat-text"><span class="count" style="color: white">{{ category_count }}</span></div>
+                                <div class="stat-heading" style="color: white">Categories</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="col-lg-3 col-md-6">
             <div class="card">
                 <div class="card-body" style="background-color: green">
@@ -51,7 +50,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count" style="color: white">{{ supplier }}</span></div>
+                                <div class="stat-text"><span class="count" style="color: white">{{ supplier_count }}</span></div>
                                 <div class="stat-heading" style="color: white">Supplier</div>
                             </div>
                         </div>
@@ -59,10 +58,9 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-body" style="background-color: orchid">
+                <div class="card-body" style="background-color: maroon">
                     <div class="stat-widget-five">
                         <div class="stat-icon dib flat-color-4">
                             <i class="fa fa-users"></i>
@@ -70,7 +68,7 @@
                         <div class="stat-content">
                             <div class="text-left dib">
                                 <div class="stat-text"><span class="count" style="color: white">{{ buyer }}</span></div>
-                                <div class="stat-heading" style="color: white">Buyer</div>
+                                <div class="stat-heading" style="color: white">Season</div>
                             </div>
                         </div>
                     </div>
@@ -141,7 +139,7 @@
                         </div> <!-- /.table-stats -->
                     </div>
                 </div> <!-- /.card -->
-            </div>  <!-- /.col-lg-8 -->
+            </div>  <!-- /.col-lg-2 -->
 
             
         </div>

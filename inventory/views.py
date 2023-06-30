@@ -15,8 +15,12 @@ from .models import Supplier, Category
 @login_required(login_url='login')
 def inventory_dashboard(request):
     current_site = get_current_site(request)
+    supplier_count = Supplier.objects.count()
+    category_count = Category.objects.count()
     context = {
         'current_site': current_site,
+        'supplier_count': supplier_count,
+        'category_count': category_count
     }
 
     return render(request, 'inventory_dashboard.html', context)

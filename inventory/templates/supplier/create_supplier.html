@@ -3,41 +3,43 @@
 {% block title %}Create_Supplier - Point of Sale System{% endblock %}
 {% include 'base/style.html' %}
 {% block content %}
+{% load widget_tweaks %}
+
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h1 class="card-title text-center"><b>Create Supplier</b></h1> <br>
+                    <h1 class="card-title text-center"><b>Create Supplier</b></h1><br>
                     <form method="POST" class="needs-validation" novalidate>
                         {% csrf_token %}
                         <br>
                         <div class="form-group">
                             <label for="{{ form.name.id_for_label }}">Name</label>
-                            {{ form.name }}
+                            {{ form.name|attr:"class:form-control" }}
                             <div class="invalid-feedback">{{ form.name.errors }}</div>
                         </div>
                         <div class="form-group">
                             <label for="{{ form.email.id_for_label }}">Email</label>
-                            {{ form.email }}
+                            {{ form.email|attr:"class:form-control" }}
                             <div class="invalid-feedback">{{ form.email.errors }}</div>
                         </div>
                         <div class="form-group">
                             <label for="{{ form.phone.id_for_label }}">Phone</label>
-                            {{ form.phone_number }}
+                            {{ form.phone_number|attr:"class:form-control" }}
                             <div class="invalid-feedback">{{ form.phone.errors }}</div>
                         </div>
                         <div class="form-group">
                             <label for="{{ form.address.id_for_label }}">Address</label>
-                            {{ form.address }}
+                            {{ form.address|attr:"class:form-control" }}
                             <div class="invalid-feedback">{{ form.address.errors }}</div>
                         </div>
                         <button type="submit" class="btn btn-primary">Create</button>
                     </form>
-                    <a href="{% url 'inventory:supplier_list' %}"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
+                    <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
 {% endblock %}
