@@ -3,5 +3,6 @@ env/
 /accounts/*/migrations/
 venv/
 __pycache__/
+/accounts/__pycache__/
 accounts/migrations/
 db.sqlite3
