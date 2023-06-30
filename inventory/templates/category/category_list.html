@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Category_List - Point of Sale System{% endblock %}
+{% include 'base/style.html' %}
+{% block content %}
+<h1>Category List</h1>
+<i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_category' %}"> Create New</a>
+                      
+    </ul>
+    <div class="categories">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="box-title">Categories </h4>
+                    </div>
+                    <div class="card-body--">
+                        <div class="table-stats order-table ov-h">
+                            <table class="table ">
+                                <thead>
+                                    <tr>
+                                        <th class="serial">#</th>
+                                        <th>Name</th>
+                                        <th>Descrption</th>
+                                        <th>Parent</th>
+                                        <th>Status</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if categories %}
+                                    {% for category in categories %}
+                                    <tr>
+                                        <td class="serial">{{ forloop.counter }}</td>
+                                        <td>{{ category.name }}</td>
+                                        <td>{{ category.description }}</td>
+                                        <td>{{ category.parent }}</td>
+                                        <td>
+                                            <a href="{% url 'inventory:category_delete' category.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                        <tr><td>No Category Data</td></tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div> <!-- /.table-stats -->
+                    </div>
+                </div> <!-- /.card -->
+            </div>  <!-- /.col-lg-8 -->
+        </div>
+    </div>
+{% endblock %}

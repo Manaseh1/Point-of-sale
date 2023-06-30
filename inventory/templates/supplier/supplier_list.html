@@ -1,0 +1,55 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Suplier_List - Point of Sale System{% endblock %}
+{% include 'base/style.html' %}
+{% block content %}
+<h1>Supplier List</h1>
+<i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_supplier' %}"> Create New</a>
+
+<div class="suppliers">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Suppliers </h4>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">#</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Adresss</th>
+                                    <th>Phone Number</th>
+                                    <th>Activity</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if suppliers %}
+                                {% for supplier in suppliers %}
+                                <tr>
+                                    <td class="serial">{{ forloop.counter }}</td>
+                                    <td>{{ supplier.name }}</td>
+                                    <td>{{ supplier.email }}</td>
+                                    <td>{{ supplier.address }}</td>
+                                    <td>{{ supplier.phone_number }}</td>
+                                    <td>
+                                        <a href="{% url 'inventory:supplier_delete' supplier.id %}" class="btn btn-danger btn-sm">Delete</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                    <tr><td>No Supplier Data</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.table-stats -->
+                </div>
+            </div> <!-- /.card -->
+        </div>  <!-- /.col-lg-8 -->
+    </div>
+</div>
+{% endblock %}

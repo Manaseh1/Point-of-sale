@@ -135,8 +135,8 @@
               <li class="menu-item-has-children dropdown nav-item" >
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i><p> Supplier</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="#">View</a></li>
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_supplier' %}">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="{% url 'inventory:supplier_list' %}">View</a></li>
                   </ul>
               </li>
 
@@ -159,8 +159,8 @@
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i><p> Category</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_category' %}">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="{% url 'inventory:category_list' %}">View</a></li>
                   </ul>
               </li>
 
