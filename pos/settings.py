@@ -41,6 +41,7 @@ DJANGO_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap4',
+    'widget_tweaks',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 APPS = [
