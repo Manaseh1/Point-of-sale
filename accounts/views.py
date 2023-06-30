@@ -23,6 +23,7 @@ def home(request):
         if form.is_valid(): 
              
             form.save()
+            print(profile)
             messages.success(request,"Successful Signup. LOGIN!") 
             return redirect('accounts:login')
 
@@ -48,8 +49,8 @@ def signin(request):
 @login_required
 def profile(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
         first_name = request.POST.get('first_name')
+        email = request.POST.get('email')
         last_name = request.POST.get('last_name')
         address = request.POST.get('address')
         full_name = f"{request.POST.get('first_name')} {request.POST.get('last_name')}"
@@ -86,4 +87,4 @@ def profile(request):
         # Redirect to a success page or display a success message
 
     # Handle the GET request or display the form again
-    return render(request, 'profile.html')
+    return render(request, 'Profile.html')

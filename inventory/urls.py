@@ -9,4 +9,5 @@ appname = 'inventory'
 
 urlpatterns = [
     path('Inventory_Dasboard/', views.inventory_dashboard, name='inventory_dashboard'),
+    path('product_add', views.CreateProduct.as_view(), name='product')
 ]

@@ -103,19 +103,20 @@
                                         <th>Category</th>
                                         <th>Date</th>
                                         <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% if product %}
-                                    {% for product in orders %}
+                                    {% if products %}
+                                    {% for product in products%}
                                     <tr>
                                         <td class="serial">{{ forloop.counter }}</td>
                                         <td>{{ product.supplier }}</td>
-                                        <td>{{ product.product }}</td>
-                                        <td>{{ product.type }}</td>
-                                        <td>{{ product.decription }}</td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.product_type }}</td>
+                                        <td>{{ product.description }}</td>
                                         <td>{{ product.category }}</td>
-                                        <td>{{ product.created_date }}</td>
+                                        <td>{{ product.date_added }}</td>
                                         <td>
                                             {% if product.status == 'pending' %}
                                                 <a class="btn btn-warning" href="#">{{ product.status }}</a>
@@ -131,6 +132,9 @@
                                                 <a class="btn btn-info" href="#">{{ product.status }}</a>
                                             {% endif %}
                                         </td>
+                                        <td><button type="button" class="btn btn-light "><i class="fa-solid fa-pen-to-square"></i></button> </td>
+                                        <td><button type="button" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button> </td>
+                                    
                                     </tr>
                                     {% endfor %}
                                     {% else %}
