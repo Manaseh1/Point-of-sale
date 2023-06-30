@@ -4,9 +4,113 @@
 
 {% include 'base/style.html' %}
 {% block content %}
+<link rel="stylesheet" href="{% static 'css/style' %}" />
 <div class="row d-flex justify-content-center align-items-center h-100">
     <div class="container-fluid">
     <div class="row mt-4">
+        <div class="col-md-9">
+            <div class="card">
+            <div class="card-header p-2">
+            <ul class="nav nav-pills">
+            <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Logs</a></li>
+            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activities</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            </div>
+            <div class="card-body">
+            <div class="tab-content">
+            <div class="tab-pane" id="activity">
+            </div>
+            </div>
+            
+            <div class="tab-pane active" id="settings">
+                <form class="form-horizontal" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                      
+                    <div class="form-group row">
+                      <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                      <div class="col-sm-10">
+                        <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ user.email }}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="first_name" class="form-control" id="inputFirstName" placeholder="First Name" value="{{ user.first_name}}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputLastName"  class="col-sm-2 col-form-label">Last Name</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="last_name" class="form-control" id="inputLastName" placeholder="Last Name" value="{{ user.last_name }}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address" value="{{ user.profile.address }}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputCity" class="col-sm-2 col-form-label">City</label>
+                      <div class="col-sm-10">
+                        <input type="text" name="city" class="form-control" id="inputCity" placeholder="City" value="{{ user.profile.city }}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputProfileImage" class="col-sm-2 col-form-label">Profile Image</label>
+                      <div class="col-sm-10">
+                        <input type="file" name="profile-user-img" class="form-control-file" id="inputProfileImage" value="{{ user.profile.profile_image }}"> <span>current image = {{ user.profile.profile_image }}</span>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputDateOfBirth" class="col-sm-2 col-form-label">Date of Birth</label>
+                      <div class="col-sm-10">
+                        <input type="date" name="date_of_birth" class="form-control" id="inputDateOfBirth" value="{{ user.profile.date_of_birth }}">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
+                      <div class="col-sm-10">
+                        <select name="gender" class="form-control" id="inputGender" value="{{ user.profile.gender }}">
+                          <option value="">Select Gender</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label for="inputRole" class="col-sm-2 col-form-label">Role</label>
+                      <div class="col-sm-10">
+                        <select name="role" class="form-control" id="inputRole" value="{{ user.profile.role }}">
+                          <option value="">Select Role</option>
+                          <option value="admin">Admin</option>
+                          <option value="manager">Manager</option>
+                          <option value="employee">Employee</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <div class="offset-sm-2 col-sm-10">
+                        <button type="submit" class="btn btn-danger">Submit</button>
+                      </div>
+                    </div>
+                  </form>          
+            </div>
+            
+            </div>
+            
+            </div>
+            </div>
     <div class="col-md-3">
     
     <div class="card card-primary card-outline">
@@ -55,118 +159,57 @@
         
         </p>
         <hr>
-        <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+        <div class="notes-section">
+            <strong><i class="far fa-file-alt mr-1 mb-3"></i> Notes</strong>
+            <p class="notes-content mb-3" id="notes-content" contenteditable="false">Write something you want to remember tomorrow.</p>
+            <button id="edit-button" class="btn btn-primary">Edit</button>
+          </div>
+          
+        <script>
+            $(document).ready(function() {
+            var $notesContent = $('#notes-content');
+            var notesKey = 'notes';
+
+            // Retrieve notes from local storage
+            var savedNotes = localStorage.getItem(notesKey);
+            if (savedNotes) {
+                $notesContent.html(savedNotes);
+            }
+
+            $('#edit-button').click(function() {
+                var $editButton = $(this);
+
+                if ($editButton.text() === 'Edit') {
+                $notesContent.attr('contenteditable', 'true');
+                $editButton.text('Save');
+                $editButton.addClass('btn-success');
+
+
+                // Set cursor at the end of the editable content
+                var range = document.createRange();
+                range.selectNodeContents($notesContent[0]);
+                range.collapse(false);
+                var selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+                } else {
+                $notesContent.attr('contenteditable', 'false');
+                $editButton.text('Edit');
+                $editButton.removeClass('btn-success');
+                $editButton.addClass('btn-primary');
+
+                // Save notes to local storage
+                var notes = $notesContent.html();
+                localStorage.setItem(notesKey, notes);
+                }
+            });
+            });
+        </script>
         </div>
         
         </div>
     
     </div>
-    
-    <div class="col-md-9">
-    <div class="card">
-    <div class="card-header p-2">
-    <ul class="nav nav-pills">
-    <li class="nav-item"><a class="nav-link" href="#activity" data-toggle="tab">Logs</a></li>
-    <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activities</a></li>
-    <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
-    </ul>
-    </div>
-    <div class="card-body">
-    <div class="tab-content">
-    <div class="tab-pane" id="activity">
-    </div>
-    </div>
-    
-    <div class="tab-pane active" id="settings">
-        <form class="form-horizontal" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-              
-            <div class="form-group row">
-              <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-              <div class="col-sm-10">
-                <input type="email" name="email" class="form-control" id="inputEmail" placeholder="Email" value="{{ user.email }}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputFirstName" class="col-sm-2 col-form-label">First Name</label>
-              <div class="col-sm-10">
-                <input type="text" name="first_name" class="form-control" id="inputFirstName" placeholder="First Name" value="{{ user.first_name}}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputLastName"  class="col-sm-2 col-form-label">Last Name</label>
-              <div class="col-sm-10">
-                <input type="text" name="last_name" class="form-control" id="inputLastName" placeholder="Last Name" value="{{ user.last_name }}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
-              <div class="col-sm-10">
-                <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address" value="{{ user.profile.address }}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputCity" class="col-sm-2 col-form-label">City</label>
-              <div class="col-sm-10">
-                <input type="text" name="city" class="form-control" id="inputCity" placeholder="City" value="{{ user.profile.city }}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputProfileImage" class="col-sm-2 col-form-label">Profile Image</label>
-              <div class="col-sm-10">
-                <input type="file" name="profile-user-img" class="form-control-file" id="inputProfileImage" value="{{ user.profile.profile_image }}"> <span>current image = {{ user.profile.profile_image }}</span>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputDateOfBirth" class="col-sm-2 col-form-label">Date of Birth</label>
-              <div class="col-sm-10">
-                <input type="date" name="date_of_birth" class="form-control" id="inputDateOfBirth" value="{{ user.profile.date_of_birth }}">
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
-              <div class="col-sm-10">
-                <select name="gender" class="form-control" id="inputGender" value="{{ user.profile.gender }}">
-                  <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputRole" class="col-sm-2 col-form-label">Role</label>
-              <div class="col-sm-10">
-                <select name="role" class="form-control" id="inputRole" value="{{ user.profile.role }}">
-                  <option value="">Select Role</option>
-                  <option value="admin">Admin</option>
-                  <option value="manager">Manager</option>
-                  <option value="employee">Employee</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="offset-sm-2 col-sm-10">
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="offset-sm-2 col-sm-10">
-                <button type="submit" class="btn btn-danger">Submit</button>
-              </div>
-            </div>
-          </form>          
-    </div>
-    
-    </div>
-    
-    </div>
-    </div>
-    
     </div>
     
     </div>

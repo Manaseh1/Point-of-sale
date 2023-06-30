@@ -32,7 +32,7 @@
     }
   </style>
 </head>
-<body class="sidebar-mini layout-fixed">
+<body class="sidebar-mini">
   <div class="wrapper">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -99,42 +99,103 @@
       </a>
       <div class="sidebar">
         {% if user.is_authenticated %}
+        <a href="{% url 'accounts:profile' %}"  class="d-block">
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-          <a href="{% url 'accounts:profile' %}"  class="d-block"> <div class="image">
+           <div class="image">
             {% if user.profile.profile_image %}
               <img src="{{ user.profile.profile_image.url }}"class="img-circle elevation-2" alt="Profile Image" class="profile-image">
             {% else %}
               <img src="{% static 'images/placeholder.png' %}" class="img-circle elevation-2"  alt="Profile Image Placeholder">
             {% endif %}
           </div>
-          </a>
           <div class="info">
-            <a href="{% url 'accounts:profile' %}"  class="d-block">{{ user.username }}</a>
+           {{ user.username }}
           </div>
+        </a>
         </div>
-
-
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <ul class="nav nav-pills nav-sidebar flex-column mb-5" data-widget="treeview" role="menu" data-accordion="false">
+          
           <li class="nav-item">
             <a href="{% url 'dashboard:index' %}" class="nav-link">
-              <i class='bx bxs-dashboard'></i>
-              <p>Dashboard</p>
+                <i class='bx bxs-dashboard'></i>
+                <p>Main Dashboard</p>
             </a>
-          </li>
-          <li class="nav-item">
+        </li>
+        <li class="nav-item">
             <a href="{% url 'dashboard:logout' %}" class="nav-link">
-              <i class='bx bx-log-out'></i>
-              <p>Logout</p>
+                <i class='bx bx-log-out'></i>
+                <p>Logout</p>
             </a>
-          </li>
-        </ul>
-        {% endif %}
+        </li>
+        {% if user.profile.role == "admin" %}
+              <li class="active nav-item" style="background: black" >
+                  <a class="nav-link" href="{% url 'inventory:inventory_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Inventory Dashboard</p> </a>
+              </li>
+              <li class="nav-item menu-title" style="color: white">Inventory</li><!-- /.menu-title -->
+              <li class="menu-item-has-children dropdown nav-item" >
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i><p> Supplier</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="menu-item-has-children dropdown nav-item">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i><p> Buyer</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="menu-item-has-children dropdown nav-item">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i><p> Season</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="menu-item-has-children dropdown nav-item">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i><p> Category</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="menu-item-has-children dropdown nav-item">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-list"></i><p> Product</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="menu-item-has-children dropdown nav-item">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i><p> Order</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                  </ul>
+              </li>
+
+              <li class="nav-item menu-item-has-children dropdown">
+                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-truck"></i><p> Delivery</p></a>
+                  <ul class="sub-menu children dropdown-menu">
+                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
+                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="#">View</a></li>
+                  </ul>
+              </li>
+          {% endif %}
+      {% endif %}
+    </ul>
       </div>
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-      <section class="content">
+      <section class="content pt-4">
         {% block content %}
 
         {% endblock %}
