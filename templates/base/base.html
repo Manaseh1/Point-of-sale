@@ -30,6 +30,10 @@
     .sidebar-collapse .navbar {
       margin-left: 0;
     }
+    .sub-menu a li:hover{
+      color: brown;
+      background-color: grey;
+    }
   </style>
 </head>
 <body class="sidebar-mini">
@@ -135,56 +139,56 @@
               <li class="menu-item-has-children dropdown nav-item" >
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i><p> Supplier</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_supplier' %}">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="{% url 'inventory:supplier_list' %}">View</a></li>
+                      <a href="{% url 'inventory:create_supplier' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a href="{% url 'inventory:supplier_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i><p> Buyer</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a  href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i><p> Season</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i><p> Category</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_category' %}">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="{% url 'inventory:category_list' %}">View</a></li>
+                      <a href="{% url 'inventory:create_category' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i> Add</li></a>
+                      <a  href="{% url 'inventory:category_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i> View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-list"></i><p> Product</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a  href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i><p> Order</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="nav-item menu-item-has-children dropdown">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-truck"></i><p> Delivery</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
           {% endif %}
