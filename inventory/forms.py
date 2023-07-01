@@ -6,10 +6,10 @@ class CreateProductForm(forms.ModelForm):
         model = Product
         fields = '__all__'
         widgets = {
-            'supplier': forms.TextInput(attrs={'class': 'form-control'}),
+            'supplier': forms.Select(attrs={'class': 'form-control'}),
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
-            'category': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
             'product_type': forms.TextInput(attrs={'class': 'form-control'}),
             'description': forms.TextInput(attrs={'class': 'form-control'}),
             'date_added': forms.TextInput(attrs={'class': 'form-control'}),
@@ -22,13 +22,6 @@ class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
         fields = ('name', 'email', 'address', 'phone_number')
-
-
-class CategoryForm(forms.ModelForm):
-    class Meta:
-        model = Category
-        fields = ('name', 'description', 'parent')
-
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category

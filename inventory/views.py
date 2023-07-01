@@ -4,17 +4,13 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.mail import send_mail
 from django.conf import settings
-from .models import Product
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render, redirect
-from .forms import SupplierForm, CategoryForm
-from .models import Supplier, Category
 from django.views.generic.edit import CreateView
-from .forms import CreateProductForm
-from .models import Product
+from .forms import CreateProductForm,SupplierForm,CategoryForm
+from .models import *
 # @login_required(login_url='login')
 def inventory_dashboard(request):
     products = Product.objects.all()
@@ -22,7 +18,7 @@ def inventory_dashboard(request):
     supplier_count = Supplier.objects.count()
     category_count = Category.objects.count()
     context = {
-        'products':products,
+        'products': products,
         'current_site': current_site,
         'supplier_count': supplier_count,
         'category_count': category_count
@@ -35,7 +31,6 @@ class CreateProduct(CreateView):
     form_class = CreateProductForm
     model = Product
     success_url ='Inventory_Dasboard/'
-
 
 def create_supplier(request):
     if request.method == 'POST':
