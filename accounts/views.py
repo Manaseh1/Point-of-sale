@@ -25,7 +25,7 @@ def home(request):
             form.save()
             print(profile)
             messages.success(request,"Successful Signup. LOGIN!") 
-            return redirect('accounts:login')
+            return redirect('login')
 
     return render(request,'home.html',{'form':form})
 
