@@ -25,3 +25,6 @@ class Profile(models.Model):
     date_started = models.DateField(blank=True, null=True)
     def __str__(self):
         return self.user.username
+
+
+    

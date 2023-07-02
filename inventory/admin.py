@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import Category,Supplier
+from .models import *
+# Register your models here.
+@admin.register(Product)    
+class ProductAdmin(admin.ModelAdmin):
+    list_display=('name','description','supplier','category','date_added','status','price',)
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
