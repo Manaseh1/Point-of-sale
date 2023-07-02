@@ -36,8 +36,8 @@
     }
   </style>
 </head>
-<body class="sidebar-mini">
-  <div class="wrapper">
+<body class="sidebar-mini bg-white">
+  <div class="wrapper bg-white">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <ul class="navbar-nav">
@@ -198,7 +198,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper ">
       <section class="content pt-4">
         {% block content %}
 
@@ -228,6 +228,35 @@
         $("body").toggleClass('sidebar-collapse');
       });
     });
+    
   </script> 
+  {% if user.is_authenticated %}
+  <script>
+    $(function() {
+  // Set the idle timeout duration in milliseconds (5 minutes in this example)
+  var idleTimeout = 5 * 60* 1000; // 5 minutes
+  
+  // Initialize the idle timer variable
+  var idleTimer;
+
+  // Reset the idle timer function
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function() {
+      // Redirect the user to the password retrieval page
+      window.location.href = "{% url 'accounts:lockscreen' %}";
+    }, idleTimeout);
+  }
+
+  // Attach event listeners to relevant user activities
+  $(document).on("mousemove keydown scroll", function() {
+    resetIdleTimer();
+  });
+
+  // Start the idle timer on page load
+  resetIdleTimer();
+});
+  </script>
+  {% endif %}
 </body>
 </html>
