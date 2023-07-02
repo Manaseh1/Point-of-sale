@@ -1,0 +1,73 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Suplier_List - Point of Sale System{% endblock %}
+{% include 'base/style.html' %}
+{% block content %}
+<h1>Product List</h1>
+<div class="products">
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="box-title">Products </h4>
+                    <i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_product' %}"> Create New</a>
+                </div>
+                <div class="card-body--">
+                    <div class="table-stats order-table ov-h">
+                        <table class="table ">
+                            <thead>
+                                <tr>
+                                    <th class="serial">#</th>
+                                    <th>Supplier</th>
+                                    <th>Product</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if products %}
+                                {% for product in products%}
+                                <tr>
+                                    <td class="serial">{{ forloop.counter }}</td>
+                                    <td>{{ product.supplier }}</td>
+                                    <td>{{ product.name }}</td>
+                                    <td>{{ product.product_type }}</td>
+                                    <td>{{ product.description }}</td>
+                                    <td>{{ product.category }}</td>
+                                    <td>{{ product.date_added }}</td>
+                                    <td>
+                                        {% if product.status == 'pending' %}
+                                            <a class="btn btn-warning" href="#">{{ product.status }}</a>
+                                        {% elif product.status == 'decline' %}
+                                            <a class="btn btn-danger" href="#">{{ product.status }}</a>
+                                        {% elif product.status == 'complete' %}
+                                            <a class="btn btn-success" href="#">{{ product.status }}</a>
+                                        {% elif product.status == 'approved' %}
+                                            <a class="btn btn-primary" href="#">{{ product.status }}</a>
+                                        {% elif product.status == 'bulk' %}
+                                            <a class="btn btn-secondary" href="#">{{ product.status }}</a>
+                                        {% else %}
+                                            <a class="btn btn-info" href="#">{{ product.status }}</a>
+                                        {% endif %}
+                                    </td>
+                                    <td><button type="button" class="btn btn-light "><i class="fa-solid fa-pen-to-square"></i></button> </td>
+                                    <td><button type="button" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button> </td>
+                                
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                    <tr><td>No Product Data</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div> <!-- /.table-stats -->
+                </div>
+            </div> <!-- /.card -->
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -17,17 +17,19 @@ def inventory_dashboard(request):
     current_site = get_current_site(request)
     supplier_count = Supplier.objects.count()
     category_count = Category.objects.count()
+    products_count = Product.objects.count()
     context = {
         'products': products,
         'current_site': current_site,
         'supplier_count': supplier_count,
-        'category_count': category_count
+        'category_count': category_count,
+        'product_count': products_count,
     }
 
     return render(request, 'inventory_dashboard.html', context)
 
 class CreateProduct(CreateView):
-    template_name = 'prodadd.html'
+    template_name = 'product/prodadd.html'
     form_class = CreateProductForm
     model = Product
     success_url ='Inventory_Dasboard/'
@@ -59,6 +61,10 @@ def supplier_list(request):
 def category_list(request):
     categories = Category.objects.all()
     return render(request, 'category/category_list.html', {'categories': categories})
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'product/product_list.html', {'products': products})
 
 def delete_category(request, category_id):
     category = Category.objects.get(id=category_id)

@@ -135,7 +135,8 @@
               <li class="active nav-item" style="background: black" >
                   <a class="nav-link" href="{% url 'inventory:inventory_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Inventory Dashboard</p> </a>
               </li>
-              <li class="nav-item menu-title" style="color: white">Inventory</li><!-- /.menu-title -->
+              <details>
+                <summary><li class="nav-item menu-title" style="color: white">Inventory</li></summary>
               <li class="menu-item-has-children dropdown nav-item" >
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i><p> Supplier</p></a>
                   <ul class="sub-menu children dropdown-menu">
@@ -171,8 +172,8 @@
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-list"></i><p> Product</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <a  href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
-                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
+                      <a  href="{% url 'inventory:create_product' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="{% url 'inventory:product_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
@@ -191,6 +192,7 @@
                       <a href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
+              </details>
           {% endif %}
       {% endif %}
     </ul>
