@@ -135,6 +135,9 @@
               <li class="active nav-item" style="background: black" >
                   <a class="nav-link" href="{% url 'inventory:inventory_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Inventory Dashboard</p> </a>
               </li>
+              <li class="active nav-item" style="background: black" >
+                <a class="nav-link" href="{% url 'sales:sales_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Sales Dashboard</p> </a>
+            </li>
               <details>
                 <summary><li class="nav-item menu-title" style="color: white">Inventory</li></summary>
               <li class="menu-item-has-children dropdown nav-item" >
@@ -236,7 +239,7 @@
   <script>
     $(function() {
   // Set the idle timeout duration in milliseconds (5 minutes in this example)
-  var idleTimeout = 5 * 60* 1000; // 5 minutes
+  var idleTimeout = 5 * 60 * 1000; // 5 minutes
   
   // Initialize the idle timer variable
   var idleTimer;

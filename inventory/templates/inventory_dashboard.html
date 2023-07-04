@@ -87,7 +87,6 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="box-title">Products </h4>
-                        <i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_product' %}"> Create New</a>
                     </div>
                     <div class="card-body--">
                         <div class="table-stats order-table ov-h">
@@ -131,8 +130,9 @@
                                                 <a class="btn btn-info" href="#">{{ product.status }}</a>
                                             {% endif %}
                                         </td>
-                                        <td><button type="button" class="btn btn-light "><i class="fa-solid fa-pen-to-square"></i></button> </td>
-                                        <td><button type="button" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button> </td>
+                                        <td><button type="button" class="btn btn-light "><i class="fa-solid fa-pen-to-square"></i></button> 
+                                            <a href="{% url 'inventory:product_delete' product.id %}" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a> 
+                                        </td>
                                     
                                     </tr>
                                     {% endfor %}

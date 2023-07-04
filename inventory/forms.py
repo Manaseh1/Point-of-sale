@@ -16,6 +16,8 @@ class CreateProductForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
             'quantity': forms.NumberInput(attrs={'class': 'form-control'}),
+            'units': forms.TextInput(attrs={'class': 'form-control'}),
+            'supplier_name': forms.HiddenInput(attrs={'class': 'form-control'}),
         }
 
 class SupplierForm(forms.ModelForm):

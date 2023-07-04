@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.edit import CreateView
 from .forms import CreateProductForm,SupplierForm,CategoryForm
 from .models import *
+from django.urls import reverse_lazy
+
 # @login_required(login_url='login')
 def inventory_dashboard(request):
     products = Product.objects.all()
@@ -32,7 +34,7 @@ class CreateProduct(CreateView):
     template_name = 'product/prodadd.html'
     form_class = CreateProductForm
     model = Product
-    success_url ='Inventory_Dasboard/'
+    success_url = reverse_lazy('inventory:product_list')
 
 def create_supplier(request):
     if request.method == 'POST':
@@ -73,5 +75,13 @@ def delete_category(request, category_id):
 
 def delete_supplier(request, supplier_id):
     supplier = Supplier.objects.get(id=supplier_id)
+    supplier_name = supplier.name
+    products = Product.objects.filter(supplier=supplier)
+    products.update(supplier_name=supplier_name, supplier=None)
     supplier.delete()
     return redirect('inventory:supplier_list')
+
+def delete_product(request, product_id):
+    product = Product.objects.get(id=product_id)
+    product.delete()
+    return redirect('inventory:product_list')

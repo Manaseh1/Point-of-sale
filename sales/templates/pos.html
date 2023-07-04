@@ -1,0 +1,289 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Sales Dashboard - Point of Sale System{% endblock %}
+{% include 'base/style.html' %}
+{% block content %}
+<div class="col-md-12">
+    <div class="card py-2">
+        <div class="card-body">
+            <h4 class="card-title mb-0">Point of Sales</h4>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <div class="card">
+        <form action="" id="pos-form">
+            <div class="card-body">
+                <fieldset>
+                    <legend>Add Products</legend>
+                    <div class="row align-items-end">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="product-id">Select Product</label>
+                                <select id="product-id" class="form-control form-control-sm">
+                                    <option value="" disabled selected></option>
+                                    {% for product in products %}
+                                    <option value="{{ product.pk }}">{{ product }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-5 col-sm-12">
+                            <div class="form-group mb-3">
+                                <label for="product-qty">Qty</label>
+                                <input type="number" class="form-control form-control-sm text-center" step="any" id="product-qty" value="1">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-2 col-sm-12">
+                            <div class="form-group mb-3">
+                                <button class="btn btn-light btn-sm bg-gradient border rounded-0 text-start" type="button" id="add_item"><i class="mdi mdi-plus"></i> Add Item</button>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="d-flex w-100" id="POS-field">
+                        <div class="col-8 bg-gradient bg-light border h-100">
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col width="5%">
+                                    <col width="15%">
+                                    <col width="40%">
+                                    <col width="20%">
+                                    <col width="20%">
+                                </colgroup>
+                                <thead>
+                                        <tr class="bg-info bg-gradient bg-opacity-50 text-light">
+                                            <th class="bg-info py-1 px-2 text-center  text-light"></th>
+                                            <th class="bg-info py-1 px-2 text-center  text-light">QTY</th>
+                                            <th class="bg-info py-1 px-2 text-center  text-light">Product</th>
+                                            <th class="bg-info py-1 px-2 text-center  text-light">Price</th>
+                                            <th class="bg-info py-1 px-2 text-center  text-light">Total</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-4 bg-gradient bg-info bg-opacity-50 border h-100">
+                            <div class="col-12 py-4 px-2">
+                                <dl>
+                                    <dt class="h4 fw-bold text-light">Sub Total</dt>
+                                    <dd class="text-end py-1 px-2 rounded-0 bg-light">
+                                        <input type="hidden" name="sub_total" value="0">
+                                        <span class="h3 fw-bold" id="sub_total">0.00</span>
+                                    </dd>
+                                    <dt class="h4 fw-bold text-light">Tax Inclusive (%)</dt>
+                                    <dd>
+                                        <input type="number" class="form-control form-control-lg rounded-0 text-end" step="any" min="0" max="100" name="tax" value="0">
+                                    </dd>
+                                    <dt class="h4 fw-bold text-light">Tax Amount</dt>
+                                    <dd class="text-end py-1 px-2 rounded-0 bg-light">
+                                        <input type="hidden" name="tax_amount" value="0">
+                                        <span class="h3 fw-bold" id="tax_amount">0.00</span>
+                                    </dd>
+                                    <dt class="h4 fw-bold text-light">Grand Total</dt>
+                                    <dd class="text-end py-1 px-2 rounded-0 bg-light">
+                                        <input type="hidden" name="grand_total" value="0">
+                                        <input type="hidden" name="tendered_amount" value="0">
+                                        <input type="hidden" name="amount_change" value="0">
+                                        <input type="hidden" name="grand_total" value="0">
+                                        <input type="hidden" name="grand_total" value="0">
+                                        <span class="h3 fw-bold" id="grand_total">0.00</span>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <div class="row">
+                    <div class="col-md-12 text-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal">Checkout</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="item-clone" class="d-none">
+    <tr>
+        <td class="px-2 py-1 text-center">
+            <button class="btn btn-sm btn-outline-danger rounded-0 rem-item" type="button"><i class="mdi mdi-close"></i></button>
+        </td>
+        <td class="px-2 py-1">
+            <input type="hidden" name="product_id[]">
+            <input type="hidden" name="price[]">
+            <input type="number" name="qty[]" min="0" class="form-control form-control-sm rounded-0 text-center">
+        </td>
+        <td class="px-2 py-1 product_name text-start"></td>
+        <td class="px-2 py-1 product_price text-end"></td>
+        <td class="px-2 py-1 product_total text-end"></td>
+    </tr>
+</div>
+<!-- Button to trigger the modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="receiptModal" tabindex="-1" aria-labelledby="receiptModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="receiptModalLabel">Receipt</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div id="outprint">
+                        <div class="lh-1">
+                            <center><small class="fw-bold">POS</small></center>
+                            <center><small class="fw-bold">M&J</small></center>
+                        </div>
+                        <hr>
+                        <div class="lh-1">
+                            <div>
+                                <span>Data:</span> {{ transaction.date_added|date:"M d Y" }} <br>
+                                <span>Transaction Code:</span> {{ transaction.code }}
+                            </div>
+                        </div>
+                        <div class="clear-fix py-3"></div>
+                        <div class="lh-1">
+                            <div class="d-flex w-100 align-items-end border-bottom">
+                                <div class="col-2 text-center fw-bold">Qty</div>
+                                <div class="col-6 text-center fw-bold">Product</div>
+                                <div class="col-4 text-center fw-bold">Amount</div>
+                            </div>
+                            {% for item in salesItems %}
+                            <div class="d-flex w-100 align-items-end">
+                                <div class="col-2 text-center fw-bold">{{ item.qty|floatformat:0 }}</div>
+                                <div class="col-6 fw-bold">
+                                    <div class="lh-1">
+                                        <small>{{ item.product_id }}</small><br>
+                                        <small>{{ item.price }}</small><br>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-end fw-bold">{{ item.total }}</div>
+                            </div>
+                            {% endfor %}
+                            <hr>
+                            <div class="d-flex w-100 align-items-end">
+                                <div class="col-6 text-start fw-bold">Total</div>
+                                <div class="col-6 text-end fw-bold">{{ transaction.grand_total }}</div>
+                            </div>
+                            <div class="d-flex w-100 align-items-end">
+                                <div class="col-6 text-start fw-bold">Tax <small>(inclusive)</small>: {{ transaction.tax }}%</div>
+                                <div class="col-6 text-end fw-bold">{{ transaction.tax_amount|floatformat:2 }}</div>
+                            </div>
+                            <div class="d-flex w-100 align-items-end">
+                                <div class="col-6 text-start fw-bold">Tenedered</div>
+                                <div class="col-6 text-end fw-bold">{{ transaction.tendered_amount }}</div>
+                            </div>
+                            <div class="d-flex w-100 align-items-end">
+                                <div class="col-6 text-start fw-bold">Change</div>
+                                <div class="col-6 text-end fw-bold">{{ transaction.amount_change }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="clear-fix py-3"></div>
+                    <div class="d-flex w-100 justify-content-end">
+                        <button class="btn btn-light bg-gradient border rounded-0 btn-sm me-1" type="button" id="receipt_print">
+                            <i class="mdi mdi-printer"></i> Print
+                        </button>
+                        <button class="btn btn-secondary bg-gradient border rounded-0 btn-sm" type="button" data-bs-dismiss="modal">
+                            <i class="mdi mdi-close"></i> Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function() {
+        $('#receipt_print').click(function() {
+            var head = $('head').clone();
+            var p = $('#outprint').clone();
+            var el = $("<div>");
+            head.append('<style>body{background-color:unset; font-size:24; !important}</style>');
+            el.append(head);
+            el.find('title').text("Receipt - Print View");
+            el.append(p);
+            var nw = window.open('', '_blank', "width=500,height=800,left=300,top=200");
+            nw.document.write(el.html());
+            nw.document.close();
+            setTimeout(() => {
+                nw.print();
+                setTimeout(() => {
+                    nw.close();
+                }, 250);
+            }, 300);
+        });
+    });
+</script>
+<!-- Modal -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <form action="" id="checkout-form">
+                        <div class="form-group mb-3">
+                            <label for="payable_amount" class="control-label">Payable Amount</label>
+                            <input type="text" id="payable_amount" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required disabled>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="tendered_amount" class="control-label">Amount Tendered</label>
+                            <input type="number" step="any" id="tendered_amount" class="form-control form-control-lg rounded-0 text-end" value="0.00" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="payment_change" class="control-label">Change</label>
+                            <input type="text" id="payment_change" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required disabled>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#receiptModal">
+                                Open Receipt
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('#tendered_amount').on('input keypress keyup keydown', function() {
+            var tendered_amount = $('#tendered_amount').val()
+            var payable = $('#payable_amount').val()
+            tendered_amount = tendered_amount.replace(/,/gi, '')
+            payable = payable.replace(/,/gi, '')
+            var change = 0
+            tendered_amount = tendered_amount > 0 ? tendered_amount : 0;
+            $('[name="tendered_amount"]').val(tendered_amount)
+            change = parseFloat(tendered_amount) - parseFloat(payable)
+            console.log(tendered_amount, payable)
+            $('#payment_change').val(parseFloat(change).toLocaleString('en-US'))
+            $('[name="amount_change"]').val(change)
+        })
+
+        $('#checkout-form').submit(function(e) {
+            e.preventDefault();
+            if ($('[name="amount_change"]').val() < 0) {
+                alert("Tendered Amount is lower than Payable Amount")
+                return false;
+            }
+            // Perform additional actions or submit the form
+            // $('#checkout-form').submit()
+        })
+    })
+</script>
+
+
+{% endblock %}
