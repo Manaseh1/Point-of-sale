@@ -29,7 +29,8 @@ class Product(models.Model):
         complete = 'complete','complete'
         approved = 'approved','approved'
         bulk = 'bulk','bulk'
-    supplier = models.ForeignKey(Supplier,on_delete=models.CASCADE)
+    supplier = models.ForeignKey(Supplier,on_delete=models.PROTECT, null=True)
+    supplier_name = models.CharField(max_length=100, default='None')
     name = models.CharField(max_length= 130)
     image = models.ImageField(upload_to='product_images/',blank =True,null =True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
@@ -39,6 +40,13 @@ class Product(models.Model):
     status = models.CharField(max_length=100,choices = statuses.choices,default = statuses.pending)
     price = models.FloatField()
     quantity = models.IntegerField()
+    units = models.CharField(max_length=100,default='units')
+    def save(self, *args, **kwargs):
+        if self.supplier:
+            self.supplier_name = self.supplier.name
+        else:
+            self.product_name = None
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name        

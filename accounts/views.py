@@ -5,6 +5,7 @@ from .forms import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from .models import User,Profile
 
 # Create your views here.
 def home(request):
@@ -38,6 +39,7 @@ def signin(request):
             user = authenticate(request,username =cd['username'],password=cd['password'])
             if user is not None:
                 if user.is_active:
+                    request.session['username'] = cd['username']
                     login(request,user)
                     return redirect('dashboard:index')
                 else:
@@ -85,6 +87,37 @@ def profile(request):
         return redirect('accounts:profile')
 
         # Redirect to a success page or display a success message
+    return render(request, 'profile.html')
 
-    # Handle the GET request or display the form again
-    return render(request, 'Profile.html')
+
+def session_retrieval_view(request):
+    # Get the 'next' parameter from the URL
+    username = request.session.get('username')
+    next_url = request.GET.get('next')
+    user = User.objects.get(username=username)
+    profile = Profile.objects.get(user__username=username)
+    profile_pic = profile.profile_image.url
+    if request.method == 'POST':
+        password = request.POST.get('password')
+
+        # Authenticate the user
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            # Password is correct
+            login(request, user)
+            return redirect(next_url) if next_url else redirect('dashboard:index')
+        else:
+            message = "wrong Password"
+            context = {
+            'next_url': next_url,
+            'username': username,
+            'profile_pic': profile_pic,
+            'msg': message
+            }
+            return render(request, 'session_retrieval.html', context)
+    context = {
+        'next_url': next_url,
+        'username': username,
+        'profile_pic': profile_pic,
+    }
+    return render(request, 'session_retrieval.html', context)

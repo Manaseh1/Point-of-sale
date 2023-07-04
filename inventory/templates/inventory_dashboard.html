@@ -8,7 +8,7 @@
     <div class="row justify-content-space-between">
         <div class="col-lg-3 col-md-6">
             <div class="card">
-                <div class="card-body" style="background-color: gray">
+                <div class="card-body" style="background-color: blue">
                     <div class="stat-widget-five">
                         <div class="stat-icon dib flat-color-1">
                             <i class="fa fa-shopping-cart"></i>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text" style="color: white"><span class="count">{{ product }}</span></div>
+                                <div class="stat-text" style="color: white"><span class="count">{{ product_count }}</span></div>
                                 <div class="stat-heading" style="color: white">Product</div>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                 <div class="card-body" style="background-color: red">
                     <div class="stat-widget-five">
                         <div class="stat-icon dib flat-color-3">
-                            <i class="fa fa-user"></i>
+                            <i class="fa fa-users"></i>
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
@@ -63,11 +63,11 @@
                 <div class="card-body" style="background-color: maroon">
                     <div class="stat-widget-five">
                         <div class="stat-icon dib flat-color-4">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-cloud"></i>
                         </div>
                         <div class="stat-content">
                             <div class="text-left dib">
-                                <div class="stat-text"><span class="count" style="color: white">{{ buyer }}</span></div>
+                                <div class="stat-text"><span class="count" style="color: white">{{ season_count }} 0 </span></div>
                                 <div class="stat-heading" style="color: white">Season</div>
                             </div>
                         </div>
@@ -130,8 +130,11 @@
                                                 <a class="btn btn-info" href="#">{{ product.status }}</a>
                                             {% endif %}
                                         </td>
-                                        <td><button type="button" class="btn btn-light "><a style="text-decoration:none;" href ="{%url 'inventory:product_edit' product.id%}"><i class="fa-solid fa-pen-to-square"></i></a></button> </td>
-                                        <td><button type="button" class="btn btn-danger "><a href ="{%url 'inventory:product_delete' product.id%}" ><i class="fa-solid fa-trash"></i></a></button> </td>
+                                        <td> </td>
+                                        <td>
+<button type="button" class="btn btn-light "><a style="text-decoration:none;" href ="{%url 'inventory:product_edit' product.id%}"><i class="fa-solid fa-pen-to-square"></i></a></button> </                                        
+                                        <a href="{% url 'inventory:product_delete' product.id %}" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash"></i></a> 
+                                        </td>
                                     
                                     </tr>
                                     {% endfor %}
