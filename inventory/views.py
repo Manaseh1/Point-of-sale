@@ -3,13 +3,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.http import HttpResponse
 from django.template import loader
 from django.core.mail import send_mail
+from django.urls import reverse_lazy
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic.edit import CreateView
-from .forms import CreateProductForm,SupplierForm,CategoryForm
+from django.views.generic.edit import CreateView,UpdateView,DeleteView
+from .forms import CreateProductForm,SupplierForm,CategoryForm,EditProductForm
 from .models import *
 # @login_required(login_url='login')
 def inventory_dashboard(request):
@@ -27,10 +28,26 @@ def inventory_dashboard(request):
     return render(request, 'inventory_dashboard.html', context)
 
 class CreateProduct(CreateView):
-    template_name = 'prodadd.html'
+    template_name = 'product/prodadd.html'
     form_class = CreateProductForm
     model = Product
     success_url ='Inventory_Dasboard/'
+
+class EditProduct(UpdateView):
+    template_name = 'product/editproduct.html'
+    form_class = EditProductForm
+    model = Product
+    def get_success_url(self):
+        # Custom logic to determine the success URL
+        # For example, redirecting to the inventory dashboard
+        return reverse_lazy('inventory:inventory_dashboard')
+
+
+class DeleteProduct(DeleteView):
+    template_name = 'product/deleteproduct.html'
+    model = Product
+    success_url ='Inventory_Dasboard/'
+
 
 def create_supplier(request):
     if request.method == 'POST':

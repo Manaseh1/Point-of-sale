@@ -130,8 +130,8 @@
                                                 <a class="btn btn-info" href="#">{{ product.status }}</a>
                                             {% endif %}
                                         </td>
-                                        <td><button type="button" class="btn btn-light "><i class="fa-solid fa-pen-to-square"></i></button> </td>
-                                        <td><button type="button" class="btn btn-danger "><i class="fa-solid fa-trash"></i></button> </td>
+                                        <td><button type="button" class="btn btn-light "><a style="text-decoration:none;" href ="{%url 'inventory:product_edit' product.id%}"><i class="fa-solid fa-pen-to-square"></i></a></button> </td>
+                                        <td><button type="button" class="btn btn-danger "><a href ="{%url 'inventory:product_delete' product.id%}" ><i class="fa-solid fa-trash"></i></a></button> </td>
                                     
                                     </tr>
                                     {% endfor %}
