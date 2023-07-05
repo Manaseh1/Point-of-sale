@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-lg-4 col-md-2 col-sm-12">
                             <div class="form-group mb-3">
-                                <button class="btn btn-light btn-sm bg-gradient border rounded-0 text-start" type="submit" id="add_item"><i class="mdi mdi-plus"></i> Add Item</button>
+                                <button class="btn btn-light btn-sm bg-gradient border rounded-0 text-start" type="button" id="add_item"><i class="mdi mdi-plus"></i> Add Item</button>
                             </div>
                         </div>
                     </div>
@@ -158,18 +158,22 @@ document.getElementById('add_item').addEventListener('click', function () {
     addItem(itemName, itemPrice, itemQty);
 });
 
-document.querySelector('input[name="qty[]"]').addEventListener('change', function() {
-    const updatedQty = parseInt(quantityInput.value);
-    const productTotalCell = itemRow.querySelector('.product_total');
-    const updatedTotal = calculateTotal(itemPrice, updatedQty);
-    productTotalCell.innerHTML = updatedTotal;
-  });
+
 // Remove item button click event handler (delegation to dynamically added items)
 document.getElementById('item-list').addEventListener('click', function (event) {
     if (event.target.classList.contains('rem-item')) {
         const itemRow = event.target.closest('tr');
         itemRow.remove();
     }
+});
+document.querySelector('input[name="qty[]"]').addEventListener('change', function(event) {
+    const quantityInput = event.target; // Get the input element that triggered the change event
+    const updatedQty = parseInt(quantityInput.value);
+    const itemRow = quantityInput.closest('.item_row'); // Assuming you have a parent element with class 'item_row'
+    const itemPrice = getItemPrice(itemRow); // Assuming you have a function to get the item price based on the item row
+    const productTotalCell = itemRow.querySelector('.product_total');
+    const updatedTotal = calculateTotal(itemPrice, updatedQty);
+    productTotalCell.innerHTML = updatedTotal;
 });
 
 </script>

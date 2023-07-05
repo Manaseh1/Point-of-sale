@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os, inspect
-import django_dyn_dt
+
 from pathlib import Path
 import os
 
@@ -52,6 +52,7 @@ APPS = [
     'accounts',
     'inventory',
     'sales',
+    'purchase_order'
 ]
 
 EXTENSIONS = [
@@ -150,14 +151,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/staticfiles/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 MEDIA_URL = '/Media/'
-DYN_DB_PKG_ROOT = os.path.dirname( inspect.getfile( django_dyn_dt ) ) # <-- NEW App
-STATICFILES_DIRS = (
-    os.path.join(DYN_DB_PKG_ROOT, "templates/static"),
-)
-DYNAMIC_DATATB = {
-    # SLUG -> Import_PATH 
-    'Product'  : "inventory.models.Product",
-}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
