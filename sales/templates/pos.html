@@ -82,8 +82,6 @@
                                         <input type="hidden" name="grand_total" value="0">
                                         <input type="hidden" name="tendered_amount" value="0">
                                         <input type="hidden" name="amount_change" value="0">
-                                        <input type="hidden" name="grand_total" value="0">
-                                        <input type="hidden" name="grand_total" value="0">
                                         <span class="h3 fw-bold" id="grand_total"></span>
                                     </dd>
                                 </dl>
@@ -100,80 +98,6 @@
         </form>
     </div>
 </div>
-<script>
-    // Function to add a new item to the table
-function addItem(itemName, itemPrice, itemQty) {
-    const itemRow = document.createElement('tr');
-    itemRow.innerHTML = `
-        <td class="px-2 py-1 text-center">
-            <button class="btn btn-sm btn-outline-danger rounded-0 rem-item" type="button"><i class="bx bx-x rem-item"></i></button>
-        </td>
-        <td class="px-2 py-1">
-            <input type="hidden" name="product_id[]" value="${itemName}">
-            <input type="hidden" name="price[]" value="${itemPrice}">
-            <input type="number" name="qty[]" min="0" class="form-control form-control-sm rounded-0 text-center" value="${itemQty}">
-        </td>
-        <td class="px-2 py-1 product_name text-start">${itemName}</td>
-        <td class="px-2 py-1 product_price text-end">${itemPrice}</td>
-        <td class="px-2 py-1 product_total text-end">${calculateTotal(itemPrice, itemQty)}</td>
-    `;
-    var grand_total = document.getElementById('grand_total');
-    const sub_total = document.getElementById('sub_total');
-    const tax = document.getElementById('tax_amount');
-    const itemList = document.getElementById('item-list');
-    var tax_amount = parseFloat(document.getElementsByName('tax')[0].value);
-    var total = calculateTotal(itemPrice, itemQty);
-    var total_tax = (tax_amount/100) * total;
-    sub_total.innerHTML = calculateTotal(itemPrice, itemQty);
-    tax.innerHTML = total_tax;
-    var total_grand = (parseFloat(total) + total_tax);
-    grand_total.innerHTML = total_grand;
-    itemList.appendChild(itemRow);
-}
-
-// Function to calculate the total price
-function calculateTotal(price, quantity) {
-    return (parseFloat(price) * parseInt(quantity)).toFixed(2);
-}
-
-// Add item button click event handler
-document.getElementById('add_item').addEventListener('click', function () {
-    const productId = document.getElementById('product-id').value;
-    const product = document.querySelector(`#product-id option[value='${productId}']`);
-    
-    if (!productId) {
-        alert("Product and Quantity Field is required!");
-        return;
-    }
-    
-    const itemName = product.getAttribute('data-name');
-    const itemPrice = product.getAttribute('data-price');
-    const itemQty = document.getElementById('product-qty').value;
-    
-    if (!itemQty) {
-        alert('Please enter a valid quantity.');
-        return;
-    }
-    
-    addItem(itemName, itemPrice, itemQty);
-});
-
-document.querySelector('input[name="qty[]"]').addEventListener('change', function() {
-    const updatedQty = parseInt(quantityInput.value);
-    const productTotalCell = itemRow.querySelector('.product_total');
-    const updatedTotal = calculateTotal(itemPrice, updatedQty);
-    productTotalCell.innerHTML = updatedTotal;
-  });
-// Remove item button click event handler (delegation to dynamically added items)
-document.getElementById('item-list').addEventListener('click', function (event) {
-    if (event.target.classList.contains('rem-item')) {
-        const itemRow = event.target.closest('tr');
-        itemRow.remove();
-    }
-});
-
-</script>
-
 <!-- Button to trigger the modal -->
 
 
@@ -252,28 +176,6 @@ document.getElementById('item-list').addEventListener('click', function (event) 
         </div>
     </div>
 </div>
-<script>
-    $(function() {
-        $('#receipt_print').click(function() {
-            var head = $('head').clone();
-            var p = $('#outprint').clone();
-            var el = $("<div>");
-            head.append('<style>body{background-color:unset; font-size:24; !important}</style>');
-            el.append(head);
-            el.find('title').text("Receipt - Print View");
-            el.append(p);
-            var nw = window.open('', '_blank', "width=500,height=800,left=300,top=200");
-            nw.document.write(el.html());
-            nw.document.close();
-            setTimeout(() => {
-                nw.print();
-                setTimeout(() => {
-                    nw.close();
-                }, 250);
-            }, 300);
-        });
-    });
-</script>
 <!-- Modal -->
 <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -337,6 +239,118 @@ document.getElementById('item-list').addEventListener('click', function (event) 
         })
     })
 </script>
+<script>
+    $(function() {
+        $('#receipt_print').click(function() {
+            var head = $('head').clone();
+            var p = $('#outprint').clone();
+            var el = $("<div>");
+            head.append('<style>body{background-color:unset; font-size:24; !important}</style>');
+            el.append(head);
+            el.find('title').text("Receipt - Print View");
+            el.append(p);
+            var nw = window.open('', '_blank', "width=500,height=800,left=300,top=200");
+            nw.document.write(el.html());
+            nw.document.close();
+            setTimeout(() => {
+                nw.print();
+                setTimeout(() => {
+                    nw.close();
+                }, 250);
+            }, 300);
+        });
+    });
+</script>
+<!-- Place the HTML markup for the table and other elements here -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    // Function to calculate the total of an item based on price and quantity
+    function calculateTotal(price, qty) {
+        return (parseFloat(price) * parseFloat(qty)).toFixed(2);
+    }
 
+    // Function to update the grand total and tax amount
+    function updateTotals() {
+        let grandTotal = 0;
+        let subTotal = 0;
+        let totalTax = 0;
+        const taxRate = parseFloat($('#tax').val()) || 0;
 
+        $('#item-list tr').each(function(index, row) {
+            const price = parseFloat($(row).find('.product_price').text());
+            const qty = parseInt($(row).find('.qty').val());
+            const total = calculateTotal(price, qty);
+            subTotal += parseFloat(total);
+        });
+
+        totalTax = (taxRate / 100) * subTotal;
+        grandTotal = subTotal + totalTax;
+        $('#sub_total').text(subTotal.toFixed(2));
+        $('#tax_amount').text(totalTax.toFixed(2));
+        $('#grand_total').text(grandTotal.toFixed(2));
+        $('#payable_amount').val(grandTotal.toFixed(2)); // Set payable amount as grand total
+    }
+
+    $(document).ready(function() {
+        // Event delegation for dynamically added quantity inputs
+        $('#item-list').on('change', '.qty', function() {
+            const row = $(this).closest('tr');
+            const price = parseFloat(row.find('.product_price').text());
+            const qty = parseInt($(this).val());
+            const total = calculateTotal(price, qty);
+            row.find('.product_total').text(total);
+            updateTotals();
+        });
+
+        // Add item button click event
+        $('#add_item').on('click', function() {
+            const productId = $('#product-id').val();
+            const productName = $('#product-id option:selected').data('name');
+            const productPrice = $('#product-id option:selected').data('price');
+            const productQty = parseInt($('#product-qty').val());
+
+            if (!productId || isNaN(productQty) || productQty <= 0) {
+                alert('Please select a product and provide a valid quantity.');
+                return;
+            }
+            const existingProduct = $('#item-list tr').find(`input[name="product_id[]"][value="${productId}"]`);
+            if (existingProduct.length) {
+                alert('Product already exists in the list.');
+                return;
+            }
+
+            const itemRow = `
+                <tr>
+                    <td class="px-2 py-1 text-center">
+                        <button class="btn btn-sm btn-outline-danger rounded-0 rem-item" type="button">
+                            <i class="bx bx-x"></i>
+                        </button>
+                    </td>
+                    <td class="px-2 py-1">
+                        <input type="hidden" name="product_id[]" value="${productId}">
+                        <input type="hidden" name="price[]" value="${productPrice}">
+                        <input type="number" name="qty[]" class="form-control form-control-sm rounded-0 text-center qty" min="0" value="${productQty}">
+                    </td>
+                    <td class="px-2 py-1">${productName}</td>
+                    <td class="px-2 py-1 product_price">${productPrice}</td>
+                    <td class="px-2 py-1 product_total">${calculateTotal(productPrice, productQty)}</td>
+                </tr>
+            `;
+
+            $('#item-list').append(itemRow);
+            $('#product-id').val('');
+            $('#product-qty').val('');
+            updateTotals();
+        });
+
+        // Remove item button click event
+        $('#item-list').on('click', '.rem-item', function() {
+            $(this).closest('tr').remove();
+            updateTotals();
+        });
+
+        // Update totals on page load
+        updateTotals();
+    });
+</script>
 {% endblock %}
