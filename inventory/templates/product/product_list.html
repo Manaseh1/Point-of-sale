@@ -21,10 +21,10 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
+                                    {% comment %} <th>Units</th> {% endcomment %}
                                     <th>Unit Price</th>
-                                    <th>Units</th>
                                     <th>Type</th>
-                                    <th>Description</th>
+                                    
                                     <th>Category</th>
                                     <th>Date</th>
                                     <th>Status</th>
@@ -38,11 +38,11 @@
                                     <td class="serial">{{ forloop.counter }}</td>
                                     <td>{{ product.supplier_name }}</td>
                                     <td>{{ product.name }}</td>
-                                    <td>{{ product.quantity }}</td>
+                                    <td>{{ product.quantity }} {{ product.units }}</td>
+                                    {% comment %} <td>{{ product.units }}</td> {% endcomment %}
                                     <td>{{ product.price }}</td>
-                                    <td>{{ product.units }}</td>
                                     <td>{{ product.product_type }}</td>
-                                    <td>{{ product.description }}</td>
+                                    {% comment %} <td>{{ product.description }}</td> {% endcomment %}
                                     <td>{{ product.category }}</td>
                                     <td>{{ product.date_added }}</td>
                                     <td>

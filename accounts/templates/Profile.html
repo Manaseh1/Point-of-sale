@@ -25,7 +25,11 @@
                   <div class="col-md-4">
                     <div class="card profile-card p-2">
                         <div class="profile-picture m-auto shadow ">
-                            <img src="{{ user.profile.profile_image.url }}" alt="Profile Image" class="img-responsive">
+                          {% if user.profile.profile_image %}
+                            <img src="{{ user.profile.profile_image.url }}"class="img-circle elevation-2" alt="Profile Image" class="profile-image">
+                          {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" class="img-circle elevation-2"  alt="Profile Image Placeholder">
+                          {% endif %}
                         </div>
                         <div class="card-body">
                             <h4 class="card-title text">{{ user.profile.full_name }}</h4>

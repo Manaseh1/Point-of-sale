@@ -87,7 +87,7 @@ def profile(request):
         return redirect('accounts:profile')
 
         # Redirect to a success page or display a success message
-    return render(request, 'profile.html')
+    return render(request, 'Profile.html')
 
 
 def session_retrieval_view(request):
