@@ -5,15 +5,8 @@
 {% include 'base/style.html' %}
 {% block content %}
 <div class="col-md-12">
-    <div class="card py-2">
-        <div class="card-body">
-            <h4 class="card-title mb-0">Point of Sales</h4>
-        </div>
-    </div>
-</div>
-<div class="col-md-12">
     <div class="card">
-        <form action="" id="pos-form">
+        <form id="pos-form">
             <div class="card-body">
                 <fieldset>
                     <legend>Add Products</legend>
@@ -21,27 +14,12 @@
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             <div class="form-group mb-3">
                                 <label for="product-id">Select Product</label>
-                                    <!-- add_item.html -->
-                                    <select id="product-id" class="form-control form-control-sm" multiple>
-                                        <option value="" disabled selected></option>
-                                        {% for product in products %}
-                                            <option value="{{ product.name }}">{{ product }}</option>
-                                        {% endfor %}
-                                    </select>
-
-                                    
-                                            <!-- JavaScript code -->
-                                    <script>
-                                        $(document).ready(function() {
-                                            $('#product-id').change(function() {
-                                                var selectedOptions = [];
-                                                $('#product-id option:selected').each(function() {
-                                                    selectedOptions.push($(this).text());
-                                                });
-                                                $('#selected-products').html(selectedOptions.join(', '));
-                                            });
-                                        });
-                                    </script>
+                                <select id="product-id" class="form-control form-control-sm">
+                                    <option value="" disabled selected></option>
+                                    {% for product in products %}
+                                    <option value="{{ product.pk }}" data-name="{{ product.name }}" data-price="{{ product.price }}">{{ product }}</option>
+                                    {% endfor %}
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-5 col-sm-12">
@@ -69,22 +47,16 @@
                                     <col width="20%">
                                 </colgroup>
                                 <thead>
-                                        <tr class="bg-info bg-gradient bg-opacity-50 text-light">
-                                            <th class="bg-info py-1 px-2 text-center  text-light"></th>
-                                            <th class="bg-info py-1 px-2 text-center  text-light">QTY</th>
-                                            <th class="bg-info py-1 px-2 text-center  text-light">Product</th>
-                                            <th class="bg-info py-1 px-2 text-center  text-light">Price</th>
-                                            <th class="bg-info py-1 px-2 text-center  text-light">Total</th>
-                                        </tr>
-                                </thead>
-                                    
-                                <tbody>
-                                    <tr>
-                                    <td></td>
-                                    <td></td>
-                                    
-                                    <td id ="selected-products"></td>
+                                    <tr class="bg-info bg-gradient bg-opacity-50 text-light">
+                                        <th class="bg-info py-1 px-2 text-center  text-light"></th>
+                                        <th class="bg-info py-1 px-2 text-center  text-light">QTY</th>
+                                        <th class="bg-info py-1 px-2 text-center  text-light">Product</th>
+                                        <th class="bg-info py-1 px-2 text-center  text-light">Price</th>
+                                        <th class="bg-info py-1 px-2 text-center  text-light">Total</th>
                                     </tr>
+                                </thead>
+                                <tbody id="item-list">
+                                    <!-- Product items will be added here dynamically -->
                                 </tbody>
                             </table>
                         </div>
@@ -98,7 +70,7 @@
                                     </dd>
                                     <dt class="h4 fw-bold text-light">Tax Inclusive (%)</dt>
                                     <dd>
-                                        <input type="number" class="form-control form-control-lg rounded-0 text-end" step="any" min="0" max="100" name="tax" value="0">
+                                        <input type="number" id="tax" class="form-control form-control-lg rounded-0 text-end" step="any" min="0" max="100" name="tax" value="5">
                                     </dd>
                                     <dt class="h4 fw-bold text-light">Tax Amount</dt>
                                     <dd class="text-end py-1 px-2 rounded-0 bg-light">
@@ -112,7 +84,7 @@
                                         <input type="hidden" name="amount_change" value="0">
                                         <input type="hidden" name="grand_total" value="0">
                                         <input type="hidden" name="grand_total" value="0">
-                                        <span class="h3 fw-bold" id="grand_total">0.00</span>
+                                        <span class="h3 fw-bold" id="grand_total"></span>
                                     </dd>
                                 </dl>
                             </div>
@@ -128,21 +100,80 @@
         </form>
     </div>
 </div>
-<div id="item-clone" class="d-none">
-    <tr>
+<script>
+    // Function to add a new item to the table
+function addItem(itemName, itemPrice, itemQty) {
+    const itemRow = document.createElement('tr');
+    itemRow.innerHTML = `
         <td class="px-2 py-1 text-center">
-            <button class="btn btn-sm btn-outline-danger rounded-0 rem-item" type="button"><i class="mdi mdi-close"></i></button>
+            <button class="btn btn-sm btn-outline-danger rounded-0 rem-item" type="button"><i class="bx bx-x rem-item"></i></button>
         </td>
         <td class="px-2 py-1">
-            <input type="hidden" name="product_id[]">
-            <input type="hidden" name="price[]">
-            <input type="number" name="qty[]" min="0" class="form-control form-control-sm rounded-0 text-center">
+            <input type="hidden" name="product_id[]" value="${itemName}">
+            <input type="hidden" name="price[]" value="${itemPrice}">
+            <input type="number" name="qty[]" min="0" class="form-control form-control-sm rounded-0 text-center" value="${itemQty}">
         </td>
-        <td class="px-2 py-1 product_name text-start"></td>
-        <td class="px-2 py-1 product_price text-end"></td>
-        <td class="px-2 py-1 product_total text-end"></td>
-    </tr>
-</div>
+        <td class="px-2 py-1 product_name text-start">${itemName}</td>
+        <td class="px-2 py-1 product_price text-end">${itemPrice}</td>
+        <td class="px-2 py-1 product_total text-end">${calculateTotal(itemPrice, itemQty)}</td>
+    `;
+    var grand_total = document.getElementById('grand_total');
+    const sub_total = document.getElementById('sub_total');
+    const tax = document.getElementById('tax_amount');
+    const itemList = document.getElementById('item-list');
+    var tax_amount = parseFloat(document.getElementsByName('tax')[0].value);
+    var total = calculateTotal(itemPrice, itemQty);
+    var total_tax = (tax_amount/100) * total;
+    sub_total.innerHTML = calculateTotal(itemPrice, itemQty);
+    tax.innerHTML = total_tax;
+    var total_grand = (parseFloat(total) + total_tax);
+    grand_total.innerHTML = total_grand;
+    itemList.appendChild(itemRow);
+}
+
+// Function to calculate the total price
+function calculateTotal(price, quantity) {
+    return (parseFloat(price) * parseInt(quantity)).toFixed(2);
+}
+
+// Add item button click event handler
+document.getElementById('add_item').addEventListener('click', function () {
+    const productId = document.getElementById('product-id').value;
+    const product = document.querySelector(`#product-id option[value='${productId}']`);
+    
+    if (!productId) {
+        alert("Product and Quantity Field is required!");
+        return;
+    }
+    
+    const itemName = product.getAttribute('data-name');
+    const itemPrice = product.getAttribute('data-price');
+    const itemQty = document.getElementById('product-qty').value;
+    
+    if (!itemQty) {
+        alert('Please enter a valid quantity.');
+        return;
+    }
+    
+    addItem(itemName, itemPrice, itemQty);
+});
+
+document.querySelector('input[name="qty[]"]').addEventListener('change', function() {
+    const updatedQty = parseInt(quantityInput.value);
+    const productTotalCell = itemRow.querySelector('.product_total');
+    const updatedTotal = calculateTotal(itemPrice, updatedQty);
+    productTotalCell.innerHTML = updatedTotal;
+  });
+// Remove item button click event handler (delegation to dynamically added items)
+document.getElementById('item-list').addEventListener('click', function (event) {
+    if (event.target.classList.contains('rem-item')) {
+        const itemRow = event.target.closest('tr');
+        itemRow.remove();
+    }
+});
+
+</script>
+
 <!-- Button to trigger the modal -->
 
 

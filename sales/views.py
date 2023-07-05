@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Sales, salesItems
 from inventory.models import Product
 from django.contrib.auth.decorators import login_required
+from .models import *
 
 @login_required
 def sales_dashboard(request):
@@ -11,11 +12,11 @@ def sales_dashboard(request):
 @login_required
 def pos(request):
     products = Product.objects.all()
-    # prod = get_object_or_404(Product,pk=pk)
-    # additem, created = salesItems.objects.get_or_create(product = prod)
-    # additem.save()
+    sales = Sales.objects.all()
+    salesitems = salesItems.objects.all()
     context = {
         'products': products,
-        # 'additem': additem,
-    }    
-    return render(request, 'pos.html',context)
+        'sales': sales,
+        'salesitems': salesitems
+    }
+    return render(request, 'pos.html', context)
