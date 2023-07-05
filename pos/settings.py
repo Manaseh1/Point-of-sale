@@ -9,7 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os, inspect
+import django_dyn_dt
 from pathlib import Path
 import os
 
@@ -42,13 +43,15 @@ DJANGO_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'crispy_bootstrap4',
+    'django_dyn_dt',  
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 APPS = [
     'dashboard',
     'accounts',
-    'inventory'
+    'inventory',
+    'sales',
 ]
 
 EXTENSIONS = [
@@ -68,12 +71,13 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pos.urls'
+TEMPLATE_DIR_DATATB = os.path.join(BASE_DIR, "django_dyn_dt/templates") # <-- NEW App
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),  # Path to your 'base' directory
+            os.path.join(BASE_DIR, 'templates'), TEMPLATE_DIR_DATATB # Path to your 'base' directory
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -142,7 +146,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/staticfiles/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+MEDIA_URL = '/Media/'
+DYN_DB_PKG_ROOT = os.path.dirname( inspect.getfile( django_dyn_dt ) ) # <-- NEW App
+STATICFILES_DIRS = (
+    os.path.join(DYN_DB_PKG_ROOT, "templates/static"),
+)
+DYNAMIC_DATATB = {
+    # SLUG -> Import_PATH 
+    'Product'  : "inventory.models.Product",
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

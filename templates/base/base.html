@@ -30,10 +30,14 @@
     .sidebar-collapse .navbar {
       margin-left: 0;
     }
+    .sub-menu a li:hover{
+      color: brown;
+      background-color: grey;
+    }
   </style>
 </head>
-<body class="sidebar-mini">
-  <div class="wrapper">
+<body class="sidebar-mini bg-white">
+  <div class="wrapper bg-white">
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
       <ul class="navbar-nav">
@@ -131,62 +135,67 @@
               <li class="active nav-item" style="background: black" >
                   <a class="nav-link" href="{% url 'inventory:inventory_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Inventory Dashboard</p> </a>
               </li>
-              <li class="nav-item menu-title" style="color: white">Inventory</li><!-- /.menu-title -->
+              <li class="active nav-item" style="background: black" >
+                <a class="nav-link" href="{% url 'sales:sales_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Sales Dashboard</p> </a>
+            </li>
+              <details >
+                <summary><li class="nav-item menu-title" style="color: white">Inventory</li></summary>
               <li class="menu-item-has-children dropdown nav-item" >
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i><p> Supplier</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_supplier' %}">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="{% url 'inventory:supplier_list' %}">View</a></li>
+                      <a href="{% url 'inventory:create_supplier' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a href="{% url 'inventory:supplier_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i><p> Buyer</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a  href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i><p> Season</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i><p> Category</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="{% url 'inventory:create_category' %}">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="{% url 'inventory:category_list' %}">View</a></li>
+                      <a href="{% url 'inventory:create_category' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i> Add</li></a>
+                      <a  href="{% url 'inventory:category_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i> View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-list"></i><p> Product</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a  href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a  href="{% url 'inventory:create_product' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="{% url 'inventory:product_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i><p> Order</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a  href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
 
               <li class="nav-item menu-item-has-children dropdown">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-truck"></i><p> Delivery</p></a>
                   <ul class="sub-menu children dropdown-menu">
-                      <li><i class="fa fa-plus-circle" style="color: darkblue"></i><a href="#">Add</a></li>
-                      <li><i class="fa fa-eye" style="color: darkblue"></i><a href="#">View</a></li>
+                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
+                      <a href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
+              </details>
           {% endif %}
       {% endif %}
     </ul>
@@ -194,7 +203,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div class="content-wrapper ">
       <section class="content pt-4">
         {% block content %}
 
@@ -224,6 +233,35 @@
         $("body").toggleClass('sidebar-collapse');
       });
     });
+    
   </script> 
+  {% if user.is_authenticated %}
+  <script>
+    $(function() {
+  // Set the idle timeout duration in milliseconds (5 minutes in this example)
+  var idleTimeout = 5 * 60 * 1000; // 5 minutes
+  
+  // Initialize the idle timer variable
+  var idleTimer;
+
+  // Reset the idle timer function
+  function resetIdleTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(function() {
+      // Redirect the user to the password retrieval page
+      window.location.href = "{% url 'accounts:lockscreen' %}";
+    }, idleTimeout);
+  }
+
+  // Attach event listeners to relevant user activities
+  $(document).on("mousemove keydown scroll", function() {
+    resetIdleTimer();
+  });
+
+  // Start the idle timer on page load
+  resetIdleTimer();
+});
+  </script>
+  {% endif %}
 </body>
 </html>

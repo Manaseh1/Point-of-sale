@@ -1,0 +1,115 @@
+
+{% include 'base/style.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>POS | Lockscreen</title>
+        <link rel="icon" href="{% static 'images/posi.png' %}" type="image/png">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&amp;display=fallback">
+        <style>
+            .alert {
+                padding: 10px;
+                margin-bottom: 10px;
+                border: 1px solid transparent;
+                border-radius: 4px;
+            }
+
+            .alert-danger {
+                color: #721c24;
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+            }
+        </style>
+        </head>
+    <body class="bg-white">
+
+        <div class="lockscreen-wrapper shadow bg-light">
+        <div class="lockscreen-logo">
+        <a href="#"><b>POS</b> M&J</a>
+        </div>
+        
+        <div class="lockscreen-name text-center">{{ username }}</div>
+        
+        <div class="lockscreen-item">
+        
+        <div class="lockscreen-image">
+        <img src="{{ profile_pic }}" alt="User Image">
+        </div>
+        <form class="lockscreen-credentials" method="post">
+            {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next_url }}">
+        <div class="input-group">
+            
+        <input type="password" class="form-control" placeholder="password" name="password" required>
+        
+        <div class="input-group-append">
+        <button type="submit" class="btn">
+        <i class="fas fa-arrow-right text-muted"></i>
+        </button>
+        
+        </div>
+        </div>
+        </form>
+       </div>
+         <div class="alert alert-danger" id="alertMessage" style="display: none;">
+            <p>{{ msg }}</p>
+        </div>
+        <div class="help-block text-center">
+        Enter your password to retrieve your session
+        </div>
+        <div class="text-center">
+        <a href="{% url 'dashboard:logout' %}">Or sign in as a different user</a>
+        </div>
+        <div class="lockscreen-footer text-center">
+        Copyright © 2023 <b><a href="{% url 'dashboard:logout' %}" class="text-black">POS M&J</a></b><br>
+        All rights reserved
+        </div>
+        </div>        
+        <script>
+            function showAlertMessage() {
+            var alertMessage = document.getElementById('alertMessage');
+            var msg = "{{ msg }}";  // Retrieve the 'msg' value from the template
+            if (msg.trim() !== '') {
+                alertMessage.style.display = 'block';
+                setTimeout(function() {
+                    alertMessage.style.display = 'none';
+                }, 4000); // 4000 milliseconds = 4 seconds
+            }
+        }
+        window.addEventListener('DOMContentLoaded', (event) => {
+            showAlertMessage();
+        });
+        // Initialize pushmenu sidebar
+    $(document).ready(function() {
+      $('#pushmenu').on('click', function(e) {
+        e.preventDefault();
+        $("body").toggleClass('sidebar-collapse');
+      });
+    });
+    $(function() {
+    // Set the idle timeout duration in milliseconds (5 minutes in this example)
+    var idleTimeout = 5 * 60 * 1000; // 5 minutes
+    // Initialize the idle timer variable
+    var idleTimer;
+    // Reset the idle timer function
+    function resetIdleTimer() {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(function() {
+        // Redirect the user to the password retrieval page
+        window.location.href = "{% url 'dashboard:logout' %}";
+        }, idleTimeout);
+    }
+    // Attach event listeners to relevant user activities
+    $(document).on("mousemove keydown scroll", function() {
+        resetIdleTimer();
+    });
+
+    // Start the idle timer on page load
+    resetIdleTimer();
+    });
+    </script>
+</body>
+</html>
