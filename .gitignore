@@ -1,6 +1,6 @@
 .env
 env/
-/accounts/*/migrations/
+accounts/*/migrations/
 venv/
 __pycache__/
 accounts/migrations/

@@ -5,22 +5,22 @@ from inventory.models import Product
 from decimal import Decimal
 
 class Sales(models.Model):
-    code = models.CharField(max_length=100)
-    sub_total = models.FloatField(default=0)
-    grand_total = models.FloatField(default=0)
-    tax_amount = models.FloatField(default=0)
-    tax = models.FloatField(default=0)
-    tendered_amount = models.FloatField(default=0)
-    amount_change = models.FloatField(default=0)
-    date_added = models.DateTimeField(default=timezone.now) 
-    date_updated = models.DateTimeField(auto_now=True) 
+    code = models.CharField(max_length=100, blank=True, null=True)
+    sub_total = models.FloatField(default=0, blank=True, null=True)
+    grand_total = models.FloatField(default=0, blank=True, null=True)
+    tax_amount = models.FloatField(default=0, blank=True, null=True)
+    tax = models.FloatField(default=0, blank=True, null=True)
+    tendered_amount = models.FloatField(default=0, blank=True, null=True)
+    amount_change = models.FloatField(default=0, blank=True, null=True)
+    date_added = models.DateTimeField(default=timezone.now, blank=True, null=True) 
+    date_updated = models.DateTimeField(auto_now=True, blank=True, null=True) 
 
     def __str__(self):
         return self.code
 
 class salesItems(models.Model):
-    sale_id = models.ForeignKey(Sales,on_delete=models.CASCADE)
-    #product_id = models.ForeignKey(Product,on_delete=models.CASCADE)
-    price = models.FloatField(default=0)
-    qty = models.FloatField(default=0)
-    total = models.FloatField(default=0)
+    sale = models.ForeignKey(Sales,on_delete=models.CASCADE)
+    product = models.CharField(max_length=100, blank=True, null=True)
+    price = models.FloatField(default=0, blank=True, null=True)
+    qty = models.FloatField(default=0, blank=True, null=True)
+    total = models.FloatField(default=0, blank=True, null=True)

@@ -21,8 +21,8 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Unit Price</th>
                                     <th>Units</th>
+                                    <th>Unit Price</th>
                                     <th>Type</th>
                                     <th>Description</th>
                                     <th>Category</th>
@@ -38,9 +38,9 @@
                                     <td class="serial">{{ forloop.counter }}</td>
                                     <td>{{ product.supplier_name }}</td>
                                     <td>{{ product.name }}</td>
-                                    <td>{{ product.quantity }}</td>
-                                    <td>{{ product.price }}</td>
+                                    <td>{{ product.quantity }} {{ product.units }}</td>
                                     <td>{{ product.units }}</td>
+                                    <td>{{ product.price }}</td>
                                     <td>{{ product.product_type }}</td>
                                     <td>{{ product.description }}</td>
                                     <td>{{ product.category }}</td>

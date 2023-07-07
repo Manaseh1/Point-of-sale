@@ -1,131 +1,167 @@
-{% extends 'base/base.html' %}
-{% load static %}
-
-{% block title %}Sales Dashboard - Point of Sale System{% endblock %}
-{% include 'base/style.html' %}
+{% extends 'base/base.html' %} {% load static %} {% block title %}Sales
+Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
 {% block content %}
-    <!-- Widgets -->
-    <div class="row">
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body" style="background-color: blue">
-                    <div class="stat-widget-five">
-                        <div class="stat-icon dib flat-color-1">
-                            <i class="fa fa-dollar"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="text-left dib">
-                                <div class="stat-text" style="color: white">$5000</div>
-                                <div class="stat-heading" style="color: white">Total Sales</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body" style="background-color: green">
-                    <div class="stat-widget-five">
-                        <div class="stat-icon dib flat-color-2">
-                            <i class="fa fa-users"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="text-left dib">
-                                <div class="stat-text" style="color: white">50</div>
-                                <div class="stat-heading" style="color: white">Customers</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body" style="background-color: orange">
-                    <div class="stat-widget-five">
-                        <div class="stat-icon dib flat-color-3">
-                            <i class="fa fa-shopping-cart"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="text-left dib">
-                                <div class="stat-text" style="color: white">100</div>
-                                <div class="stat-heading" style="color: white">Orders</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6">
-            <div class="card">
-                <div class="card-body" style="background-color: purple">
-                    <div class="stat-widget-five">
-                        <div class="stat-icon dib flat-color-4">
-                            <i class="fa fa-calendar"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="text-left dib">
-                                <div class="stat-text" style="color: white">30</div>
-                                <div class="stat-heading" style="color: white">Upcoming Events</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!-- Widgets -->
 <div class="row">
-    <div class="col-lg-12">
-    <a href="{% url 'sales:sales_pos' %}" class="btn btn-primary w-100">POS</a>
-    </div>
-</div>
-    <div class="clearfix"></div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="box-title">Recent Sales</h4>
-                </div>
-                <div class="card-body--">
-                    <div class="table-stats order-table ov-h">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="serial">#</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th>Amount</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% if sales %}
-                                {% for sale in sales %}
-                                    <tr>
-                                        <td class="serial">{{ forloop.counter }}</td>
-                                        <td>{{ sale.product }}</td>
-                                        <td>{{ sale.quantity }}</td>
-                                        <td>{{ sale.amount }}</td>
-                                        <td>{{ sale.date }}</td>
-                                    </tr>
-                                {% empty %}
-                                    <tr>
-                                        <td colspan="5">No sales data available.</td>
-                                    </tr>
-                                {% endfor %}
-                                {% else %}
-                                <tr><td colspan="5">No sales data available.</td></tr>
-                                {% endif %}
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+  <div class="col-lg-3 col-md-6">
+    <div class="card">
+      <div class="card-body" style="background-color: blue">
+        <div class="stat-widget-five">
+          <div class="stat-icon dib flat-color-1">
+            <i class="fa fa-dollar"></i>
+          </div>
+          <div class="stat-content">
+            <div class="text-left dib">
+              <div class="stat-text" style="color: white">
+                Kshs/= {{ total_sales }}
+              </div>
+              <div class="stat-heading" style="color: white">Total Sales</div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card">
+      <div class="card-body" style="background-color: green">
+        <div class="stat-widget-five">
+          <div class="stat-icon dib flat-color-2">
+            <i class="fa fa-users"></i>
+          </div>
+          <div class="stat-content">
+            <div class="text-left dib">
+              <div class="stat-text" style="color: white">50</div>
+              <div class="stat-heading" style="color: white">Customers</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card">
+      <div class="card-body" style="background-color: orange">
+        <div class="stat-widget-five">
+          <div class="stat-icon dib flat-color-3">
+            <i class="fa fa-shopping-cart"></i>
+          </div>
+          <div class="stat-content">
+            <div class="text-left dib">
+              <div class="stat-text" style="color: white">100</div>
+              <div class="stat-heading" style="color: white">Orders</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-3 col-md-6">
+    <div class="card">
+      <div class="card-body" style="background-color: purple">
+        <div class="stat-widget-five">
+          <div class="stat-icon dib flat-color-4">
+            <i class="fa fa-calendar"></i>
+          </div>
+          <div class="stat-content">
+            <div class="text-left dib">
+              <div class="stat-text" style="color: white">30</div>
+              <div class="stat-heading" style="color: white">
+                Upcoming Events
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <a href="{% url 'sales:sales_pos' %}" class="btn btn-primary w-100">POS</a>
+  </div>
+</div>
+{% if error_message %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ error_message }}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endif %}
+
+<div class="clearfix"></div>
+<div class="table-stats order-table ov-h">
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="serial">#</th>
+        <th>Code</th>
+        <th>Sub Total</th>
+        <th>Tax</th>
+        <th>Tax Amount</th>
+        <th>Grand Total</th>
+        <th>Tendered Amount</th>
+        <th>Amount Change</th>
+        <th>Date Added</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if sales %} {% for sale in sales %}
+      <tr>
+        <td class="serial">{{ forloop.counter }}</td>
+        <td>
+          <details>
+            <summary style="color: blue; cursor: pointer">
+              {{ sale.code }}
+            </summary>
+            <ul>
+              {% for item in sale.salesitems_set.all %}
+              <li>
+                {{ item.qty|floatformat:0 }} {{ item.product }}s @ {{ item.total}} /= 
+              </li>
+              {% endfor %}
+            </ul>
+          </details>
+        </td>
+        <td>{{ sale.sub_total }}</td>
+        <td>{{ sale.tax|floatformat:0 }}%</td>
+        <td>{{ sale.tax_amount }}</td>
+        <td>{{ sale.grand_total }}</td>
+        <td>{{ sale.tendered_amount }}</td>
+        <td>{{ sale.amount_change }}</td>
+        <td>{{ sale.date_added }}</td>
+        <td>
+          <a
+            href="{% url 'sales:receipt' sale.id %}"
+            target="_blank"
+            class="btn btn-primary"
+            ><i class="bx bx-receipt"></i>
+          </a>
+
+          <form action="{% url 'sales:delete_sale' sale.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger btn-sm">
+              <i class="bx bx-trash"></i>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="10">No sales data available.</td>
+      </tr>
+      {% endfor %} {% else %}
+      <tr>
+        <td colspan="10">No sales data available.</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}
