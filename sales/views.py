@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from psycopg2 import IntegrityError
 from .models import Sales, salesItems
+from inventory.models import Product
 from django.contrib.auth.decorators import login_required
 from .models import *
 from datetime import date, datetime

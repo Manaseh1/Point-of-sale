@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import os, inspect
 
 from pathlib import Path
 import os
@@ -43,6 +44,7 @@ DJANGO_APPS = [
     'widget_tweaks',
     'crispy_bootstrap4',
 
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 APPS = [
@@ -50,6 +52,7 @@ APPS = [
     'accounts',
     'inventory',
     'sales',
+    'purchase_order'
 ]
 
 EXTENSIONS = [
@@ -100,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': '5432',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -148,7 +151,9 @@ STATIC_URL = '/staticfiles/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
 MEDIA_URL = '/Media/'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
