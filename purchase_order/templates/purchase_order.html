@@ -19,77 +19,82 @@
         </div>
     </div>    
 </div>
-
-<form method="POST" id="form">
-  <input type="text" name="product" id="product">
-  <input type="text" name="quantity" id="quantity">
-  <input type="text" name="unit_price" id="unit_price">
+<form method="POST" action="{% url 'purchase_order:save_form_data' %}" id="form">
+  {% csrf_token %}
+  <input type="text" name="product[]" id="product"value ="${product}">
+  <input type="text" name="quantity[]" id="quantity"value ="${quantity}">
+  <input type="text" name="unit_price[]" id="unit_price"value ="${unit_price}">
   <input type="button" class="btn btn-secondary" onclick="addproduct()" value="Add Item">
   <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save changes</button>
 
-</form>
+  <table id="table" class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Unit Price</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
 
-<table id="table" class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Product</th>
-      <th scope="col">Quantity</th>
-      <th scope="col">Unit Price</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
+    </tbody>
+    <tfoot>
+      <tr id="totalsRow">
+        <td colspan="3">Totals:</td>
+        <td id="totalsCell"></td>
+        <td></td>
+      </tr>
+    </tfoot>
+  </table>
 
-  </tbody>
-</table>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" id="saveChanges"data-toggle="modal" data-target="#exampleModal">
-  Checkout
-</button>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" id="saveChanges" data-toggle="modal" data-target="#exampleModal">
+    Checkout
+  </button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id='Supplier details'>
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div id='Supplier details'>
             Name of the supplier:<br>
             Email:
             Name of the buyer
-        </div>
-        <div >
-        <table id="table1" class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Product</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Unit Price</th>
-              <th scope="col">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+          </div>
+          <div>
+            <table id="table1" class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
 
-          </tbody>
-        </table>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- Existing HTML code for the form, table, and modal -->
+</form>
 
 <script>
 function addproduct() {
@@ -109,31 +114,29 @@ function addproduct() {
 
   var table = document.getElementById('table');
   var table1 = document.getElementById('table1');
- 
   var rowCount = table.rows.length;
-  var rowCount1 = table1.rows.length;
 
-  var tr = table.insertRow(rowCount);
-  var tr1 = table1.insertRow(rowCount1);
+  var tr = table.insertRow(rowCount - 1); // Insert before the totals row
+  var tr1 = table1.insertRow(rowCount - 1); // Insert
 
   var indexCell = tr.insertCell(0);
   var productCell = tr.insertCell(1);
   var quantityCell = tr.insertCell(2);
   var priceCell = tr.insertCell(3);
   var actionsCell = tr.insertCell(4);
-
+  
   var indexCell1 = tr1.insertCell(0);
   var productCell1 = tr1.insertCell(1);
   var quantityCell1 = tr1.insertCell(2);
   var priceCell1 = tr1.insertCell(3);
 
 
-  indexCell.innerHTML = rowCount;
+  indexCell.innerHTML = rowCount - 1;
   productCell.innerHTML = product;
   quantityCell.innerHTML = quantity;
   priceCell.innerHTML = unit_price.toFixed(2);
   
-  indexCell1.innerHTML =rowCount
+  indexCell1.innerHTML = rowCount - 1;
   productCell1.innerHTML = product;
   quantityCell1.innerHTML = quantity;
   priceCell1.innerHTML = unit_price.toFixed(2);
@@ -143,6 +146,7 @@ function addproduct() {
   deleteButton.addEventListener('click', function() {
     var currentRow = this.parentNode.parentNode;
     currentRow.parentNode.removeChild(currentRow);
+    updateTotals();
   });
 
   actionsCell.appendChild(deleteButton);
@@ -151,8 +155,23 @@ function addproduct() {
   document.getElementById('product').value = '';
   document.getElementById('quantity').value = '';
   document.getElementById('unit_price').value = '';
+
+  updateTotals();
 }
 
+function updateTotals() {
+  var table = document.getElementById('table');
+  var totalsCell = document.getElementById('totalsCell');
+  var total = 0;
+
+  for (var i = 1; i < table.rows.length - 1; i++) {
+    var price = parseFloat(table.rows[i].cells[3].innerHTML);
+    total += price;
+  }
+
+  totalsCell.innerHTML = total.toFixed(2);
+}
+  
 
 </script>
 
