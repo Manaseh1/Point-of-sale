@@ -61,6 +61,7 @@ def profile(request):
         date_of_birth = request.POST.get('date_of_birth')
         gender = request.POST.get('gender')
         role = request.POST.get('role')
+        pnonenumber = request.POST.get('phone_number')
 
         # Retrieve the user
         user = request.user
@@ -79,6 +80,7 @@ def profile(request):
         user.profile.gender = gender
         user.profile.role = role
         user.profile.date_started = datetime.now()
+        user.profile.phone_number = pnonenumber
 
         # Save the changes
         user.save()

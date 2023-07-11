@@ -26,7 +26,7 @@
                     <div class="card profile-card p-2">
                         <div class="profile-picture m-auto shadow ">
                           {% if user.profile.profile_image %}
-                            <img src="{{ user.profile.profile_image.url }}"class="img-circle elevation-2" alt="Profile Image" class="profile-image">
+                            <img src="{{ user.profile.profile_image.url }}"class="img-circle img-thumbnail" alt="Profile Image" class="profile-image">
                           {% else %}
                             <img src="{% static 'images/placeholder.png' %}" class="img-circle elevation-2"  alt="Profile Image Placeholder">
                           {% endif %}
@@ -100,6 +100,13 @@
                       </div>
                     </div>
                     <div class="form-group row">
+                      <label for="inputPhoneNumber" class="col-sm-2 col-form-label">Phone Number</label>
+                      <div class="col-sm-10">
+                        <input type="tel" name="phone_number" class="form-control" id="inputPhoneNumber" value="{{ user.profile.phone_number }}">
+                      </div>
+                    </div>
+                    
+                    <div class="form-group row">
                       <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
                       <div class="col-sm-10">
                         <input type="text" name="address" class="form-control" id="inputAddress" placeholder="Address" value="{{ user.profile.address }}">
@@ -126,21 +133,21 @@
                     <div class="form-group row">
                       <label for="inputGender" class="col-sm-2 col-form-label">Gender</label>
                       <div class="col-sm-10">
-                        <select name="gender" class="form-control" id="inputGender" value="{{ user.profile.gender }}">
+                        <select name="gender" class="form-control" id="inputGender">
                           <option value="">Select Gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                        </select>
+                          <option value="male" {% if user.profile.gender == 'male' %}selected{% endif %}>Male</option>
+                          <option value="female" {% if user.profile.gender == 'female' %}selected{% endif %}>Female</option>
+                        </select>                        
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="inputRole" class="col-sm-2 col-form-label">Role</label>
                       <div class="col-sm-10">
-                        <select name="role" class="form-control" id="inputRole" value="{{ user.profile.role }}">
+                        <select name="role" class="form-control" id="inputRole">
                           <option value="">Select Role</option>
-                          <option value="admin">Admin</option>
-                          <option value="manager">Manager</option>
-                          <option value="employee">Employee</option>
+                          <option value="admin" {% if user.profile.role == 'admin' %}selected{% endif %}>Admin</option>
+                          <option value="manager" {% if user.profile.role == 'manager' %}selected{% endif %}>Manager</option>
+                          <option value="employee" {% if user.profile.role == 'employee' %}selected{% endif %}>Employee</option>
                         </select>
                       </div>
                     </div>

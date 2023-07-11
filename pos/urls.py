@@ -25,5 +25,5 @@ urlpatterns = [
     path('inventory/', include(('inventory.urls', 'inventory'), namespace='inventory')),
     path('sales/', include(('sales.urls', 'sales'), namespace='sales')),
     #path('products/', include('django_dyn_dt.urls')),  # <-- NEW: API routing rules
-
+    path('purchase/',include('purchase_order.urls',namespace= "purchase_order")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -43,7 +43,6 @@ DJANGO_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'crispy_bootstrap4',
- 
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -72,13 +71,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pos.urls'
-TEMPLATE_DIR_DATATB = os.path.join(BASE_DIR, "django_dyn_dt/templates") # <-- NEW App
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'), TEMPLATE_DIR_DATATB # Path to your 'base' directory
+            os.path.join(BASE_DIR, 'templates'),  # Path to your 'base' directory
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -102,9 +100,9 @@ WSGI_APPLICATION = 'pos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pos',                      
+        'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': 'Spiderman1337',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
