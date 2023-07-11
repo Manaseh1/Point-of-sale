@@ -43,7 +43,7 @@ DJANGO_APPS = [
     'crispy_forms',
     'widget_tweaks',
     'crispy_bootstrap4',
-    'django_dyn_dt',  
+ 
 
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
