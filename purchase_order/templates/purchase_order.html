@@ -1,76 +1,97 @@
-{%extends "base/base.html"%}
-{%block title%} Purchase order{%endblock%}
-    
-{%block content%}
+{% extends "base/base.html" %}
+{% block title %}Purchase Order{% endblock %}
+
+{% block content %}
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
-                    <form method="POST" class="needs-validation" novalidate>
-                        {% csrf_token %}
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
+          <form method="POST" class="needs-validation" novalidate>
+            {% csrf_token %}
 
-                      
-                    </form>
-                    <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
-                </div>
+            <!-- Supplier details form fields -->
+            <br>
+            <div class="mb-3">
+              <label for="supplier_name" class="form-label">Supplier Name</label>
+              <input type="text" class="form-control" id="supplier_name" name="supplier_name" required>
             </div>
+            <div class="mb-3">
+              <label for="supplier_email" class="form-label">Supplier Email</label>
+              <input type="email" class="form-control" id="supplier_email" name="supplier_email" required>
+            </div>
+            <div class="mb-3">
+              <label for="buyer_name" class="form-label">Buyer Name</label>
+              <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
+            </div>
+
+          </form>
+          <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
         </div>
-    </div>    
+      </div>
+    </div>
+  </div>
 </div>
-<form method="POST" action="{% url 'purchase_order:save_form_data' %}" id="form">
-  {% csrf_token %}
-  <input type="text" name="product[]" id="product"value ="${product}">
-  <input type="text" name="quantity[]" id="quantity"value ="${quantity}">
-  <input type="text" name="unit_price[]" id="unit_price"value ="${unit_price}">
-  <input type="button" class="btn btn-secondary" onclick="addproduct()" value="Add Item">
-  <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save changes</button>
 
-  <table id="table" class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Product</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit Price</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
+<div class="container">
+  <form method="POST" action="{% url 'purchase_order:save_form_data' %}" id="form">
+    {% csrf_token %}
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <label for="product" class="form-label">Product</label>
+        <input type="text" class="form-control" id="product" required>
+      </div>
+      <div class="col-md-3">
+        <label for="quantity" class="form-label">Quantity</label>
+        <input type="number" class="form-control" id="quantity" required>
+      </div>
+      <div class="col-md-3">
+        <label for="unit_price" class="form-label">Unit Price</label>
+        <input type="number" step="0.01" class="form-control" id="unit_price" required>
+      </div>
+      <div class="col-md-3 align-self-end">
+        <button type="button" class="btn btn-secondary" onclick="addProduct()">Add Item</button>
+      </div>
+    </div>
 
-    </tbody>
-    <tfoot>
-      <tr id="totalsRow">
-        <td colspan="3">Totals:</td>
-        <td id="totalsCell"></td>
-        <td></td>
-      </tr>
-    </tfoot>
-  </table>
+    <table id="table" class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Product</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Total Price</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+      <tfoot>
+        <tr id="totalsRow">
+          <td colspan="4">Totals:</td>
+          <td id="totalsCell"></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
 
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" id="saveChanges" data-toggle="modal" data-target="#exampleModal">
-    Checkout
-  </button>
+    <div class="text-end">
+      <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save Changes</button>
+    </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id='Supplier details'>
-            Name of the supplier:<br>
-            Email:
-            Name of the buyer
+    <!-- Modal -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div>
+          <div class="modal-body">
+            <div id="supplierDetails">
+              <!-- Supplier details displayed here -->
+            </div>
             <table id="table1" class="table">
               <thead>
                 <tr>
@@ -78,152 +99,133 @@
                   <th scope="col">Product</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Unit Price</th>
+                  <th scope="col">Total Price</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
-              <tbody>
-
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
 
 <script>
-function addproduct() {
-  var product = document.getElementById('product').value;
-  var quantity = parseInt(document.getElementById('quantity').value);
-  var unit_price = parseFloat(document.getElementById('unit_price').value);
+  function addProduct() {
+    var product = document.getElementById('product').value.trim();
+    var quantity = document.getElementById('quantity').value.trim();
+    var unitPrice = document.getElementById('unit_price').value.trim();
 
-  if (isNaN(quantity)) {
-    alert('Please enter a valid quantity.');
-    return;
-  }
+    if (product === '' || quantity === '' || unitPrice === '') {
+      alert('Please fill in all the fields.');
+      return;
+    }
 
-  if (isNaN(unit_price)) {
-    alert('Please enter a valid unit price.');
-    return;
-  }
+    var table = document.getElementById('table');
+    var table1 = document.getElementById('table1');
+    var rowCount = table.rows.length;
 
-  var table = document.getElementById('table');
-  var table1 = document.getElementById('table1');
-  var rowCount = table.rows.length;
+    var newRow = table.insertRow(rowCount - 1);
+    var newRow1 = table1.insertRow(rowCount - 1);
 
-  var tr = table.insertRow(rowCount - 1); // Insert before the totals row
-  var tr1 = table1.insertRow(rowCount - 1); // Insert
+    var indexCell = newRow.insertCell(0);
+    var productCell = newRow.insertCell(1);
+    var quantityCell = newRow.insertCell(2);
+    var priceCell = newRow.insertCell(3);
+    var totalPriceCell = newRow.insertCell(4);
+    var actionsCell = newRow.insertCell(5);
 
-  var indexCell = tr.insertCell(0);
-  var productCell = tr.insertCell(1);
-  var quantityCell = tr.insertCell(2);
-  var priceCell = tr.insertCell(3);
-  var actionsCell = tr.insertCell(4);
+    var indexCell1 = newRow1.insertCell(0);
+    var productCell1 = newRow1.insertCell(1);
+    var quantityCell1 = newRow1.insertCell(2);
+    var priceCell1 = newRow1.insertCell(3);
+    var totalPriceCell1 = newRow1.insertCell(4);
+
+    indexCell.innerHTML = rowCount - 1;
+    productCell.innerHTML = product;
+    quantityCell.innerHTML = quantity;
+    priceCell.innerHTML = parseFloat(unitPrice).toFixed(2);
+    var totalPrice = parseFloat(quantity) * parseFloat(unitPrice);
+    totalPriceCell.innerHTML = totalPrice.toFixed(2);
   
-  var indexCell1 = tr1.insertCell(0);
-  var productCell1 = tr1.insertCell(1);
-  var quantityCell1 = tr1.insertCell(2);
-  var priceCell1 = tr1.insertCell(3);
+    indexCell1.innerHTML = rowCount - 1;
+    productCell1.innerHTML = product;
+    quantityCell1.innerHTML = quantity;
+    priceCell1.innerHTML = parseFloat(unitPrice).toFixed(2);
+    totalPriceCell1.innerHTML = totalPrice.toFixed(2);
 
+    var deleteButton = document.createElement('button');
+    deleteButton.innerHTML = 'Delete';
+    deleteButton.classList.add('btn', 'btn-sm', 'btn-danger');
+    deleteButton.addEventListener('click', function () {
+      var currentRow = this.parentNode.parentNode;
+      table.deleteRow(currentRow.rowIndex);
+      table1.deleteRow(currentRow.rowIndex);
+      updateTotals();
+    });
 
-  indexCell.innerHTML = rowCount - 1;
-  productCell.innerHTML = product;
-  quantityCell.innerHTML = quantity;
-  priceCell.innerHTML = unit_price.toFixed(2);
-  
-  indexCell1.innerHTML = rowCount - 1;
-  productCell1.innerHTML = product;
-  quantityCell1.innerHTML = quantity;
-  priceCell1.innerHTML = unit_price.toFixed(2);
+    actionsCell.appendChild(deleteButton);
 
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = 'Delete';
-  deleteButton.addEventListener('click', function() {
-    var currentRow = this.parentNode.parentNode;
-    currentRow.parentNode.removeChild(currentRow);
+    // Reset input fields
+    document.getElementById('product').value = '';
+    document.getElementById('quantity').value = '';
+    document.getElementById('unit_price').value = '';
+
     updateTotals();
-  });
-
-  actionsCell.appendChild(deleteButton);
-
-  // Reset input fields
-  document.getElementById('product').value = '';
-  document.getElementById('quantity').value = '';
-  document.getElementById('unit_price').value = '';
-
-  updateTotals();
-}
-
-function updateTotals() {
-  var table = document.getElementById('table');
-  var totalsCell = document.getElementById('totalsCell');
-  var total = 0;
-
-  for (var i = 1; i < table.rows.length - 1; i++) {
-    var price = parseFloat(table.rows[i].cells[3].innerHTML);
-    total += price;
   }
 
-  totalsCell.innerHTML = total.toFixed(2);
-}
-  
+  function updateTotals() {
+    var table = document.getElementById('table');
+    var totalsCell = document.getElementById('totalsCell');
+    var total = 0;
 
+    for (var i = 1; i < table.rows.length - 1; i++) {
+      var totalPrice = parseFloat(table.rows[i].cells[4].innerHTML);
+      total += totalPrice;
+    }
+
+    totalsCell.innerHTML = total.toFixed(2);
+  }
+
+  function openModal() {
+    var supplierDetails = document.getElementById('supplierDetails');
+    var supplierName = document.getElementById('supplier_name').value.trim();
+    var supplierEmail = document.getElementById('supplier_email').value.trim();
+    var buyerName = document.getElementById('buyer_name').value.trim();
+
+    // Update supplier details in the modal
+    supplierDetails.innerHTML = '<p><strong>Name of the supplier:</strong> ' + supplierName + '</p>' +
+      '<p><strong>Email:</strong> ' + supplierEmail + '</p>' +
+      '<p><strong>Name of the buyer:</strong> ' + buyerName + '</p>';
+
+    // Copy table rows to the modal table
+    var tableRows = document.getElementById('table').rows;
+    var table1 = document.getElementById('table1');
+    table1.innerHTML = '';
+
+    for (var i = 1; i < tableRows.length - 1; i++) {
+      var newRow = table1.insertRow();
+
+      var indexCell = newRow.insertCell(0);
+      var productCell = newRow.insertCell(1);
+      var quantityCell = newRow.insertCell(2);
+      var priceCell = newRow.insertCell(3);
+      var totalPriceCell = newRow.insertCell(4);
+
+      indexCell.innerHTML = tableRows[i].cells[0].innerHTML;
+      productCell.innerHTML = tableRows[i].cells[1].innerHTML;
+      quantityCell.innerHTML = tableRows[i].cells[2].innerHTML;
+      priceCell.innerHTML = tableRows[i].cells[3].innerHTML;
+      totalPriceCell.innerHTML = tableRows[i].cells[4].innerHTML;
+    }
+
+    $('#checkoutModal').modal('show');
+  }
 </script>
-
-<script>
-
-//function addproduct() {
-  var product = document.getElementById('product').value;
-  var quantity = parseInt(document.getElementById('quantity').value);
-  var unit_price = parseFloat(document.getElementById('unit_price').value);
-
-  if (isNaN(quantity)) {
-    alert('Please enter a valid quantity.');
-    return;
-  }
-
-  if (isNaN(unit_price)) {
-    alert('Please enter a valid unit price.');
-    return;
-  }
-
-  var table = document.getElementById('table');
-  var rowCount = table.rows.length;
-
-  var tr = table.insertRow(rowCount);
-
-  var indexCell = tr.insertCell(0);
-  var productCell = tr.insertCell(1);
-  var quantityCell = tr.insertCell(2);
-  var priceCell = tr.insertCell(3);
-  var actionsCell = tr.insertCell(4);
-
-  indexCell.innerHTML = rowCount;
-  productCell.innerHTML = product;
-  quantityCell.innerHTML = quantity;
-  priceCell.innerHTML = unit_price.toFixed(2);
-
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = 'Delete';
-  deleteButton.addEventListener('click', function() {
-    var currentRow = this.parentNode.parentNode;
-    currentRow.parentNode.removeChild(currentRow);
-  });
-
-  actionsCell.appendChild(deleteButton);
-
-  // Reset input fields
-  document.getElementById('product').value = '';
-  document.getElementById('quantity').value = '';
-  document.getElementById('unit_price').value = '';
-//}
-// modal script
-
-</script>
-
-{%endblock%}
+{% endblock %}

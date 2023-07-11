@@ -59,6 +59,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
                 {{ transaction.grand_total }}
               </div>
             </div>
+            <hr />
             <div class="d-flex w-100 align-items-end">
               <div class="col-6 text-start fw-bold">
                 Tax <small>(inclusive)</small>: {{ transaction.tax }}%
@@ -67,12 +68,24 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
                 {{ transaction.tax_amount|floatformat:2 }}
               </div>
             </div>
+            <hr />
             <div class="d-flex w-100 align-items-end">
-              <div class="col-6 text-start fw-bold">Tenedered</div>
+              <div class="col-6 text-start fw-bold">Payment Method/s
+              </div>
+              <div class="col-6 text-end fw-bold">
+                {% for method in payment_method %}
+                <b>{{ method.payment_method }} :</b> Ksh/= {{ method.Amount }} <br>
+                {% endfor %}
+              </div>
+            </div>
+            <hr />
+            <div class="d-flex w-100 align-items-end">
+              <div class="col-6 text-start fw-bold"> total Tenedered</div>
               <div class="col-6 text-end fw-bold">
                 {{ transaction.tendered_amount }}
               </div>
             </div>
+            <hr />
             <div class="d-flex w-100 align-items-end">
               <div class="col-6 text-start fw-bold">Change</div>
               <div class="col-6 text-end fw-bold">

@@ -24,3 +24,8 @@ class salesItems(models.Model):
     price = models.FloatField(default=0, blank=True, null=True)
     qty = models.FloatField(default=0, blank=True, null=True)
     total = models.FloatField(default=0, blank=True, null=True)
+
+class MoneyControl(models.Model):
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE)
+    payment_method = models.CharField(max_length=100, blank=True, null=True)
+    Amount = models.FloatField(default=0, blank=True, null=True)
