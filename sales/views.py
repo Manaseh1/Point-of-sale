@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404, render
 from django.shortcuts import render, redirect
 from psycopg2 import IntegrityError
-from .models import Sales, salesItems
+from .models import Sales, salesItems, MoneyControl
 from inventory.models import Product
 from django.contrib.auth.decorators import login_required
 from .models import *
@@ -14,8 +14,18 @@ def sales_dashboard(request):
     today = datetime.now().date()
     salesc = Sales.objects.filter(date_added__date=today).order_by('-date_added')
     sales = Sales.objects.order_by('-date_added')
+    Mpesa = MoneyControl.objects.filter(payment_method = "Mpesa")
+    Cash = MoneyControl.objects.filter(payment_method = "Cash")
+    totalMpesa = Mpesa.aggregate(total=Sum('Amount'))['total'] or 0
+    totalCash = Cash.aggregate(total=Sum('Amount'))['total'] or 0
     total_sales = salesc.aggregate(total=Sum('grand_total'))['total'] or 0
-    return render(request, 'sales_dashboard.html', {'sales': sales, 'total_sales': total_sales})
+    context = {
+        'sales': sales, 
+        'total_sales': total_sales,
+        'totalMpesa': totalMpesa,
+        'totalCash': totalCash
+        }
+    return render(request, 'sales_dashboard.html', context)
 
 
 @login_required
@@ -67,6 +77,18 @@ def pos(request):
                     total=float(price) * float(quantity)
                 )
                 item.save()
+            mpesa = request.POST.get('mpesa')
+            tcash = request.POST.get('cash')
+            cash = float(tcash) - float(amount_change)
+            
+            if float(mpesa) > 0:
+                mpesa_moneycontrol = MoneyControl(sale=sale, payment_method='Mpesa', Amount=float(mpesa))
+                mpesa_moneycontrol.save()
+
+            if float(cash) > 0:
+                cash_moneycontrol = MoneyControl(sale=sale, payment_method='Cash', Amount=float(cash))
+                cash_moneycontrol.save()
+
             sales = Sales.objects.filter(code=code).first()
             transaction = {}
             for field in Sales._meta.get_fields():
@@ -75,9 +97,11 @@ def pos(request):
             if 'tax_amount' in transaction:
                 transaction['tax_amount'] = format(float(transaction['tax_amount']))
             ItemList = salesItems.objects.filter(sale_id=sales).all()
+            payment_method  = MoneyControl.objects.filter(sale_id=sales).all()
             context = {
                 "transaction": transaction,
-                "salesItems": ItemList
+                "salesItems": ItemList,
+                "payment_method":payment_method
             }
 
             # Return the template with the saved sale data
@@ -98,9 +122,11 @@ def receipt_view(request, sale_id):
     if 'tax_amount' in transaction:
         transaction['tax_amount'] = format(float(transaction['tax_amount']), '.2f')
     ItemList = salesItems.objects.filter(sale_id=sales)
+    payment_method  = MoneyControl.objects.filter(sale_id=sales).all()
     context = {
         "transaction": transaction,
-        "salesItems": ItemList
+        "salesItems": ItemList,
+        "payment_method":payment_method
     }
     return render(request, 'receipt.html', context)
 @login_required
