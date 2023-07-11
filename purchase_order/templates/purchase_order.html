@@ -21,9 +21,9 @@
 </div>
 <form method="POST" action="{% url 'purchase_order:save_form_data' %}" id="form">
   {% csrf_token %}
-  <input type="text" name="product[]" id="product"value ="${product}">
-  <input type="text" name="quantity[]" id="quantity"value ="${quantity}">
-  <input type="text" name="unit_price[]" id="unit_price"value ="${unit_price}">
+  <input type="text" name="product[]" id="product"value ="">
+  <input type="text" name="quantity[]" id="quantity"value ="">
+  <input type="text" name="unit_price[]" id="unit_price"value ="">
   <input type="button" class="btn btn-secondary" onclick="addproduct()" value="Add Item">
   <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save changes</button>
 
@@ -175,55 +175,6 @@ function updateTotals() {
 
 </script>
 
-<script>
 
-//function addproduct() {
-  var product = document.getElementById('product').value;
-  var quantity = parseInt(document.getElementById('quantity').value);
-  var unit_price = parseFloat(document.getElementById('unit_price').value);
-
-  if (isNaN(quantity)) {
-    alert('Please enter a valid quantity.');
-    return;
-  }
-
-  if (isNaN(unit_price)) {
-    alert('Please enter a valid unit price.');
-    return;
-  }
-
-  var table = document.getElementById('table');
-  var rowCount = table.rows.length;
-
-  var tr = table.insertRow(rowCount);
-
-  var indexCell = tr.insertCell(0);
-  var productCell = tr.insertCell(1);
-  var quantityCell = tr.insertCell(2);
-  var priceCell = tr.insertCell(3);
-  var actionsCell = tr.insertCell(4);
-
-  indexCell.innerHTML = rowCount;
-  productCell.innerHTML = product;
-  quantityCell.innerHTML = quantity;
-  priceCell.innerHTML = unit_price.toFixed(2);
-
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = 'Delete';
-  deleteButton.addEventListener('click', function() {
-    var currentRow = this.parentNode.parentNode;
-    currentRow.parentNode.removeChild(currentRow);
-  });
-
-  actionsCell.appendChild(deleteButton);
-
-  // Reset input fields
-  document.getElementById('product').value = '';
-  document.getElementById('quantity').value = '';
-  document.getElementById('unit_price').value = '';
-//}
-// modal script
-
-</script>
 
 {%endblock%}
