@@ -44,7 +44,6 @@ DJANGO_APPS = [
     'widget_tweaks',
     'crispy_bootstrap4',
 
-
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 APPS = [
