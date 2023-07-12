@@ -46,10 +46,10 @@
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Home</a>
+          <a href="{% url 'dashboard:index' %}" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Contact</a>
+          <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#contactsModal">Contact</a>
         </li>
         <li class="nav-item dropdown d-none d-sm-inline-block">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -135,6 +135,9 @@
               <li class="active nav-item" style="background: black" >
                 <a class="nav-link" href="{% url 'sales:sales_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Sales Dashboard</p> </a>
             </li>
+            <li class="active nav-item" style="background: black" >
+                <a class="nav-link" href="{%url 'purchase_order:purchase_order'%}"><i class=" menu-icon fa fa-laptop"></i><p> Purchase Orders Dashboard</p> </a>
+            </li>
               <details >
                 <summary><li class="nav-item menu-title" style="color: white">Inventory</li></summary>
               <li class="menu-item-has-children dropdown nav-item" >
@@ -216,6 +219,51 @@
       </div>
     </footer>
   </div>
+<!-- Contacts Modal -->
+<div class="modal fade" id="contactsModal" tabindex="-1" role="dialog" aria-labelledby="contactsModalLabel" aria-hidden="true">
+  <style>
+    .card.contact-card:hover {
+  transform: rotate(360deg) scale(1.2);
+  transition: transform 0.5s ease-in-out;
+  z-index: 1;
+}
+
+  </style>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="contactsModalLabel">Developers</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="card contact-card" style="background-image: linear-gradient(to bottom, #FF5F6D, #FFC371);">
+              <div class="card-body">
+                <h6>Manaseh</h6>
+                <p>Email: manaseh@example.com</p>
+                <p>Phone: 123456789</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card contact-card" style="background-image: linear-gradient(to bottom, #6A82FB, #FC5C7D);">
+              <div class="card-body">
+                <h6>James</h6>
+                Email:
+                <small><p>njengajamesmwangi@gmail.com</p></small>
+                <p>Phone: 0741593506</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <b class="text-center">Supervised by Alfred</b>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- JavaScript dependencies -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

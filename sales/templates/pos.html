@@ -130,7 +130,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
                   <dt class="h4 fw-bold text-light">Grand Total</dt>
                   <dd class="text-end py-1 px-2 rounded-0 bg-light">
                     <input type="hidden" name="grand_total" value="0" />
-                    <input type="hidden" name="mpesa" value="0" />
+                    <input type="hidden" name="mpesa" value="0"/>
                     <input type="hidden" name="cash" value="0" />
                     <input type="hidden" name="tendered_amount" value="0" />
                     <input type="hidden" name="amount_change" value="0" />
@@ -210,7 +210,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
   $(function () {
     $("#mpesa_amount, #cash_amount").on("input", function () {
       var mpesaAmount = parseFloat($("#mpesa_amount").val()) || 0;
-      $('[name="mpesa"]').val(totalTendered);
+      $('[name="mpesa"]').val(mpesaAmount);
       var cashAmount = parseFloat($("#cash_amount").val()) || 0;
       $('[name="cash"]').val(cashAmount);
       var totalTendered = mpesaAmount + cashAmount;
