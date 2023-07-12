@@ -32,8 +32,9 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
           </div>
           <div class="stat-content">
             <div class="text-left dib">
-              <div class="stat-text" style="color: white">50</div>
-              <div class="stat-heading" style="color: white">Customers</div>
+              <div class="stat-text" style="color: white">Kshs/= {{ totalMpesa }}
+              </div>
+              <div class="stat-heading" style="color: white">Total Mpesa</div>
             </div>
           </div>
         </div>
@@ -43,15 +44,15 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
 
   <div class="col-lg-3 col-md-6">
     <div class="card">
-      <div class="card-body" style="background-color: orange">
+      <div class="card-body" style="background-color: silver">
         <div class="stat-widget-five">
           <div class="stat-icon dib flat-color-3">
             <i class="fa fa-shopping-cart"></i>
           </div>
           <div class="stat-content">
             <div class="text-left dib">
-              <div class="stat-text" style="color: white">100</div>
-              <div class="stat-heading" style="color: white">Orders</div>
+              <div class="stat-text" style="color: white">Kshs/= {{ totalCash }}</div>
+              <div class="stat-heading" style="color: white">Total Cash</div>
             </div>
           </div>
         </div>

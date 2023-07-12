@@ -1,76 +1,90 @@
-{%extends "base/base.html"%}
-{%block title%} Purchase order{%endblock%}
-    
-{%block content%}
+ {% extends "base/base.html" %}
+{% block title %}Purchase Order{% endblock %}
+
+{% block content %}
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
-                    <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
-                    <form method="POST" class="needs-validation" novalidate>
-                        {% csrf_token %}
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
+          <form method="POST"  class="needs-validation" novalidate>
+            {% csrf_token %}
 
-                      
-                    </form>
-                    <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
-                </div>
+            <!-- Supplier details form fields -->
+            <br>
+            <div class="mb-3">
+              <label for="supplier_name" class="form-label">Supplier Name</label>
+              <input type="text" class="form-control" id="supplier_name" name="supplier_name" required>
             </div>
+            <div class="mb-3">
+              <label for="supplier_email" class="form-label">Supplier Email</label>
+              <input type="email" class="form-control" id="supplier_email" name="supplier_email" required>
+            </div>
+            <div class="mb-3">
+              <label for="buyer_name" class="form-label">Buyer Name</label>
+              <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
+            </div>
+
+          </form>
+
+          <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
         </div>
-    </div>    
+      </div>
+    </div>
+  </div>
 </div>
-<form method="POST" action="{% url 'purchase_order:save_form_data' %}" id="form">
-  {% csrf_token %}
-  <input type="text" name="product[]" id="product"value ="${product}">
-  <input type="text" name="quantity[]" id="quantity"value ="${quantity}">
-  <input type="text" name="unit_price[]" id="unit_price"value ="${unit_price}">
-  <input type="button" class="btn btn-secondary" onclick="addproduct()" value="Add Item">
-  <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save changes</button>
 
-  <table id="table" class="table">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Product</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit Price</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
+<div class="container">
+  <form method="POST"  id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form">
+    {% csrf_token %}
+   
+        
+          <h1>Product Form</h1>
+          
+          
+               <thead>
+                <table class='table'>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Unit Price</th>
+                  <th scope="col">Total Price</th>
+                  <th scope="col">Action field</th>
+                </tr>
+               </thead>
+               </table>
+            <div class="fields"></div>
+ 
+            <p>
+                <button type="button" class="add-fields">
+                    Add fields
+                </button>
 
-    </tbody>
-    <tfoot>
-      <tr id="totalsRow">
-        <td colspan="3">Totals:</td>
-        <td id="totalsCell"></td>
-        <td></td>
-      </tr>
-    </tfoot>
-  </table>
+                <button type="submit">
+                    Send form
+                </button>
+            </p>
+    <table id="table1" class="table">
+     
+    </table>
 
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary" id="saveChanges" data-toggle="modal" data-target="#exampleModal">
-    Checkout
-  </button>
+    <div class="text-end">
+      <button type="button" class="btn btn-primary" id="saveChangesButton" onclick="openModal()">Save Changes</button>
+    </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div id='Supplier details'>
-            Name of the supplier:<br>
-            Email:
-            Name of the buyer
+    <!-- Modal -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div>
+          <div class="modal-body">
+            <div id="supplierDetails">
+              <!-- Supplier details displayed here -->
+            </div>
             <table id="table1" class="table">
               <thead>
                 <tr>
@@ -78,152 +92,120 @@
                   <th scope="col">Product</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Unit Price</th>
-                  <th scope="col">Actions</th>
+                  <th scope="col">Total Price</th>
+          
                 </tr>
               </thead>
-              <tbody>
-
-              </tbody>
-            </table>
+              <tbody id='item-list' ></tbody>
+            </table> 
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Save changes</button>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</form>
+  </form>
+</div>
 
-<script>
-function addproduct() {
-  var product = document.getElementById('product').value;
-  var quantity = parseInt(document.getElementById('quantity').value);
-  var unit_price = parseFloat(document.getElementById('unit_price').value);
+<!--
+    text/x-templates is a fake type  just to tell
+   the browser to ignore this script block
+-->
+<script type="text/x-templates" id="fields-templates">
 
-  if (isNaN(quantity)) {
-    alert('Please enter a valid quantity.');
-    return;
-  }
-
-  if (isNaN(unit_price)) {
-    alert('Please enter a valid unit price.');
-    return;
-  }
-
-  var table = document.getElementById('table');
-  var table1 = document.getElementById('table1');
-  var rowCount = table.rows.length;
-
-  var tr = table.insertRow(rowCount - 1); // Insert before the totals row
-  var tr1 = table1.insertRow(rowCount - 1); // Insert
-
-  var indexCell = tr.insertCell(0);
-  var productCell = tr.insertCell(1);
-  var quantityCell = tr.insertCell(2);
-  var priceCell = tr.insertCell(3);
-  var actionsCell = tr.insertCell(4);
-  
-  var indexCell1 = tr1.insertCell(0);
-  var productCell1 = tr1.insertCell(1);
-  var quantityCell1 = tr1.insertCell(2);
-  var priceCell1 = tr1.insertCell(3);
-
-
-  indexCell.innerHTML = rowCount - 1;
-  productCell.innerHTML = product;
-  quantityCell.innerHTML = quantity;
-  priceCell.innerHTML = unit_price.toFixed(2);
-  
-  indexCell1.innerHTML = rowCount - 1;
-  productCell1.innerHTML = product;
-  quantityCell1.innerHTML = quantity;
-  priceCell1.innerHTML = unit_price.toFixed(2);
-
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = 'Delete';
-  deleteButton.addEventListener('click', function() {
-    var currentRow = this.parentNode.parentNode;
-    currentRow.parentNode.removeChild(currentRow);
-    updateTotals();
-  });
-
-  actionsCell.appendChild(deleteButton);
-
-  // Reset input fields
-  document.getElementById('product').value = '';
-  document.getElementById('quantity').value = '';
-  document.getElementById('unit_price').value = '';
-
-  updateTotals();
-}
-
-function updateTotals() {
-  var table = document.getElementById('table');
-  var totalsCell = document.getElementById('totalsCell');
-  var total = 0;
-
-  for (var i = 1; i < table.rows.length - 1; i++) {
-    var price = parseFloat(table.rows[i].cells[3].innerHTML);
-    total += price;
-  }
-
-  totalsCell.innerHTML = total.toFixed(2);
-}
-  
-
+    <p class="input-fields">
+    
+      <table class ='table'>
+ 
+        </thead>
+      <tr>
+       <td> <input name="product[]" placeholder="product"></td>
+      <td> <input type ="number"name="quantity[]" placeholder="quantity"></td>
+      <td><input type ="number"name="unit_price[]" placeholder="unit price">
+      <!--td> <input id ="total" name = "totals[]" value= 0.00--><td>
+        <td><button type="button" class="remove-fields">
+            Remove these fields
+        </button></td>
+      <tr>  
+      </table>
+    </p>
 </script>
 
 <script>
+$(function () {
+    var FIELDS_TEMPLATE = $('#fields-templates').text();
+    var $form = $('#my-form');
+    var $fields = $form.find('.fields');
 
-//function addproduct() {
-  var product = document.getElementById('product').value;
-  var quantity = parseInt(document.getElementById('quantity').value);
-  var unit_price = parseFloat(document.getElementById('unit_price').value);
+    $form.on('click', '.add-fields', function () {
+        $fields.prepend($(FIELDS_TEMPLATE));
+    });
 
-  if (isNaN(quantity)) {
-    alert('Please enter a valid quantity.');
-    return;
+    $form.on('click', '.remove-fields', function (event) {
+        $(event.target).closest('.input-fields').remove();
+    });
+    $form.on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function () {
+      var $inputFields = $(this).closest('.input-fields');
+      var quantity = parseFloat($inputFields.find('input[name="quantity[]"]').val());
+      var unit_price = parseFloat($inputFields.find('input[name="unit_price[]"]').val());
+      var total = calculateTotal(quantity, unit_price);
+      $inputFields.find('#total').val(total.toFixed(2));
+    });
+  function calculateTotal(quantity, unit_price) {
+    return parseFloat(quantity) * parseFloat(unit_price);
   }
+});
 
-  if (isNaN(unit_price)) {
-    alert('Please enter a valid unit price.');
-    return;
-  }
 
-  var table = document.getElementById('table');
-  var rowCount = table.rows.length;
 
-  var tr = table.insertRow(rowCount);
-
-  var indexCell = tr.insertCell(0);
-  var productCell = tr.insertCell(1);
-  var quantityCell = tr.insertCell(2);
-  var priceCell = tr.insertCell(3);
-  var actionsCell = tr.insertCell(4);
-
-  indexCell.innerHTML = rowCount;
-  productCell.innerHTML = product;
-  quantityCell.innerHTML = quantity;
-  priceCell.innerHTML = unit_price.toFixed(2);
-
-  var deleteButton = document.createElement('button');
-  deleteButton.innerHTML = 'Delete';
-  deleteButton.addEventListener('click', function() {
-    var currentRow = this.parentNode.parentNode;
-    currentRow.parentNode.removeChild(currentRow);
-  });
-
-  actionsCell.appendChild(deleteButton);
-
-  // Reset input fields
-  document.getElementById('product').value = '';
-  document.getElementById('quantity').value = '';
-  document.getElementById('unit_price').value = '';
-//}
-// modal script
 
 </script>
 
-{%endblock%}
+{% comment %} <script>
+let products =[
+  {product:'beans',quantity:'2',unitPrice:'12',totalprice:'123'},
+   
+]
+function makeTableHead(table,data){
+  let thead=  table.createTHead();
+  let row = thead.insertRow();
+  for (let key of data){
+    let th = document.createElement("th")
+    let text =document.createTextNode(key);
+    th.appendChild(text);
+    row.appendChild(th);
+  }
+}
+
+let table = document.querySelector("table")
+let data = Object.keys(products[0])
+makeTableHead(table,data);
+
+function makeTable(table,data){
+  for(let element of data){
+    let row = table.insertRow()
+    for (key in element){
+      let cell = row.insertCell();
+      let text = document.createTextNode(element[key])
+      cell.appendChild(text)
+    }
+    
+  }
+}
+makeTable(table,products)
+</script> {% endcomment %}
+  
+
+{% endblock %} 
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>jQuery Dynamic Form</title>
+
+    <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+</body>
+</html>

@@ -130,6 +130,8 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
                   <dt class="h4 fw-bold text-light">Grand Total</dt>
                   <dd class="text-end py-1 px-2 rounded-0 bg-light">
                     <input type="hidden" name="grand_total" value="0" />
+                    <input type="hidden" name="mpesa" value="0" />
+                    <input type="hidden" name="cash" value="0" />
                     <input type="hidden" name="tendered_amount" value="0" />
                     <input type="hidden" name="amount_change" value="0" />
                     <span class="h3 fw-bold" id="grand_total">0.00</span>
@@ -157,79 +159,46 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
 </div>
 <!-- Button to trigger the modal -->
 <!-- Modal -->
-<div
-  class="modal fade"
-  id="checkoutModal"
-  tabindex="-1"
-  aria-labelledby="checkoutModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="container-fluid">
           <form action="" id="checkout-form">
             <div class="form-group mb-3">
-              <label for="payable_amount" class="control-label"
-                >Payable Amount</label
-              >
-              <input
-                type="text"
-                id="payable_amount"
-                class="form-control form-control-lg rounded-0 text-end"
-                value="{{ 0.00 }}"
-                required
-                disabled
-              />
+              <label for="payable_amount" class="control-label">Payable Amount</label>
+              <input type="text" id="payable_amount" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required disabled>
+            </div>
+            <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="mpesa_amount" class="control-label" style="color: green;">Mpesa</label>
+                <input type="number" step="any" id="mpesa_amount" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="cash_amount" class="control-label">Cash</label>
+                <input type="number" step="any" id="cash_amount" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required>
+              </div>
+            </div>
+          </div>
+
+            <div class="form-group mb-3">
+              <label for="total_tendered" class="control-label">Total Amount Tendered</label>
+              <input type="text" id="total_tendered" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required disabled>
             </div>
             <div class="form-group mb-3">
-              <label for="tendered_amount" class="control-label"
-                >Amount Tendered</label
-              >
-              <input
-                type="number"
-                step="any"
-                id="tendered_amount"
-                class="form-control form-control-lg rounded-0 text-end"
-                value="0.00"
-                required
-              />
-            </div>
-            <div class="form-group mb-3">
-              <label for="payment_change" class="control-label">Change</label>
-              <input
-                type="text"
-                id="payment_change"
-                class="form-control form-control-lg rounded-0 text-end"
-                value="{{ 0.00 }}"
-                required
-                disabled
-              />
+              <label for="change_amount" class="control-label">Change</label>
+              <input type="text" id="change_amount" class="form-control form-control-lg rounded-0 text-end" value="{{ 0.00 }}" required disabled>
             </div>
             <div class="d-flex justify-content-end">
-              <button
-                type="button"
-                class="btn btn-secondary me-2"
-                data-bs-dismiss="modal"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                class="btn btn-primary"
-                onclick="submitCheckoutForm()"
-              >
-                Save
-              </button>
+              <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="submitCheckoutForm()">Save</button>
             </div>
           </form>
         </div>
@@ -237,26 +206,25 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
     </div>
   </div>
 </div>
-
 <script>
   $(function () {
-    $("#tendered_amount").on("input keypress keyup keydown", function () {
-      var tendered_amount = $("#tendered_amount").val();
-      var payable = $("#payable_amount").val();
-      tendered_amount = tendered_amount.replace(/,/gi, "");
-      payable = payable.replace(/,/gi, "");
-      var change = 0;
-      tendered_amount = tendered_amount > 0 ? tendered_amount : 0;
-      $('[name="tendered_amount"]').val(tendered_amount);
-      change = parseFloat(tendered_amount) - parseFloat(payable);
-      console.log(tendered_amount, payable);
-      $("#payment_change").val(parseFloat(change).toLocaleString("en-US"));
-      $('[name="amount_change"]').val(change);
+    $("#mpesa_amount, #cash_amount").on("input", function () {
+      var mpesaAmount = parseFloat($("#mpesa_amount").val()) || 0;
+      $('[name="mpesa"]').val(mpesaAmount);
+      var cashAmount = parseFloat($("#cash_amount").val()) || 0;
+      $('[name="cash"]').val(cashAmount);
+      var totalTendered = mpesaAmount + cashAmount;
+      $("#total_tendered").val(totalTendered.toFixed(2));
+      $('[name="tendered_amount"]').val(totalTendered);
+      var payableAmount = parseFloat($("#payable_amount").val());
+      var changeAmount = totalTendered - payableAmount;
+      $("#change_amount").val(changeAmount.toFixed(2));
+      $('[name="amount_change"]').val(changeAmount);
     });
 
     $("#checkout-form").submit(function (e) {
       e.preventDefault();
-      if ($('[name="amount_change"]').val() < 0) {
+      if ($("#total_tendered").val() < $("#payable_amount").val()) {
         alert("Tendered Amount is lower than Payable Amount");
         return false;
       }
@@ -264,6 +232,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
       // $('#checkout-form').submit()
     });
   });
+
   function submitCheckoutForm() {
     document.getElementById("pos-form").submit();
   }
