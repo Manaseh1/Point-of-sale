@@ -25,5 +25,5 @@ urlpatterns = [
     path('inventory/', include(('inventory.urls', 'inventory'), namespace='inventory')),
     path('sales/', include(('sales.urls', 'sales'), namespace='sales')),
     path('stock/', include(('stockmgt.urls', 'stock'), namespace='stock')),
-    path('purchase/',include('purchase_order.urls',namespace= "purchase_order")),
+    path('purchase/',include('purchase_order.urls',namespace= "purchase")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

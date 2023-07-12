@@ -1,5 +1,5 @@
 from django.forms import ValidationError
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Purchase
@@ -17,7 +17,13 @@ def purchase_order(request):
     }
     return render(request,'purchase_order.html',context)
 
-
+@login_required
+def purchase_items(request):
+    purchases = Purchase.objects.all()
+    context  = {
+        'purchases': purchases
+    }
+    return render(request,'purchases_items.html',context)
 
 def save_form_data(request):
     if request.method == 'POST':
@@ -53,6 +59,6 @@ def save_form_data(request):
             except ValidationError as e:
                 return HttpResponse(f'Error saving product: {e}')
 
-        return HttpResponse('Form data saved successfully.')
+        return redirect('purchase:purchase_items')
 
     return HttpResponse('Invalid request method.')

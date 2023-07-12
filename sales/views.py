@@ -82,6 +82,13 @@ def pos(request):
                 item.save()
                 stock = Stock.objects.filter(product=product_id).first()
                 if stock:
+                    quantity = int(quantity)
+                    price = float(price)
+
+                    if stock.current_revenue is None:
+                        stock.current_revenue = 0.0
+
+                    stock.current_revenue += float(quantity * price)
                     stock.remaining_quantity -= int(quantity)
                     stock.save()
             mpesa = request.POST.get('mpesa')

@@ -9,6 +9,7 @@
         <tr>
           <th>Product Name</th>
           <th>Stock Remaining</th>
+          <th>Expected Revenue</th>
           <th>Revenue Generated</th>
           <th>Initial Quantity</th>
           <th>Actions</th>
@@ -19,6 +20,7 @@
           <tr>
             <td>{{ stock.product }}</td>
             <td>{{ stock.remaining_quantity }}</td>
+            <td>{{ stock.intended_revenue }}</td>
             <td>{{ stock.current_revenue }}</td>
             <td>{{ stock.initial_quantity }}</td>
             <td> <a class="btn btn-info" href="{% url 'stock:restock' stock_id=stock.id %}">Restock</a></td>
