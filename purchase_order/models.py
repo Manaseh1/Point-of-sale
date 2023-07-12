@@ -6,7 +6,7 @@ class Purchase(models.Model):
     product_name = models.CharField(max_length=100,default=None)
     quantity = models.FloatField(default= 0)
     unit_price = models.FloatField(default=0)
-    # totals = models.FloatField()
+    totals = models.FloatField()
     def get_total(self):
         return self.quantity * self.unit_price
 

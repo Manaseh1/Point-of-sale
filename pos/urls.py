@@ -24,10 +24,6 @@ urlpatterns = [
     path('dashboard/', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
     path('inventory/', include(('inventory.urls', 'inventory'), namespace='inventory')),
     path('sales/', include(('sales.urls', 'sales'), namespace='sales')),
-<<<<<<< HEAD
     path('stock/', include(('stockmgt.urls', 'stock'), namespace='stock')),
-=======
-    #path('products/', include('django_dyn_dt.urls')),  # <-- NEW: API routing rules
->>>>>>> 5ddcbfe1ef123da15f594122220da1c37afca409
     path('purchase/',include('purchase_order.urls',namespace= "purchase_order")),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -3,39 +3,6 @@
 
 {% block content %}
 <div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
-          <form method="POST"  class="needs-validation" novalidate>
-            {% csrf_token %}
-
-            <!-- Supplier details form fields -->
-            <br>
-            <div class="mb-3">
-              <label for="supplier_name" class="form-label">Supplier Name</label>
-              <input type="text" class="form-control" id="supplier_name" name="supplier_name" required>
-            </div>
-            <div class="mb-3">
-              <label for="supplier_email" class="form-label">Supplier Email</label>
-              <input type="email" class="form-control" id="supplier_email" name="supplier_email" required>
-            </div>
-            <div class="mb-3">
-              <label for="buyer_name" class="form-label">Buyer Name</label>
-              <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
-            </div>
-
-          </form>
-
-          <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
   <form method="POST"  id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form">
     {% csrf_token %}
    
@@ -198,14 +165,4 @@ makeTable(table,products)
 </script> {% endcomment %}
   
 
-{% endblock %} 
-<!DOCTYPE html>
-<html lang="en-US">
-<head>
-    <title>jQuery Dynamic Form</title>
-
-    <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-</head>
-<body>
-</body>
-</html>
+{% endblock %}
