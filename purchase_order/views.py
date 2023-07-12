@@ -21,11 +21,12 @@ def purchase_order(request):
 
 def save_form_data(request):
     if request.method == 'POST':
-        supplier = request.POST.get('supplier')
+        supplier =request.POST.get('supplier')
         products = request.POST.getlist('product[]')
         quantities = request.POST.getlist('quantity[]')
         unit_prices = request.POST.getlist('unit_price[]')
         totals = request.POST.getlist('totals[]')
+        supplier_obj = Supplier.objects.get(id = supplier)
         # supplier = Supplier.objects.filter(pk = supplier_id)
         for product, quantity, unit_price,total in zip(products, quantities, unit_prices,totals):
             if not quantity:
@@ -44,7 +45,7 @@ def save_form_data(request):
             # Create a new Product object and save it to the database
             try:
                 Purchase.objects.create(
-                    supplier = supplier,
+                    supplier_obj = supplier_obj,
                     product_name=product,
                     quantity=quantity,
                     unit_price=unit_price,
