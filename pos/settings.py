@@ -10,9 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os, inspect
-
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -51,7 +49,8 @@ APPS = [
     'accounts',
     'inventory',
     'sales',
-    'purchase_order'
+    'purchase_order',
+    'stockmgt'
 ]
 
 EXTENSIONS = [
@@ -102,7 +101,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '5432',
         'HOST': 'localhost',
         'PORT': '5432',
     }

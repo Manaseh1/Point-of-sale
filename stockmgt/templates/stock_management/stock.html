@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+{% block title %}Stock Management{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Stock Management</h1>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Product Name</th>
+          <th>Stock Remaining</th>
+          <th>Expected Revenue</th>
+          <th>Revenue Generated</th>
+          <th>Initial Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stock in stock %}
+          <tr>
+            <td>{{ stock.product }}</td>
+            <td>{{ stock.remaining_quantity }}</td>
+            <td>{{ stock.intended_revenue }}</td>
+            <td>{{ stock.current_revenue }}</td>
+            <td>{{ stock.initial_quantity }}</td>
+            <td> <a class="btn btn-info" href="{% url 'stock:restock' stock_id=stock.id %}">Restock</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

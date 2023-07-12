@@ -1,8 +1,9 @@
 from django.apps import AppConfig
 
-class ProductsConfig(AppConfig):
+class StockConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'inventory'
+    name = 'stockmgt'
 
     def ready(self):
-        from stockmgt.apps import StockConfig 
+        import stockmgt.signals  # Import signals module
+

@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from psycopg2 import IntegrityError
 from .models import Sales, salesItems, MoneyControl
 from inventory.models import Product
+from stockmgt.models import Stock
 from django.contrib.auth.decorators import login_required
 from .models import *
 from datetime import date, datetime
@@ -67,20 +68,33 @@ def pos(request):
             product_names = request.POST.getlist('product_name[]')
             prices = request.POST.getlist('price[]')
             quantities = request.POST.getlist('qty[]')
+            prodIds=request.POST.getlist('product_id[]')
 
-            for product_name, price, quantity in zip(product_names, prices, quantities):
+            for product_name, price, quantity,product_id in zip(product_names, prices, quantities,prodIds):
                 item = salesItems(
                     sale=sale,
                     product=product_name,
                     price=price,
                     qty=quantity,
                     total=float(price) * float(quantity)
+                    
                 )
                 item.save()
+                stock = Stock.objects.filter(product=product_id).first()
+                if stock:
+                    quantity = int(quantity)
+                    price = float(price)
+
+                    if stock.current_revenue is None:
+                        stock.current_revenue = 0.0
+
+                    stock.current_revenue += float(quantity * price)
+                    stock.remaining_quantity -= int(quantity)
+                    stock.save()
             mpesa = request.POST.get('mpesa')
             tcash = request.POST.get('cash')
             cash = float(tcash) - float(amount_change)
-            
+
             if float(mpesa) > 0:
                 mpesa_moneycontrol = MoneyControl(sale=sale, payment_method='Mpesa', Amount=float(mpesa))
                 mpesa_moneycontrol.save()

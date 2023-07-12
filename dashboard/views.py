@@ -8,11 +8,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
-
+from stockmgt.models import Stock
 @login_required(login_url='login')
 def dashboard(request):
+    low_quantity_stocks = Stock.objects.filter(remaining_quantity__lt=10)
+    count = low_quantity_stocks.count()
+    has_low_quantity = count > 0
     current_site = get_current_site(request)
     context = {
+        'has_low_quantity': has_low_quantity,
+        'low_quantity_count': count,
         'current_site': current_site,
     }
 

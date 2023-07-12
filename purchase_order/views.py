@@ -1,5 +1,5 @@
 from django.forms import ValidationError
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .models import Purchase
@@ -17,7 +17,13 @@ def purchase_order(request):
     }
     return render(request,'purchase_order.html',context)
 
-
+@login_required
+def purchase_items(request):
+    purchases = Purchase.objects.all()
+    context  = {
+        'purchases': purchases
+    }
+    return render(request,'purchases_items.html',context)
 
 def save_form_data(request):
     if request.method == 'POST':
@@ -26,8 +32,7 @@ def save_form_data(request):
         quantities = request.POST.getlist('quantity[]')
         unit_prices = request.POST.getlist('unit_price[]')
         totals = request.POST.getlist('totals[]')
-        supplier_obj = Supplier.objects.get(id = supplier)
-        # supplier = Supplier.objects.filter(pk = supplier_id)
+        supplier_obj = Supplier.objects.get(pk=supplier)
         for product, quantity, unit_price,total in zip(products, quantities, unit_prices,totals):
             if not quantity:
                 return HttpResponse('Quantity field cannot be empty.')
@@ -45,7 +50,7 @@ def save_form_data(request):
             # Create a new Product object and save it to the database
             try:
                 Purchase.objects.create(
-                    supplier_obj = supplier_obj,
+                    supplier = supplier_obj,
                     product_name=product,
                     quantity=quantity,
                     unit_price=unit_price,
@@ -54,6 +59,6 @@ def save_form_data(request):
             except ValidationError as e:
                 return HttpResponse(f'Error saving product: {e}')
 
-        return HttpResponse('Form data saved successfully.')
+        return redirect('purchase:purchase_items')
 
     return HttpResponse('Invalid request method.')

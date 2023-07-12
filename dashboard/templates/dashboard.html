@@ -31,15 +31,21 @@
           <p>Customer Management</p>
         </div>
     </a>
-    <a href="#" class="grid-item">
+    <a href="{% url 'stock:stock' %}" class="grid-item">
         <div>
           <i class="bx bx-box"></i>
           <p>Stock Management</p>
         </div>
     </a>
-    <a href="#" class="grid-item">
+    <a href="{% url 'stock:stock_alerts' %}" class="grid-item">
         <div>
           <i class="bx bx-bell"></i>
+          {% if has_low_quantity %}
+            <div class="alert alert-warning">
+             <b class="text-danger"> {{ low_quantity_count }} </b>
+            </div>
+          {% endif %}
+
           <p>Stock Alerts</p>
         </div>
     </a>
