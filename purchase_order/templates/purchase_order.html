@@ -4,10 +4,33 @@
 
 {% block content %}
 <div class="container">
-  <form method="POST"  id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form">
-    {% csrf_token %}
-   
-        
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
+          <form method="POST" id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form"  >
+            {% csrf_token %}
+              
+            <!-- Supplier details form fields -->
+            <br>
+            <div class="mb-3">
+              <label for="supplier_name" class="form-label">Supplier Name</label>
+                  {% render_field form.supplier class="form-control"%}
+
+            </div>
+             {% comment %}
+            <div class="mb-3">
+              <label for="supplier_email" class="form-label">Supplier Email</label>
+              <input type="email" class="form-control" id="supplier_email" name="supplier_email" required>
+            </div>
+            <div class="mb-3">
+              <label for="buyer_name" class="form-label">Buyer Name</label>
+              <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
+            </div>
+
+          
+          <div class="container"> {% endcomment %}
           <h1>Product Form</h1>
                <thead>
                 <table class='table'>
@@ -172,5 +195,4 @@ makeTable(table,products)
 </script> {% endcomment %}
   
 
-
-{% endblock %}
+{% endblock %} 

@@ -26,7 +26,7 @@ def save_form_data(request):
         quantities = request.POST.getlist('quantity[]')
         unit_prices = request.POST.getlist('unit_price[]')
         totals = request.POST.getlist('totals[]')
-        # supplier = Supplier.objects.filter(pk = supplier_id)
+        supplier_obj = Supplier.objects.get(pk=supplier)
         for product, quantity, unit_price,total in zip(products, quantities, unit_prices,totals):
             if not quantity:
                 return HttpResponse('Quantity field cannot be empty.')
@@ -44,7 +44,7 @@ def save_form_data(request):
             # Create a new Product object and save it to the database
             try:
                 Purchase.objects.create(
-                    supplier = supplier,
+                    supplier = supplier_obj,
                     product_name=product,
                     quantity=quantity,
                     unit_price=unit_price,
