@@ -1,4 +1,5 @@
  {% extends "base/base.html" %}
+ {%load widget_tweaks%}
 {% block title %}Purchase Order{% endblock %}
 
 {% block content %}
@@ -8,15 +9,17 @@
       <div class="card">
         <div class="card-body">
           <h1 class="card-title text-center"><b>Supplier details</b></h1><br>
-          <form method="POST"  class="needs-validation" novalidate>
+          <form method="POST" id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form"  >
             {% csrf_token %}
-
+              
             <!-- Supplier details form fields -->
             <br>
             <div class="mb-3">
               <label for="supplier_name" class="form-label">Supplier Name</label>
-              <input type="text" class="form-control" id="supplier_name" name="supplier_name" required>
+                  {% render_field form.supplier class="form-control"%}
+
             </div>
+             {% comment %}
             <div class="mb-3">
               <label for="supplier_email" class="form-label">Supplier Email</label>
               <input type="email" class="form-control" id="supplier_email" name="supplier_email" required>
@@ -26,23 +29,9 @@
               <input type="text" class="form-control" id="buyer_name" name="buyer_name" required>
             </div>
 
-          </form>
-
-          <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <form method="POST"  id="my-form" action="{% url 'purchase_order:save_form_data' %}" id="form">
-    {% csrf_token %}
-   
-        
+          
+          <div class="container"> {% endcomment %}
           <h1>Product Form</h1>
-          
-          
                <thead>
                 <table class='table'>
                 <tr>
@@ -65,6 +54,14 @@
                     Send form
                 </button>
             </p>
+            </form>
+          <a href="{% url 'inventory:supplier_list' %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     <table id="table1" class="table">
      
     </table>
@@ -121,10 +118,10 @@
  
         </thead>
       <tr>
-       <td> <input name="product[]" placeholder="product"></td>
-      <td> <input type ="number"name="quantity[]" placeholder="quantity"></td>
-      <td><input type ="number"name="unit_price[]" placeholder="unit price">
-      <!--td> <input id ="total" name = "totals[]" value= 0.00--><td>
+       <td> <input name="product[]" placeholder="product" class="form-control"></td>
+      <td> <input type ="number"name="quantity[]" placeholder="quantity" class="form-control"></td>
+      <td><input type ="number"name="unit_price[]" class="form-control" placeholder="unit price">
+      <td> <input id ="total" name = "totals[]" value= 0.00 class="form-control"><td>
         <td><button type="button" class="remove-fields">
             Remove these fields
         </button></td>

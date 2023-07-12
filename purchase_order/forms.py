@@ -1,14 +1,11 @@
 from django import forms
-from .models import Purchase
+from .models import Purchase,dummy
+from inventory.models import Supplier
 
-# class order_form(forms.ModelForm):
-#     widgets={
-#         'supplier': forms.Select(attrs={'class': 'form-control'}),
-            
-# }   
-#     class Meta:
-#         model = Purchase
-#         fields = (
-#             'supplier',
-         
-#         )
+class order_form(forms.ModelForm):
+
+    class Meta:
+        model = dummy
+        fields = (
+            'supplier',
+        )
