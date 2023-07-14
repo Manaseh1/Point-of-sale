@@ -19,7 +19,7 @@ class Sales(models.Model):
         return self.code
 
 class salesItems(models.Model):
-    sale = models.ForeignKey(Sales,on_delete=models.CASCADE)
+    sale = models.ForeignKey(Sales,on_delete=models.CASCADE,related_name='sales_items')
     product = models.CharField(max_length=100, blank=True, null=True)
     price = models.FloatField(default=0, blank=True, null=True)
     qty = models.FloatField(default=0, blank=True, null=True)

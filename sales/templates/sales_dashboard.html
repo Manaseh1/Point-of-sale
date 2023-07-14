@@ -121,7 +121,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
               {{ sale.code }}
             </summary>
             <ul>
-              {% for item in sale.salesitems_set.all %}
+              {% for item in sale.sales_items.all %}
               <li>
                 {{ item.qty|floatformat:0 }} {{ item.product }}s @ {{ item.total}} /= 
               </li>
