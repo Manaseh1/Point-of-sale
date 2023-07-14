@@ -1,9 +1,26 @@
+from pyexpat.errors import messages
 from inventory.models import Product
 from .models import *
 from django.shortcuts import render, get_object_or_404,redirect
 
 def restock(request, stock_id):
     stock = get_object_or_404(Stock, id=stock_id)
+
+    if request.method == 'POST':
+        quantity = request.POST.get('quantity')
+        
+        # # Perform validation on the quantity
+        # if not quantity:
+        #     messages.error(request, 'Quantity field cannot be empty.')
+        # elif int(quantity) <= 0:
+        #     messages.error(request, 'Quantity must be greater than zero.')
+        # else:
+        # Update the stock quantity
+        stock.remaining_quantity += int(quantity)
+        stock.save()
+    
+        # Redirect to a success page or any other desired view
+        return redirect('stock:stock')
 
     return render(request, 'stock_management/restock.html', {'stock': stock})
 

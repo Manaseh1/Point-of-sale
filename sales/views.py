@@ -28,6 +28,15 @@ def sales_dashboard(request):
         }
     return render(request, 'sales_dashboard.html', context)
 
+@login_required
+def SalesStockReports(request):
+    sales = Sales.objects.order_by('-date_added')
+    stocks = Stock.objects.all()
+    context = {
+        'stocks': stocks,
+        'sales': sales
+        }
+    return render(request, 'sales_stock_reports.html', context)
 
 @login_required
 def pos(request):
