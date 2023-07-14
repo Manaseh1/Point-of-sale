@@ -1,0 +1,80 @@
+{% extends "base/base.html" %}
+
+{% block title %}Reports{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1>Reports</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Sales Report</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                    <td>#</td>
+                  <th>Code</th>
+                  <th>Date</th>
+                  <th>Quantity Sold</th>
+                  <th>Total Revenue</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if sales %}
+                  {% for sale in sales %}
+                    <tr>
+                      <td class="serial">{{ forloop.counter }}</td>
+                      <td>
+                        <details>
+                          <summary style="color: blue; cursor: pointer">
+                            {{ sale.code }}
+                          </summary>
+                          <ul>
+                            {% for item in sale.sales_items.all %}
+                              <li>{{ item.qty|floatformat:0 }} {{ item.product }}s @ {{ item.total }} /=</li>
+                            {% endfor %}
+                          </ul>
+                        </details>
+                      </td>
+                      <td>{{ sale.date_added }}</td>
+                      <td>{{ sale.sales_items.count }}</td>
+                      <td>{{ sale.grand_total }}</td>
+                    </tr>
+                  {% endfor %}
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Inventory Report</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity in Stock</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for stock in stocks %}
+                  <tr>
+                    <td>{{ stock.product }}</td>
+                    <td>{{ stock.remaining_quantity }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
