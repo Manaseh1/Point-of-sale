@@ -18,8 +18,13 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
             class="img-circle elevation-3 mt-2"
             alt="Profile Image Placeholder"
           /></center>
-            <center><small class="fw-bold">POS</small></center>
-            <center><small class="fw-bold">M&J</small></center>
+            <center><small class="fw-bold">Geopella Luxury Suites</small></center>
+            <center><small class="fw-bold"><br/><br>
+              Address : P.O BOX 4O5 Ahero.  <br/><br>
+              Telephone: +254(0)736355264  <br/><br>
+              Email : geopella.luxurysuites@gmail.com  <br/><br>
+              PIN :
+            </small></center>
           </div>
           <hr />
           <div class="lh-1">
@@ -54,9 +59,9 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
 </table>
             <hr />
             <div class="d-flex w-100 align-items-end">
-              <div class="col-6 text-start fw-bold">Total</div>
+              <div class="col-6 text-start fw-bold">Total Cost</div>
               <div class="col-6 text-end fw-bold">
-                {{ transaction.grand_total }}
+                Kshs. {{ transaction.grand_total }} /= 
               </div>
             </div>
             <hr />
@@ -65,7 +70,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
                 Tax <small>(inclusive)</small>: {{ transaction.tax }}%
               </div>
               <div class="col-6 text-end fw-bold">
-                {{ transaction.tax_amount|floatformat:2 }}
+                Kshs. {{ transaction.tax_amount|floatformat:2 }} /= 
               </div>
             </div>
             <hr />
@@ -74,22 +79,22 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
               </div>
               <div class="col-6 text-end fw-bold">
                 {% for method in payment_method %}
-                <b>{{ method.payment_method }} :</b> Ksh/= {{ method.Amount }} <br>
+                <b>{{ method.payment_method }} :</b> Kshs.{{ method.Amount }} /= <br>
                 {% endfor %}
               </div>
             </div>
             <hr />
             <div class="d-flex w-100 align-items-end">
-              <div class="col-6 text-start fw-bold"> total Tenedered</div>
+              <div class="col-6 text-start fw-bold"> Ammount Given</div>
               <div class="col-6 text-end fw-bold">
-                {{ transaction.tendered_amount }}
+                Kshs. {{ transaction.tendered_amount }} /= 
               </div>
             </div>
             <hr />
             <div class="d-flex w-100 align-items-end">
-              <div class="col-6 text-start fw-bold">Change</div>
+              <div class="col-6 text-start fw-bold">Total Change</div>
               <div class="col-6 text-end fw-bold">
-                {{ transaction.amount_change }}
+                Kshs. {{ transaction.amount_change }} /= 
               </div>
             </div>
           </div>
@@ -102,7 +107,7 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
             type="button"
             id="receipt_print"
           >
-            <i class="mdi mdi-printer"></i> Print
+            <i class="mdi mdi-printer"></i> Print Receipt
           </button>
             <a class="btn btn-secondary bg-gradient border rounded-0 btn-sm" href="{% url 'sales:sales_dashboard' %}" >Sales Dashboard</p> </a>
         </div>
