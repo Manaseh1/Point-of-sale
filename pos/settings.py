@@ -50,7 +50,9 @@ APPS = [
     'inventory',
     'sales',
     'purchase_order',
-    'stockmgt'
+    'stockmgt',
+    'reporting',
+    'customersmgt',
 ]
 
 EXTENSIONS = [
