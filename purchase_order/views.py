@@ -62,3 +62,6 @@ def save_form_data(request):
         return redirect('purchase:purchase_items')
 
     return HttpResponse('Invalid request method.')
+
+def receipt(request):
+    return render(request,'receipts.html')

@@ -5,7 +5,7 @@ from inventory.models import Supplier
 class order_form(forms.ModelForm):
 
     class Meta:
-        model = dummy
+        model = Purchase
         fields = (
             'supplier',
         )
