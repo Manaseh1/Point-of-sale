@@ -14,19 +14,13 @@
   animation: blink 1s infinite;
 }
 </style>
-<div class="card">
-  <div class="card-body bg-danger">
-    <h5 class="card-title blinking">Development in Progress</h5>
-    <p class="card-text">This feature is currently under development.</p>
-    <p class="card-text">Please check back later for updates.</p>
-  </div>
-</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <div class="row">
     <div class="col-lg-4 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"><h4>Payment Method</h4>Mpesa vs. Cash Amounts</h3>
+                <h3 class="card-title"><h4><i class="fas fa-money-bill"></i> Payment Method</h4>Mpesa vs. Cash Amounts</h3>
             </div>
             <div class="card-body">
                 <canvas id="mpesa-cash-chart"></canvas>
@@ -34,28 +28,49 @@
         </div>
     </div>
     <div class="col-lg-4 mx-auto">
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Daily Sales</h3>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-chart-line"></i> Daily Sales</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <!-- Top bar content -->
+                    <div class="top-bar">
+                        <!-- Add your content here -->
+                    </div>
+                </div>
             </div>
-            <div class="card-body">
-                <canvas id="daily-sales-chart"></canvas>
+            <div class="row">
+                <div class="col">
+                    <canvas id="daily-sales-chart-line"></canvas>
+                    <hr class="line">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!-- Chart content -->
+                    <canvas id="daily-sales-chart"></canvas>
+                </div>
             </div>
         </div>
     </div>
-    <style>
-    hr {
-        background-color: green; /* Set the background color */
-        height: 2px; /* Set the height of the hr */
-        border: none; /* Remove the default border */
-    }
+</div>
+
+</div>
+<style>
+hr {
+    background-color: green; /* Set the background color */
+    height: 2px; /* Set the height of the hr */
+    border: none; /* Remove the default border */
+}
 </style>
-    <hr>
-    <div class="row">
+<hr>
+<div class="row">
     <div class="col-lg-4 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Most Bought Products</h3>
+                <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Most Bought Products</h3>
             </div>
             <div class="card-body">
                 <canvas id="most-bought-products-chart"></canvas>
@@ -65,7 +80,7 @@
     <div class="col-lg-4 mx-auto">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Stock Usage</h3>
+                <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Critical Stock</h3>
             </div>
             <div class="card-body">
                 <canvas id="stock-usage-chart"></canvas>
@@ -73,7 +88,7 @@
         </div>
     </div>
 </div>
-</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -105,96 +120,188 @@
         });
 
         // Make an AJAX request to fetch the sales data from the database
-$.ajax({
-    url: "{% url 'reports:fetch-data-from-database' %}",
-    method: "GET",
-    success: function(data) {
-        const currentDate = new Date();  // Get the current date
-        const dateRange = [];  // Array to store the date range
-        for (let i = 7; i >= 0; i--) {
-            const date = new Date(currentDate);
-            date.setDate(currentDate.getDate() - i);
-            dateRange.push(date);
-        }
-        
-        // Extract the dates and counts from the response data
-        const dates = data.dates.map(date => {
-            const formattedDate = new Date(date).toLocaleDateString('en', {
-                weekday: 'short',
-                day: 'numeric',
-                month: 'numeric',
-                year: 'numeric'
-            });
-            const [weekday, day] = formattedDate.split(' ');
-            return `${weekday} ${day}`;
-        });
-        const counts = data.counts;
-
-        // Format the date range for the label
-        const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
-
-        // Daily Sales Chart
-        var dailySalesChart = new Chart(document.getElementById("daily-sales-chart"), {
-            type: "bar",
-            data: {
-                labels: dates,
-                datasets: [{
-                    label: `Sales for (${formattedDateRange})`,
-                    data: counts,
-                    backgroundColor: "#4caf50"
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const currentDate = new Date();  // Get the current date
+                const dateRange = [];  // Array to store the date range
+                for (let i = 7; i >= 0; i--) {
+                    const date = new Date(currentDate);
+                    date.setDate(currentDate.getDate() - i);
+                    dateRange.push(date);
                 }
-            }
-        });
-    },
-    error: function() {
-        console.log("Error fetching sales data from the database.");
-    }
-});
+                
+                // Extract the dates and counts from the response data
+                const dates = data.dates.map(date => {
+                    const formattedDate = new Date(date).toLocaleDateString('en', {
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric'
+                    });
+                    const [weekday, day] = formattedDate.split(' ');
+                    return `${weekday} ${day}`;
+                });
+                const counts = data.counts;
 
+                // Format the date range for the label
+                const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
 
-        // Most Bought Products Chart
-        var mostBoughtProductsChart = new Chart(document.getElementById("most-bought-products-chart"), {
-            type: "bar",
-            data: {
-                labels: ["Product A", "Product B", "Product C", "Product D"],
-                datasets: [{
-                    label: "Quantity",
-                    data: [50, 80, 120, 70],
-                    backgroundColor: "#ff9800"
-                }]
+                // Daily Sales Chart
+                var dailySalesChart = new Chart(document.getElementById("daily-sales-chart"), {
+                    type: "bar",
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: `Sales for (${formattedDateRange})`,
+                            data: counts,
+                            backgroundColor: "purple"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom' // Set the legend position to bottom
-                    }
+            error: function() {
+                console.log("Error fetching sales data from the database.");
+            }
+        });
+        // Make an AJAX request to fetch the sales data from the database
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const currentDate = new Date();  // Get the current date
+                const dateRange = [];  // Array to store the date range
+                for (let i = 7; i >= 0; i--) {
+                    const date = new Date(currentDate);
+                    date.setDate(currentDate.getDate() - i);
+                    dateRange.push(date);
                 }
+
+                // Extract the dates and counts from the response data
+                const dates = data.dates.map(date => {
+                    const formattedDate = new Date(date).toLocaleDateString('en', {
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric'
+                    });
+                    const [weekday, day] = formattedDate.split(' ');
+                    return `${weekday} ${day}`;
+                });
+                const counts = data.counts;
+
+                // Format the date range for the label
+                const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
+
+                // Daily Sales Chart
+                var dailySalesChart = new Chart(document.getElementById("daily-sales-chart-line"), {
+                    type: "line", // Change the chart type to line
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: `Sales for (${formattedDateRange})`,
+                            data: counts,
+                            backgroundColor: "transparent", // Set the background color to transparent
+                            borderColor: "purple", // Set the line color
+                            fill: false // Disable the area fill
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                console.log("Error fetching sales data from the database.");
             }
         });
 
-        // Stock Usage Chart
-        var stockUsageChart = new Chart(document.getElementById("stock-usage-chart"), {
-            type: "pie",
-            data: {
-                labels: ["Product X", "Product Y", "Product Z"],
-                datasets: [{
-                    data: [30, 40, 50],
-                    backgroundColor: ["#ff5722", "#03a9f4", "#e91e63"]
-                }]
+
+                // Most Bought Products Chart
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const topProducts = data.top_products;
+
+                const products = topProducts.map(product => product.product);
+                const quantities = topProducts.map(product => product.total_quantity);
+
+                const mostBoughtProductsChart = new Chart(document.getElementById("most-bought-products-chart"), {
+                    type: "bar",
+                    data: {
+                        labels: products,
+                        datasets: [{
+                            label: "Quantity",
+                            data: quantities,
+                            backgroundColor: "blue"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom' // Set the legend position to bottom
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                console.log("Error fetching data from the database.");
             }
         });
+        // Make an AJAX request to fetch the critical stock data
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",  // Replace with the appropriate URL for your server endpoint
+            method: 'GET',
+            success: function(data) {
+                // Retrieve the critical stock data from the response
+                var criticalStockData = data.critical_stock;
+
+                // Extract the product names and remaining quantities
+                // Extract the product names and quantities
+                var productNames = criticalStockData.map(function(item) {
+                    return item.product + ' (' + item.remaining_quantity + ' remaining)';
+                });
+
+                var quantities = criticalStockData.map(function(item) {
+                    return item.remaining_quantity;
+                });
+
+                // Update the Stock Usage Chart with the retrieved data
+                var stockUsageChart = new Chart(document.getElementById("stock-usage-chart"), {
+                    type: "pie",
+                    data: {
+                        labels: productNames,
+                        datasets: [{
+                            data: quantities,
+                            backgroundColor: ["#ff5722", "#03a9f4", "#e91e63"]
+                        }]
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', error);
+            }
+        });
+
     });
 </script>
 {% endblock %}

@@ -79,6 +79,9 @@
       {% endif %}
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}
+        <li class="nav-item">
+            <a href="{% url 'sales:sales_pos' %}" class="nav-link"><i class="fas fa-cash-register pos-icon"></i>&nbsp; <b>POS!</b></a>
+          </li>
           <li class="nav-item">
             <a href="{% url 'dashboard:index' %}" class="nav-link"><i class='bx bxs-dashboard'></i>&nbsp; Dashboard</a>
           </li>
@@ -148,23 +151,6 @@
                       <a href="{% url 'inventory:supplier_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
-
-              <li class="menu-item-has-children dropdown nav-item">
-                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-users"></i><p> Buyer</p></a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <a  href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
-                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
-                  </ul>
-              </li>
-
-              <li class="menu-item-has-children dropdown nav-item">
-                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-calendar"></i><p> Season</p></a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
-                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
-                  </ul>
-              </li>
-
               <li class="menu-item-has-children dropdown nav-item">
                   <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-tags"></i><p> Category</p></a>
                   <ul class="sub-menu children dropdown-menu">
@@ -178,22 +164,6 @@
                   <ul class="sub-menu children dropdown-menu">
                       <a  href="{% url 'inventory:create_product' %}"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
                       <a  href="{% url 'inventory:product_list' %}"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
-                  </ul>
-              </li>
-
-              <li class="menu-item-has-children dropdown nav-item">
-                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i><p> Order</p></a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
-                      <a  href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
-                  </ul>
-              </li>
-
-              <li class="nav-item menu-item-has-children dropdown">
-                  <a class="nav-link" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-truck"></i><p> Delivery</p></a>
-                  <ul class="sub-menu children dropdown-menu">
-                      <a href="#"><li><i class="fa fa-plus-circle" style="color: darkblue"></i>Add</li></a>
-                      <a href="#"><li><i class="fa fa-eye" style="color: darkblue"></i>View</li></a>
                   </ul>
               </li>
               </details>
