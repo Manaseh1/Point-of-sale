@@ -101,7 +101,7 @@ WSGI_APPLICATION = 'pos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pos',                      
+        'NAME': 'PosDB',                      
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
@@ -141,8 +141,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
+# Email server configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'manasehnjoroge7@gmail.com'
+EMAIL_HOST_PASSWORD = 'dsccmgfnitxbzudq'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
