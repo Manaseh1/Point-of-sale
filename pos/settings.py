@@ -103,7 +103,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': '5432',
+        'PASSWORD': 'Spiderman1337',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -141,8 +141,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
+# Email server configuration
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'manasehnjoroge7@gmail.com'
+EMAIL_HOST_PASSWORD = 'dsccmgfnitxbzudq'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 

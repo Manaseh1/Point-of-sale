@@ -27,7 +27,7 @@ def purchase_items(request):
 
 def save_form_data(request):
     if request.method == 'POST':
-        supplier = request.POST.get('supplier')
+        supplier =request.POST.get('supplier')
         products = request.POST.getlist('product[]')
         quantities = request.POST.getlist('quantity[]')
         unit_prices = request.POST.getlist('unit_price[]')
@@ -62,3 +62,6 @@ def save_form_data(request):
         return redirect('purchase:purchase_items')
 
     return HttpResponse('Invalid request method.')
+
+def receipt(request):
+    return render(request,'receipts.html')
