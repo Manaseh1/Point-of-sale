@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404,redirect
 
 def restock(request, stock_id):
     stock = get_object_or_404(Stock, id=stock_id)
+    # product 
 
     if request.method == 'POST':
         quantity = request.POST.get('quantity')

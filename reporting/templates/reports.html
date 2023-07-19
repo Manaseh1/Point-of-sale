@@ -14,260 +14,294 @@
   animation: blink 1s infinite;
 }
 </style>
-<div class="card">
-  <div class="card-body bg-danger">
-    <h5 class="card-title blinking">Development in Progress</h5>
-    <p class="card-text">This feature is currently under development.</p>
-    <p class="card-text">Please check back later for updates.</p>
-  </div>
-</div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-<div class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Online Store Visitors</h3>
-                            <a href="javascript:void(0);">View Report</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">820</span>
-                                <span>Visitors Over Time</span>
-                            </p>
-                            <p class="ml-auto d-flex flex-column text-right">
-                                <span class="text-success">
-                                <i class="fas fa-arrow-up"></i> 12.5%
-                                </span>
-                                <span class="text-muted">Since last week</span>
-                            </p>
-                        </div>
-
-                        <div class="position-relative mb-4">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas id="visitors-chart" height="400" style="display: block; height: 200px; width: 324px;" width="648" class="chartjs-render-monitor"></canvas>
-                        </div>
-                        <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This Week
-                            </span>
-                            <span>
-                            <i class="fas fa-square text-gray"></i> Last Week
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">Products</h3>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-tool btn-sm">
-                            <i class="fas fa-bars"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-striped table-valign-middle">
-                            <thead>
-                                <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Sales</th>
-                                    <th>More</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"> Some Product
-                                    </td>
-                                    <td>$13 USD</td>
-                                    <td>
-                                        <small class="text-success mr-1">
-                                            <i class="fas fa-arrow-up"></i>
-                                            12%
-                                            </small> 12,000 Sold
-                                    </td>
-                                    <td>
-                                        <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"> Another Product
-                                    </td>
-                                    <td>$29 USD</td>
-                                    <td>
-                                        <small class="text-warning mr-1">
-                                        <i class="fas fa-arrow-down"></i>
-                                        0.5%
-                                        </small> 123,234 Sold
-                                    </td>
-                                    <td>
-                                        <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"> Amazing Product
-                                    </td>
-                                    <td>$1,230 USD</td>
-                                    <td>
-                                        <small class="text-danger mr-1">
-                                        <i class="fas fa-arrow-down"></i>
-                                        3%
-                                        </small> 198 Sold
-                                    </td>
-                                    <td>
-                                        <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="dist/img/default-150x150.png" alt="Product 1" class="img-circle img-size-32 mr-2"> Perfect Item
-                                        <span class="badge bg-danger">NEW</span>
-                                    </td>
-                                    <td>$199 USD</td>
-                                    <td>
-                                        <small class="text-success mr-1">
-                                        <i class="fas fa-arrow-up"></i>
-                                        63%
-                                        </small> 87 Sold
-                                    </td>
-                                    <td>
-                                        <a href="#" class="text-muted">
-                                        <i class="fas fa-search"></i>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+<div class="row">
+    <div class="col-lg-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><h4><i class="fas fa-money-bill"></i> Payment Method</h4>Mpesa vs. Cash Amounts</h3>
             </div>
-
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-header border-0">
-                        <div class="d-flex justify-content-between">
-                            <h3 class="card-title">Sales</h3>
-                            <a href="javascript:void(0);">View Report</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <p class="d-flex flex-column">
-                                <span class="text-bold text-lg">$18,230.00</span>
-                                <span>Sales Over Time</span>
-                            </p>
-                            <p class="ml-auto d-flex flex-column text-right">
-                                <span class="text-success">
-                                <i class="fas fa-arrow-up"></i> 33.1%
-                                </span>
-                                <span class="text-muted">Since last month</span>
-                            </p>
-                        </div>
-
-                        <div class="position-relative mb-4">
-                            <div class="chartjs-size-monitor">
-                                <div class="chartjs-size-monitor-expand">
-                                    <div class=""></div>
-                                </div>
-                                <div class="chartjs-size-monitor-shrink">
-                                    <div class=""></div>
-                                </div>
-                            </div>
-                            <canvas id="sales-chart" height="400" style="display: block; height: 200px; width: 324px;" width="648" class="chartjs-render-monitor"></canvas>
-                        </div>
-                        <div class="d-flex flex-row justify-content-end">
-                            <span class="mr-2">
-                            <i class="fas fa-square text-primary"></i> This year
-                            </span>
-                            <span>
-                            <i class="fas fa-square text-gray"></i> Last year
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header border-0">
-                        <h3 class="card-title">Online Store Overview</h3>
-                        <div class="card-tools">
-                            <a href="#" class="btn btn-sm btn-tool">
-                            <i class="fas fa-download"></i>
-                            </a>
-                            <a href="#" class="btn btn-sm btn-tool">
-                            <i class="fas fa-bars"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                            <p class="text-success text-xl">
-                                <i class="ion ion-ios-refresh-empty"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                                <span class="font-weight-bold">
-                                <i class="ion ion-android-arrow-up text-success"></i> 12%
-                                </span>
-                                <span class="text-muted">CONVERSION RATE</span>
-                            </p>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center border-bottom mb-3">
-                            <p class="text-warning text-xl">
-                                <i class="ion ion-ios-cart-outline"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                                <span class="font-weight-bold">
-                                <i class="ion ion-android-arrow-up text-warning"></i> 0.8%
-                                </span>
-                                <span class="text-muted">SALES RATE</span>
-                            </p>
-                        </div>
-
-                        <div class="d-flex justify-content-between align-items-center mb-0">
-                            <p class="text-danger text-xl">
-                                <i class="ion ion-ios-people-outline"></i>
-                            </p>
-                            <p class="d-flex flex-column text-right">
-                                <span class="font-weight-bold">
-                                <i class="ion ion-android-arrow-down text-danger"></i> 1%
-                                </span>
-                                <span class="text-muted">REGISTRATION RATE</span>
-                            </p>
-                        </div>
-
-                    </div>
-                </div>
+            <div class="card-body">
+                <canvas id="mpesa-cash-chart"></canvas>
             </div>
-
         </div>
-
     </div>
+    <div class="col-lg-4 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-chart-line"></i> Daily Sales</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col">
+                    <!-- Top bar content -->
+                    <div class="top-bar">
+                        <!-- Add your content here -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <canvas id="daily-sales-chart-line"></canvas>
+                    <hr class="line">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <!-- Chart content -->
+                    <canvas id="daily-sales-chart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
-{% endblock  %}
+<style>
+hr {
+    background-color: green; /* Set the background color */
+    height: 2px; /* Set the height of the hr */
+    border: none; /* Remove the default border */
+}
+</style>
+<hr>
+<div class="row">
+    <div class="col-lg-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-shopping-cart"></i> Most Bought Products</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="most-bought-products-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Critical Stock</h3>
+            </div>
+            <div class="card-body">
+                <canvas id="stock-usage-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Make an AJAX request to fetch the Mpesa and Cash values from the database
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                // Parse the response data and extract the Mpesa and Cash values
+                const mpesaValue = data.mpesa;
+                const cashValue = data.cash;
+                var Total = mpesaValue + cashValue;
+                // Create the chart using the retrieved values
+                var mpesaCashChart = new Chart(document.getElementById("mpesa-cash-chart"), {
+                    type: "doughnut",
+                    data: {
+                    labels: ["Mpesa (Ksh " + mpesaValue + ")", "Cash (Ksh " + cashValue + ")", "Total (Ksh/= "+ Total +")"],
+                    datasets: [{
+                        data: [mpesaValue, cashValue, 0],
+                        backgroundColor: ["green", "silver", "blue"]
+                    }]
+                }
+
+                });
+            },
+            error: function() {
+                console.log("Error fetching Mpesa and Cash data from the database.");
+            }
+        });
+
+        // Make an AJAX request to fetch the sales data from the database
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const currentDate = new Date();  // Get the current date
+                const dateRange = [];  // Array to store the date range
+                for (let i = 7; i >= 0; i--) {
+                    const date = new Date(currentDate);
+                    date.setDate(currentDate.getDate() - i);
+                    dateRange.push(date);
+                }
+                
+                // Extract the dates and counts from the response data
+                const dates = data.dates.map(date => {
+                    const formattedDate = new Date(date).toLocaleDateString('en', {
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric'
+                    });
+                    const [weekday, day] = formattedDate.split(' ');
+                    return `${weekday} ${day}`;
+                });
+                const counts = data.counts;
+
+                // Format the date range for the label
+                const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
+
+                // Daily Sales Chart
+                var dailySalesChart = new Chart(document.getElementById("daily-sales-chart"), {
+                    type: "bar",
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: `Sales for (${formattedDateRange})`,
+                            data: counts,
+                            backgroundColor: "purple"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                console.log("Error fetching sales data from the database.");
+            }
+        });
+        // Make an AJAX request to fetch the sales data from the database
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const currentDate = new Date();  // Get the current date
+                const dateRange = [];  // Array to store the date range
+                for (let i = 7; i >= 0; i--) {
+                    const date = new Date(currentDate);
+                    date.setDate(currentDate.getDate() - i);
+                    dateRange.push(date);
+                }
+
+                // Extract the dates and counts from the response data
+                const dates = data.dates.map(date => {
+                    const formattedDate = new Date(date).toLocaleDateString('en', {
+                        weekday: 'short',
+                        day: 'numeric',
+                        month: 'numeric',
+                        year: 'numeric'
+                    });
+                    const [weekday, day] = formattedDate.split(' ');
+                    return `${weekday} ${day}`;
+                });
+                const counts = data.counts;
+
+                // Format the date range for the label
+                const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
+
+                // Daily Sales Chart
+                var dailySalesChart = new Chart(document.getElementById("daily-sales-chart-line"), {
+                    type: "line", // Change the chart type to line
+                    data: {
+                        labels: dates,
+                        datasets: [{
+                            label: `Sales for (${formattedDateRange})`,
+                            data: counts,
+                            backgroundColor: "transparent", // Set the background color to transparent
+                            borderColor: "purple", // Set the line color
+                            fill: false // Disable the area fill
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                console.log("Error fetching sales data from the database.");
+            }
+        });
+
+
+                // Most Bought Products Chart
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",
+            method: "GET",
+            success: function(data) {
+                const topProducts = data.top_products;
+
+                const products = topProducts.map(product => product.product);
+                const quantities = topProducts.map(product => product.total_quantity);
+
+                const mostBoughtProductsChart = new Chart(document.getElementById("most-bought-products-chart"), {
+                    type: "bar",
+                    data: {
+                        labels: products,
+                        datasets: [{
+                            label: "Quantity",
+                            data: quantities,
+                            backgroundColor: "blue"
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                position: 'bottom' // Set the legend position to bottom
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                console.log("Error fetching data from the database.");
+            }
+        });
+        // Make an AJAX request to fetch the critical stock data
+        $.ajax({
+            url: "{% url 'reports:fetch-data-from-database' %}",  // Replace with the appropriate URL for your server endpoint
+            method: 'GET',
+            success: function(data) {
+                // Retrieve the critical stock data from the response
+                var criticalStockData = data.critical_stock;
+
+                // Extract the product names and remaining quantities
+                // Extract the product names and quantities
+                var productNames = criticalStockData.map(function(item) {
+                    return item.product + ' (' + item.remaining_quantity + ' remaining)';
+                });
+
+                var quantities = criticalStockData.map(function(item) {
+                    return item.remaining_quantity;
+                });
+
+                // Update the Stock Usage Chart with the retrieved data
+                var stockUsageChart = new Chart(document.getElementById("stock-usage-chart"), {
+                    type: "pie",
+                    data: {
+                        labels: productNames,
+                        datasets: [{
+                            data: quantities,
+                            backgroundColor: ["#ff5722", "#03a9f4", "#e91e63"]
+                        }]
+                    }
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log('Error:', error);
+            }
+        });
+
+    });
+</script>
+{% endblock %}
