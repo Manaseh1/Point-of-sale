@@ -29,4 +29,6 @@ urlpatterns = [
     path('purchase/',include('purchase_order.urls',namespace= 'purchase')),
     path('reports/',include('reporting.urls',namespace= 'reports')),
     path('Customers/',include('customersmgt.urls',namespace= 'customers')),
+    path('Employees/',include('employeesmgt.urls',namespace= 'employees')),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

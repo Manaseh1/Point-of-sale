@@ -53,6 +53,7 @@ APPS = [
     'stockmgt',
     'reporting',
     'customersmgt',
+    'employeesmgt'
 ]
 
 EXTENSIONS = [
@@ -103,7 +104,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'PosDB',                      
         'USER': 'postgres',
-        'PASSWORD': 'Spiderman1337',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -161,4 +162,4 @@ MEDIA_URL = '/Media/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+AUTH_USER_MODEL = 'accounts.NewEmployee'

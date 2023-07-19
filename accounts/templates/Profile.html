@@ -64,7 +64,7 @@
                                     <dt class="col-sm-4">Gender:</dt>
                                     <dd class="col-sm-8">{{ user.profile.gender }}</dd>
                                     <dt class="col-sm-4">Role:</dt>
-                                    <dd class="col-sm-8">{{ user.profile.role }}</dd>
+                                    <dd class="col-sm-8">{{ employee.role }}</dd>
                                     <dt class="col-sm-4">Date Started:</dt>
                                     <dd class="col-sm-8">{{ user.profile.date_started }}</dd>
                                 </dl>
@@ -140,17 +140,8 @@
                         </select>                        
                       </div>
                     </div>
-                    <div class="form-group row">
-                      <label for="inputRole" class="col-sm-2 col-form-label">Role</label>
-                      <div class="col-sm-10">
-                        <select name="role" class="form-control" id="inputRole">
-                          <option value="">Select Role</option>
-                          <option value="admin" {% if user.profile.role == 'admin' %}selected{% endif %}>Admin</option>
-                          <option value="manager" {% if user.profile.role == 'manager' %}selected{% endif %}>Manager</option>
-                          <option value="employee" {% if user.profile.role == 'employee' %}selected{% endif %}>Employee</option>
-                        </select>
-                      </div>
-                    </div>
+                   
+                  
                     <div class="form-group row">
                       <div class="offset-sm-2 col-sm-10">
                         <div class="checkbox">
