@@ -1,0 +1,27 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}development underway - Point of Sale System{% endblock %}
+{% include 'base/style.html' %}
+{% block content %}
+<style>
+    @keyframes blink {
+  0% { opacity: 1; color: yellow; letter-spacing: 5px}
+  50% { opacity: 0; letter-spacing: 2.5px }
+  100% { opacity: 1; color: yellow; letter-spacing: 5px;}
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
+</style>
+<div class="card">
+  <div class="card-body bg-danger">
+    <h5 class="card-title blinking">Development in Progress</h5>
+    <p class="card-text">This feature is currently under development.</p>
+    <p class="card-text">Please check back later for updates.</p>
+  </div>
+<link rel="stylesheet" href="{% static 'css/style' %}" />
+    <div class="row justify-content-center">
+      
+    </div>
+{% endblock content %}

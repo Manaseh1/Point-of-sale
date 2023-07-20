@@ -15,3 +15,12 @@ def CustomersMgtDashboard(request):
 
     }
     return render(request, 'customers.html', context)
+@login_required(login_url='login')
+def underdev(request):
+    
+    context = {
+
+    }
+    return render(request, 'underdev.html', context)
+
+

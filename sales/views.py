@@ -54,7 +54,7 @@ def pos(request):
                 check = Sales.objects.filter(code=str(pref) + str(code)).all()
                 if len(check) <= 0:
                     break
-            code = str(pref) + str(code)
+            code = str(pref) # + str(code)
             grand_total = request.POST.get('grand_total')
             sub_total = request.POST.get('sub_total')
             tax = request.POST.get('tax')
