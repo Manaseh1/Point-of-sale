@@ -15,7 +15,26 @@
 }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+<div class="row">
+        <a href="{% url 'sales:SSreports' %}" class="col-lg-3 col-md-6 ">
+            <div class="">
+    <div class="card">
+      <div class="card-body" style="background-color: green">
+        <div class="stat-widget-five">
+          <div class="stat-icon dib flat-color-2">
+            <i class="fa fa-clipboard"></i>
+          </div>
+          <div class="stat-content">
+            <div class="text-left dib">
+              <div class="stat-heading mx-auto" style="color: white"> Sales Reports</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+        </a>
+</div>
 <div class="row">
     <div class="col-lg-4 mx-auto">
         <div class="card">
@@ -118,7 +137,6 @@ hr {
                 console.log("Error fetching Mpesa and Cash data from the database.");
             }
         });
-
         // Make an AJAX request to fetch the sales data from the database
         $.ajax({
             url: "{% url 'reports:fetch-data-from-database' %}",
@@ -131,23 +149,18 @@ hr {
                     date.setDate(currentDate.getDate() - i);
                     dateRange.push(date);
                 }
-                
                 // Extract the dates and counts from the response data
                 const dates = data.dates.map(date => {
                     const formattedDate = new Date(date).toLocaleDateString('en', {
                         weekday: 'short',
                         day: 'numeric',
-                        month: 'numeric',
-                        year: 'numeric'
                     });
                     const [weekday, day] = formattedDate.split(' ');
                     return `${weekday} ${day}`;
                 });
                 const counts = data.counts;
-
                 // Format the date range for the label
                 const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
-
                 // Daily Sales Chart
                 var dailySalesChart = new Chart(document.getElementById("daily-sales-chart"), {
                     type: "bar",
@@ -190,17 +203,13 @@ hr {
                     const formattedDate = new Date(date).toLocaleDateString('en', {
                         weekday: 'short',
                         day: 'numeric',
-                        month: 'numeric',
-                        year: 'numeric'
                     });
                     const [weekday, day] = formattedDate.split(' ');
                     return `${weekday} ${day}`;
                 });
                 const counts = data.counts;
-
                 // Format the date range for the label
                 const formattedDateRange = `${dates[0]} - ${dates[dates.length - 1]}`;
-
                 // Daily Sales Chart
                 var dailySalesChart = new Chart(document.getElementById("daily-sales-chart-line"), {
                     type: "line", // Change the chart type to line
@@ -227,9 +236,7 @@ hr {
                 console.log("Error fetching sales data from the database.");
             }
         });
-
-
-                // Most Bought Products Chart
+        // Most Bought Products Chart
         $.ajax({
             url: "{% url 'reports:fetch-data-from-database' %}",
             method: "GET",
@@ -274,17 +281,14 @@ hr {
             success: function(data) {
                 // Retrieve the critical stock data from the response
                 var criticalStockData = data.critical_stock;
-
                 // Extract the product names and remaining quantities
                 // Extract the product names and quantities
                 var productNames = criticalStockData.map(function(item) {
                     return item.product + ' (' + item.remaining_quantity + ' remaining)';
                 });
-
                 var quantities = criticalStockData.map(function(item) {
                     return item.remaining_quantity;
                 });
-
                 // Update the Stock Usage Chart with the retrieved data
                 var stockUsageChart = new Chart(document.getElementById("stock-usage-chart"), {
                     type: "pie",
