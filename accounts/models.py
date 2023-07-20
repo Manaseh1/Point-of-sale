@@ -7,10 +7,11 @@ from django.conf import settings
 
 class NewEmployee(AbstractUser):
     class Role(models.TextChoices):
-        admin = ('admin','admin')
-        MANAGER = ('manager','manager')
-        EMPLOYEE = ('employee','employee')
-    role = models.CharField(max_length=100,choices= Role.choices)
+        ADMIN = ('admin', 'Admin')
+        MANAGER = ('manager', 'Manager')
+        EMPLOYEE = ('employee', 'Employee')
+        
+    role = models.CharField(max_length=100, choices=Role.choices)
     date_joined = models.DateTimeField(auto_now_add=True)
 
 @receiver(post_save, sender=NewEmployee)

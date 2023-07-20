@@ -6,6 +6,32 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from .models import NewEmployee,Profile
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.http import JsonResponse
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('oldPassword')
+        new_password = request.POST.get('newPassword')
+        confirm_password = request.POST.get('confirmPassword')
+
+        # Perform your password change logic here
+        # For example, you can use the built-in `set_password` method of the User model
+        if request.user.check_password(current_password):
+            if new_password == confirm_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, 'Password changed successfully.')
+                return JsonResponse({'success': True})
+            else:
+                messages.error(request, 'New password and confirm password do not match.')
+        else:
+            messages.error(request, 'Current password is incorrect.')
+
+    return JsonResponse({'success': False})
 
 # Create your views here.
 def home(request):

@@ -13,14 +13,19 @@
             <div class="card-header p-2">
             <ul class="nav nav-pills">
             <li class="nav-item"><a class="nav-link active" href="#profile" data-toggle="tab">Profile</a></li>
-            <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Activities</a></li>
             <li class="nav-item"><a class="nav-link " href="#settings" data-toggle="tab">Settings</a></li>
+            <li class="nav-item"><a class="nav-link" href="#changepassword" data-toggle="tab">Change Your Password</a></li>
             </ul>
             </div>
             <div class="card-body">
             <div class="tab-content">
               
               <div class="tab-pane active" id="profile">
+                <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Profile</h3>
+                </div>
+                <div class="card-body">
                 <div class="row">
                   <div class="col-md-4">
                     <div class="card profile-card p-2">
@@ -73,11 +78,84 @@
                     </div>
                 </div>
             </div>
+                </div>
+              </div>
+              
             
-            <div class="tab-pane" id="timeline">
+            <div class="tab-pane" id="changepassword">
+              <div class="card card-warning">
+                <div class="card-header">
+                  <h3 class="card-title">Change Password</h3>
+                </div>
+                <div class="card-body">
+                  <form id="changePasswordForm" method="post">
+                     {% csrf_token %}
+                    <div class="form-group">
+                      <label for="oldPassword">Old Password</label>
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="oldPassword" name="oldPassword" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text toggle-password">
+                            <i class="fas fa-eye-slash"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="newPassword">New Password</label>
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="newPassword" name="newPassword" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text toggle-password">
+                            <i class="fas fa-eye-slash"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="confirmPassword">Confirm Password</label>
+                      <div class="input-group">
+                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text toggle-password">
+                            <i class="fas fa-eye-slash"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#confirmChangeModal">Change</button>
+                  </form>
+                </div>
+              </div>
             </div>
-            
+
+
+            <!-- Confirm Change Modal -->
+            <div class="modal fade" id="confirmChangeModal" tabindex="-1" role="dialog" aria-labelledby="confirmChangeModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="confirmChangeModalLabel">Confirm Password Change</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body" id="message">
+                    Are you sure you want to change your password?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id="b1" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="b2" class="btn btn-primary" onclick="submitchangedpassword()">Confirm</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="tab-pane" id="settings">
+              <div class="card card-info">
+                <div class="card-header">
+                  <h3 class="card-title">Update Profile</h3>
+                </div>
+                <div class="card-body">
                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                       
@@ -163,6 +241,8 @@
             </div>
             </div>
             </div>
+            </div>
+            </div>
     <div class="col-md-3">
     
     <div class="card card-primary card-outline">
@@ -218,6 +298,28 @@
           </div>
           
         <script>
+          // Function to toggle password visibility
+              function togglePasswordVisibility(inputElement) {
+                const type = inputElement.getAttribute('type');
+                if (type === 'password') {
+                  inputElement.setAttribute('type', 'text');
+                } else {
+                  inputElement.setAttribute('type', 'password');
+                }
+              }
+
+              // Handle the click event of the toggle-password icons
+              const togglePasswordIcons = document.querySelectorAll('.toggle-password');
+              togglePasswordIcons.forEach(icon => {
+                icon.addEventListener('click', function () {
+                  const inputElement = icon.parentNode.previousElementSibling;
+                  togglePasswordVisibility(inputElement);
+                  icon.querySelector('i').classList.toggle('fa-eye-slash');
+                  icon.querySelector('i').classList.toggle('fa-eye');
+                });
+              });
+
+              // Rest of the code remains unchanged
             $(document).ready(function() {
             var $notesContent = $('#notes-content');
             var notesKey = 'notes';
@@ -263,6 +365,48 @@
               });
           });
       </script>
+      <script>
+              // Handle the click event of the Change button
+              document.getElementById("confirmChangeBtn").addEventListener("click", function() {
+                // Show the modal for confirmation
+                $('#confirmChangeModal').modal('show');
+              });
+
+              function submitchangedpassword() {
+                  // Get the form data
+                  const formData = new FormData(document.getElementById("changePasswordForm"));
+
+                  // Make the AJAX request
+                  $.ajax({
+                    url: "{% url 'accounts:change_password' %}",
+                    method: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                    if (response.success) {
+                      // Password change was successful
+                      $('#confirmChangeModal').modal('hide');
+                      document.getElementById("message").innerHTML = "Password changed successfully!";
+                      document.getElementById("message").classList.add("text-success");
+                      var elementToRemove = document.getElementById("b2");
+                      elementToRemove.remove();
+                      document.getElementById("b1").innerHTML = "OK Thanks!";
+                      document.getElementById("confirmChangeModalLabel").innerHTML = "SUCCESS!";
+                      document.getElementById("confirmChangeModalLabel").classList.add("text-success");
+                    } else {
+                      // Password change failed
+                      alert("Password change failed. Please check your input and try again.");
+                    }
+                  },
+                  error: function () {
+                    // Error occurred during the AJAX request
+                    // You can show an error message here
+                    alert("An error occurred. Please try again later.");
+                  },
+                  });
+                }
+            </script>
         </div>
         
         </div>
