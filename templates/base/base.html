@@ -132,7 +132,7 @@
                 <p>Logout</p>
             </a>
         </li>
-        {% if user.profile.role == "admin" %}
+        {% if user.profile.role == "admin" or user.profile.role == "manager" %}
               <li class="active nav-item" style="background: black" >
                   <a class="nav-link" href="{% url 'inventory:inventory_dashboard' %}" ><i class=" menu-icon fa fa-laptop"></i><p> Inventory Dashboard</p> </a>
               </li>
