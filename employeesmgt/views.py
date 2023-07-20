@@ -3,7 +3,7 @@ from .forms import *
 from django.urls import reverse_lazy
 from accounts.models import Profile
 from django.views.generic.edit import UpdateView
-
+from django.core.mail import send_mail
 
 # Create your views here.
 def employee_list(request):
