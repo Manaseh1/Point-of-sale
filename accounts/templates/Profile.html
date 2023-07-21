@@ -395,13 +395,16 @@
                       document.getElementById("confirmChangeModalLabel").innerHTML = "SUCCESS!";
                       document.getElementById("confirmChangeModalLabel").classList.add("text-success");
                     } else {
-                      // Password change failed
-                      alert("Password change failed. Please check your input and try again.");
+                      document.getElementById("message").innerHTML = "Password change failed. Please check your input and try again. Reload page!!!";
+                      document.getElementById("message").classList.add("text-danger");
+                      var elementToRemove = document.getElementById("b2");
+                      elementToRemove.remove();
+                      document.getElementById("b1").innerHTML = "Oops! Let me check";
+                      document.getElementById("confirmChangeModalLabel").innerHTML = "FAILURE !";
+                      document.getElementById("confirmChangeModalLabel").classList.add("text-danger");
                     }
                   },
                   error: function () {
-                    // Error occurred during the AJAX request
-                    // You can show an error message here
                     alert("An error occurred. Please try again later.");
                   },
                   });
