@@ -45,7 +45,7 @@ def pos(request):
     if request.method == 'POST':
         try:
             # Save the sale data
-            now = datetime.now()
+            now = datetime.now() #date and time
             pref = now.strftime("%Y%m%d%H%M%S")
             i = 1
             while True:

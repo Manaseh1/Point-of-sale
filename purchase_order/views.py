@@ -1,4 +1,6 @@
 from django.forms import ValidationError
+from django.shortcuts import get_object_or_404, render
+
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -33,6 +35,7 @@ def save_form_data(request):
         unit_prices = request.POST.getlist('unit_price[]')
         totals = request.POST.getlist('totals[]')
         supplier_obj = Supplier.objects.get(pk=supplier)
+        supplier_email = Supplier.objects.values('email').get(pk=supplier)
         for product, quantity, unit_price,total in zip(products, quantities, unit_prices,totals):
             if not quantity:
                 return HttpResponse('Quantity field cannot be empty.')
@@ -51,6 +54,7 @@ def save_form_data(request):
             try:
                 Purchase.objects.create(
                     supplier = supplier_obj,
+                    email = supplier_email['email'],
                     product_name=product,
                     quantity=quantity,
                     unit_price=unit_price,
@@ -63,5 +67,20 @@ def save_form_data(request):
 
     return HttpResponse('Invalid request method.')
 
-def receipt(request):
-    return render(request,'receipts.html')
+def receipt(request,purchase_id):
+    purchase_items = get_object_or_404(Purchase,id = purchase_id)
+    product = Purchase.objects.values_list('product_name', flat=True).filter(id=purchase_id)
+    product = product.get('product_name')
+    quantity = Purchase.objects.values_list('quantity',flat=True).filter(id = purchase_id)
+    quantity = quantity[0]
+    totals = Purchase.objects.values_list('totals',flat=True).filter(id = purchase_id)
+    totals = totals[0]
+    
+    context ={
+        'purchase_items':purchase_items,
+        'quantity':quantity,
+        'totals':totals,
+        'product':product
+        
+    }
+    return render(request,'receipts.html',context)

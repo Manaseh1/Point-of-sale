@@ -26,13 +26,13 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
             <div class="row">
               <div class="col-4.5 ml-auto">
                 <div>
-              <span><b>Name of Supplier: Gideon</b></span> 
+              <span><b>Name of Supplier: </b>{{purchase_items.supplier}}</span> 
               <br /><br>
-              <span><b>email:</b></span>
+              <span><b>email:</b>{{purchase_items.email}}</span>
               
               <br /><br>
-              <span><b>Name of buyer</b></span> <br><br>
-              <span><b>email:</b></span>
+              <span><b>Name of buyer:</b> {{user.first_name}}</span> <br><br>
+              <span><b>email:</b> {{user.email}}</span>
             </div>
               </div>
             </div>
@@ -41,19 +41,20 @@ Dashboard - Point of Sale System{% endblock %} {% include 'base/style.html' %}
           <table class="table">
   <thead>
     <tr>
-      <th scope="col">Qty</th>
       <th scope="col">Product</th>
+      <th scope="col">quantity</th>
       <th scope="col">Amount</th>
     </tr>
   </thead>
   <tbody>
-    {% for item in salesItems %}
+    
     <tr>
-      <td>{{ item.qty|floatformat:0 }}</td>
-      <td>{{ item.product }}</td>
-      <td>{{ item.total }}</td>
+      <td>{{ product}}</td>
+      <td>{{ quantity}}</td>
+      <td>{{ totals}}</td>
+
     </tr>
-    {% endfor %}
+    
   </tbody>
 </table>
             <hr />

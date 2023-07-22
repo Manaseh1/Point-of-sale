@@ -6,5 +6,5 @@ urlpatterns = [
     path('',purchase_order,name='purchase_order'),
     path('save-form-data/', save_form_data, name='save_form_data'),
     path('PurchaseItems/', purchase_items, name='purchase_items'),
-    path('receipts/',receipt,name ='receipt')
+    path('receipts/<int:purchase_id>',receipt,name ='receipt')
 ]
