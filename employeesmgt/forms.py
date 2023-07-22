@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 from accounts.models import NewEmployee,Profile
 
 
-class EmployeeCreationForm(UserCreationForm):
+class EmployeeCreationForm(forms.ModelForm):
       class Meta:
          model = NewEmployee
          fields = ('username','role','email')

@@ -125,7 +125,6 @@ def session_retrieval_view(request):
     next_url = request.GET.get('next')
     user = NewEmployee.objects.get(username=username)
     profile = Profile.objects.get(user__username=username)
-    profile_pic = profile.profile_image.url
     if request.method == 'POST':
         password = request.POST.get('password')
 
@@ -140,13 +139,13 @@ def session_retrieval_view(request):
             context = {
             'next_url': next_url,
             'username': username,
-            'profile_pic': profile_pic,
+            'profile': profile,
             'msg': message
             }
             return render(request, 'session_retrieval.html', context)
     context = {
         'next_url': next_url,
         'username': username,
-        'profile_pic': profile_pic,
+        'profile': profile,
     }
     return render(request, 'session_retrieval.html', context)
