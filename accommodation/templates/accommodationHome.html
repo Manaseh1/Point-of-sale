@@ -1,0 +1,48 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Accommodation - Point of Sale System{% endblock %}
+
+{% include 'base/style.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/style' %}" />
+<div class="grid-container">
+    <a href="{% url 'accommodation:room_list' %}" class="grid-item">
+        <div>
+            <i class="fas fa-bed"></i>
+            <p>Room List</p>
+        </div>
+    </a>
+    <a href="{% url 'accommodation:add_room' %}" class="grid-item">
+        <div>
+            <i class="fas fa-plus"></i>
+            <p>Add Room</p>
+        </div>
+    </a>
+    <a href="{% url 'accommodation:booking_list' %}" class="grid-item">
+        <div>
+            <i class="fas fa-book"></i>
+            <p>Booking List</p>
+        </div>
+    </a>
+    <a href="{% url 'accommodation:add_booking' %}" class="grid-item">
+        <div>
+            <i class="fas fa-plus"></i>
+            <p>Add Booking</p>
+        </div>
+    </a>
+    <a href="{% url 'accommodation:customer_list' %}" class="grid-item">
+        <div>
+            <i class="fas fa-users"></i>
+            <p>Customer List</p>
+        </div>
+    </a>
+    <a href="{% url 'accommodation:add_customer' %}" class="grid-item">
+        <div>
+            <i class="fas fa-plus"></i>
+            <p>Add Customer</p>
+        </div>
+    </a>
+</div>
+{% endblock content %}

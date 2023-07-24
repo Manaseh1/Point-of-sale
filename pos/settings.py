@@ -53,7 +53,8 @@ APPS = [
     'stockmgt',
     'reporting',
     'customersmgt',
-    'employeesmgt'
+    'employeesmgt',
+    'accommodation'
 ]
 
 EXTENSIONS = [
