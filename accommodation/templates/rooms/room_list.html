@@ -1,0 +1,86 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Room List - Accommodation{% endblock %}
+
+{% block content %}
+  <h1>Room List</h1>
+  <a href=""></a>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Room Number</th>
+        <th>Capacity</th>
+        <th>Price per Night</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for room in rooms %}
+        <tr id="roomRow{{ room.id }}">
+          <td>{{ room.room_number }}</td>
+          <td>{{ room.capacity }}</td>
+          <td>{{ room.price_per_night }}</td>
+          <td>{{ room.description }}</td>
+          <td>
+            <a href="{% url 'accommodation:edit_room' room.id %}" class="btn btn-sm btn-info">
+              <i class="fas fa-edit"></i> Edit
+            </a>
+            <button type="button" class="btn btn-sm btn-danger delete-room-btn" data-room-id="{{ room.id }}" data-toggle="modal" data-target="#deleteRoomModal{{ room.id }}">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </td>
+        </tr>
+        <!-- Delete Room Modal -->
+        <div class="modal fade" id="deleteRoomModal{{ room.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteRoomModalLabel{{ room.id }}" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteRoomModalLabel{{ room.id }}">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete the room "{{ room }}"?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteRoom(this)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+<script>
+  function deleteRoom(button) {
+    const roomId = $(button).data("room-id");
+
+    // Send an AJAX request to delete the room
+    $.ajax({
+      type: 'POST',
+      url: `{% url 'accommodation:delete_room' 0 %}`.replace('0', roomId),
+      data: { csrfmiddlewaretoken: '{{ csrf_token }}' },
+      success: function (response) {
+        if (response.success) {
+          // If the deletion is successful, remove the row from the table
+          $(`#roomRow${roomId}`).remove();
+        } else {
+          // If there's an error, display an alert
+          alert("An error occurred while deleting the room.");
+        }
+      },
+      error: function () {
+        // If there's an error with the AJAX request, display an alert
+        alert("An error occurred while processing the request.");
+      }
+    });
+  }
+</script>
