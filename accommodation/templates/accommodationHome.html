@@ -6,43 +6,127 @@
 {% include 'base/style.html' %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/style' %}" />
-<div class="grid-container">
-    <a href="{% url 'accommodation:room_list' %}" class="grid-item">
-        <div>
-            <i class="fas fa-bed"></i>
-            <p>Room List</p>
+<div class="container mt-4">
+  <h1 class="mb-4">Accommodation Management</h1>
+
+  <div class="card card-primary">
+    <div class="card-header">
+      <h3 class="card-title">Room Management</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:room_list' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-bed"></i>
+                <p class="card-text">Room List</p>
+              </div>
+            </div>
+          </a>
         </div>
-    </a>
-    <a href="{% url 'accommodation:add_room' %}" class="grid-item">
-        <div>
-            <i class="fas fa-plus"></i>
-            <p>Add Room</p>
+
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:add_room' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-plus"></i>
+                <p class="card-text">Add Room</p>
+              </div>
+            </div>
+          </a>
         </div>
-    </a>
-    <a href="{% url 'accommodation:booking_list' %}" class="grid-item">
-        <div>
-            <i class="fas fa-book"></i>
-            <p>Booking List</p>
+
+        <div class="col-md-4 mb-3">
+            <div class="card card-outline card-info">
+              <div class="card-body">
+                <i class="fas fa-home"></i>
+                <p class="card-text">{{ no_of_rooms }}</p>
+              </div>
+            </div>
         </div>
-    </a>
-    <a href="{% url 'accommodation:add_booking' %}" class="grid-item">
-        <div>
-            <i class="fas fa-plus"></i>
-            <p>Add Booking</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-primary mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Booking Management</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:booking_list' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-book"></i>
+                <p class="card-text">Booking List</p>
+              </div>
+            </div>
+          </a>
         </div>
-    </a>
-    <a href="{% url 'accommodation:customer_list' %}" class="grid-item">
-        <div>
-            <i class="fas fa-users"></i>
-            <p>Customer List</p>
+
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:add_booking' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-plus"></i>
+                <p class="card-text">Add Booking</p>
+              </div>
+            </div>
+          </a>
         </div>
-    </a>
-    <a href="{% url 'accommodation:add_customer' %}" class="grid-item">
-        <div>
-            <i class="fas fa-plus"></i>
-            <p>Add Customer</p>
+
+        <div class="col-md-4 mb-3">
+            <div class="card card-outline card-info">
+              <div class="card-body">
+                <i class="fas fa-book"></i>
+                <p class="card-text">{{ no_of_bookings }}</p>
+              </div>
+            </div>
         </div>
-    </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-primary mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Customer Management</h3>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:customer_list' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-users"></i>
+                <p class="card-text">Customer List</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+          <a href="{% url 'accommodation:add_customer' %}" class="card-link">
+            <div class="card card-outline card-primary">
+              <div class="card-body">
+                <i class="fas fa-plus"></i>
+                <p class="card-text">Add Customer</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card card-outline card-info">
+              <div class="card-body">
+                <i class="fas fa-person"></i>
+                <p class="card-text">{{ no_of_customers }}</p>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock content %}
