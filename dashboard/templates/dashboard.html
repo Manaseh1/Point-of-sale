@@ -61,16 +61,10 @@
           <p>Supplier Management</p>
         </div>
     </a>
-    <a href="{% url 'reports:report_dashboard' %}" class="grid-item">
-        <div>
-          <i class="bx bx-coin"></i>
-          <p>General Report</p>
-        </div>
-    </a>
     <a href="{% url 'customers:underdev' %}" class="grid-item">
         <div>
           <i class="bx bx-file-blank"></i>
-          <p>Quotation &amp; Invoicing</p>
+          <p>Expenses Management</p>
         </div>
     </a>
     <a href="{%url 'employees:employee_list'%}" class="grid-item">
@@ -82,7 +76,13 @@
     <a href="{% url 'customers:underdev' %}" class="grid-item">
         <div>
           <i class='bx bxs-file-plus'></i>
-          <p>Accounts Receivables & Payable</p>
+          <p>Accounts & Invoice Management</p>
+        </div>
+    </a>
+    <a href="{% url 'reports:report_dashboard' %}" class="grid-item">
+        <div>
+          <i class="bx bx-coin"></i>
+          <p>General Report</p>
         </div>
     </a>
 </div>
