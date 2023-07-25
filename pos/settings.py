@@ -53,7 +53,8 @@ APPS = [
     'stockmgt',
     'reporting',
     'customersmgt',
-    'employeesmgt'
+    'employeesmgt',
+    'accommodation'
 ]
 
 EXTENSIONS = [
@@ -101,7 +102,7 @@ WSGI_APPLICATION = 'pos.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'PosDB',                      
+        'NAME': 'pos',                      
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',

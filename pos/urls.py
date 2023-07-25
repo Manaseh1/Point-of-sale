@@ -30,5 +30,6 @@ urlpatterns = [
     path('reports/',include('reporting.urls',namespace= 'reports')),
     path('Customers/',include('customersmgt.urls',namespace= 'customers')),
     path('Employees/',include('employeesmgt.urls',namespace= 'employees')),
+    path('Accommodation/',include(('accommodation.urls', 'accommodation'),namespace= 'accommodation')),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
