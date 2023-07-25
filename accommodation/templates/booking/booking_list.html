@@ -4,7 +4,17 @@
 {% block title %}Booking List - Accommodation{% endblock %}
 
 {% block content %}
-  <h1>Booking List</h1>
+  <div class="container d-flex justify-content-between">
+    <div>
+      <h1>Booking List</h1>
+    </div>
+    <div>
+      <a href="{% url 'accommodation:home' %}" class="btn btn-primary mt-3">
+        Home
+      </a>
+    </div>
+    
+  </div>
   <table class="table">
     <thead>
       <tr>
@@ -26,7 +36,7 @@
           <td>{{ booking.check_out_date }}</td>
           <td>{% if booking.is_paid %}Yes{% else %}No{% endif %}</td>
           <td>
-            <a href="{% url 'edit_booking' booking.id %}" class="btn btn-sm btn-primary" title="Edit Booking">
+            <a href="{% url 'accommodation:edit_booking' booking.id %}" class="btn btn-sm btn-primary" title="Edit Booking">
               <i class="fas fa-edit"></i>
             </a>
             <a href="#deleteModal{{ booking.id }}" class="btn btn-sm btn-danger" title="Delete Booking" data-toggle="modal">

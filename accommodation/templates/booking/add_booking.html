@@ -4,7 +4,17 @@
 {% block title %}Add Booking - Accommodation{% endblock %}
 
 {% block content %}
-  <h1>Add Booking</h1>
+  <div class="container d-flex justify-content-between">
+    <div>
+      <h1>Add Booking</h1>
+    </div>
+    <div>
+      <a href="{% url 'accommodation:home' %}" class="btn btn-primary mt-3">
+        Home
+      </a>
+    </div>
+    
+  </div>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
