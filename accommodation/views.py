@@ -49,12 +49,18 @@ def booking_list(request):
     bookings = Booking.objects.all()
     return render(request, 'booking/booking_list.html', {'bookings': bookings})
 
-# View to add a new booking
 def add_booking(request):
     if request.method == 'POST':
         form = EditBookingForm(request.POST)
         if form.is_valid():
-            form.save()
+            booking = form.save(commit=False)  # Create a new Booking instance but don't save it yet
+            room = booking.room
+            booking.save()  # Save the booking
+
+            # Update the is_available field of the room to False
+            room.is_available = False
+            room.save()
+
             return redirect('accommodation:booking_list')
     else:
         form = EditBookingForm()
