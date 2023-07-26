@@ -5,6 +5,8 @@ from inventory.models import Product,Supplier
 
 class Order(models.Model):
     order_name = models.CharField(max_length = 100)
+    supplier = models.CharField(max_length=100,default =None,null = True)
+    grand_total = models.IntegerField(null=True,default=None)
     def __str__(self):
         return self.order_name
 class Purchase(models.Model):

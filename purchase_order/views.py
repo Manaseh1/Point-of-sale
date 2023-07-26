@@ -21,7 +21,7 @@ def purchase_order(request):
 
 @login_required
 def purchase_items(request):
-    purchases = Purchase.objects.all()
+    purchases = Purchase.objects.using('default').distinct('order')
     context  = {
         'purchases': purchases
     }
@@ -31,11 +31,16 @@ def save_form_data(request):
     if request.method == 'POST':
         order =request.POST.get('order')
         supplier =request.POST.get('supplier')
+        grand_total = request.POST.get('grand-total')
         products = request.POST.getlist('product[]')
         quantities = request.POST.getlist('quantity[]')
         unit_prices = request.POST.getlist('unit_price[]')
         totals = request.POST.getlist('totals[]')
         supplier_obj = Supplier.objects.get(pk=supplier)
+        new_order = Order.objects.create( order_name = order,
+                                         supplier = supplier_obj,
+                                          grand_total=grand_total,                          
+        )        
         supplier_email = Supplier.objects.values('email').get(pk=supplier)
         for product, quantity, unit_price,total in zip(products, quantities, unit_prices,totals):
             if not quantity:
@@ -44,7 +49,7 @@ def save_form_data(request):
             try:
                 quantity = int(quantity)
             except ValueError:
-                return HttpResponse('Invalid quantity value.')
+                return HttpResponse('Invalid quantity value.') 
 
             try:
                 unit_price = float(unit_price)
@@ -53,9 +58,7 @@ def save_form_data(request):
 
             # Create a new Product object and save it to the database
             try:
-                new_order = Order.objects.create(
-                    order_name = order   
-                )
+
                 
                 Purchase.objects.create(
                     order = new_order, 
@@ -73,28 +76,17 @@ def save_form_data(request):
 
     return HttpResponse('Invalid request method.')
 
-from django.shortcuts import render, get_object_or_404
-from .models import Purchase  # Import your Purchase model (adjust the import path as needed)
 
-def receipt(request, purchase_id):
-    # Assuming purchase_id is passed as a parameter to this view function.
-
-    # Retrieve the Purchase object or raise a 404 error if it doesn't exist
-    purchase = get_object_or_404(Purchase, order=purchase_id)
-
-    # Create lists containing the values for each field
-    products = list(Purchase.objects.filter(order=purchase_id).values_list('product_name', flat=True))
-    quantities = list(Purchase.objects.filter(order=purchase_id).values_list('quantity', flat=True))
-    totals = list(Purchase.objects.filter(order=purchase_id).values_list('totals', flat=True))
-
-    # Zip the lists together to create a list of tuples, each containing the values for one entry
-    receipt_items = zip(products, quantities, totals)
-
-    context = {
-        'receipt_items': receipt_items,
+def receipt(request, order_id):
+    order= get_object_or_404(Order, id =order_id)
+    products = Purchase.objects.filter(order = order_id)
+    supplier = get_object_or_404(Purchase,id= order_id)
+    context= {
+        'supplier':supplier,
+       'products':products,       
     }
 
-    return render(request, 'receipts.html', context)
+    return render(request, 'receipts.html',context)
 
 # def receipt(request,purchase_id):
 #     # purchase_items = get_object_or_404(Purchase,order = purchase_id)

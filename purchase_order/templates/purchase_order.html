@@ -23,7 +23,8 @@
             <div class="mb-3">
               <label for="supplier_name" class="form-label">Order Name</label>
                   {% render_field form.order class="form-control"%}
-                  
+                  <input type="text" id="grand-total" name="grand-total" readonly>
+  
 
             </div>
              {% comment %}
@@ -49,7 +50,10 @@
                   <th scope="col">Action field</th>
                 </tr>
                </thead>
+               
                </table>
+               
+
             <div class="fields"></div>
  
             <p>
@@ -61,6 +65,8 @@
                     Send form
                 </button>
             </p>
+            {% comment %} <div id="grand-total"></div> {% endcomment %}
+
             </form>
           <a href="{% url 'purchase:purchase_items'  %}" class="btn btn-link"><i class="fa fa-eye" style="color: darkblue"></i> Back to List</a>
         </div>
@@ -93,6 +99,7 @@
               <thead>
                 <tr>
                   <th scope="col">#</th>
+                  
                   <th scope="col">Product</th>
                   <th scope="col">Quantity</th>
                   <th scope="col">Unit Price</th>
@@ -100,9 +107,14 @@
           
                 </tr>
               </thead>
-              <tbody id='item-list' ></tbody>
+              <tbody id='item-list' >
+              
+              </tbody>
+              
             </table> 
           </div>
+         
+
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -123,7 +135,6 @@
     
       <table class ='table'>
  
-        </thead>
       <tr>
        <td> <input name="product[]" placeholder="product" class="form-control"></td>
       <td> <input type ="number"name="quantity[]" placeholder="quantity" class="form-control"></td>
@@ -132,12 +143,115 @@
         <td><button type="button" class="remove-fields">
             Remove these fields
         </button></td>
-      <tr>  
+        
+      </tr>
       </table>
     </p>
 </script>
-
 <script>
+  $(function () {
+    var FIELDS_TEMPLATE = $('#fields-templates').text();
+    var $form = $('#my-form');
+    var $fields = $form.find('.fields');
+
+    function calculateTotal(quantity, unit_price) {
+      return parseFloat(quantity) * parseFloat(unit_price);
+    }
+
+    function calculateGrandTotal() {
+      var total = 0;
+      $fields.find('input[name="totals[]"]').each(function () {
+        total += parseFloat($(this).val());
+      });
+      return total;
+    }
+
+    function updateGrandTotal() {
+      var grandTotal = calculateGrandTotal();
+      $('#grand-total').val(grandTotal);
+      console.log(grandTotal);
+    }
+
+    $form.on('click', '.add-fields', function () {
+      $fields.prepend($(FIELDS_TEMPLATE));
+      updateGrandTotal();
+    });
+
+    $form.on('click', '.remove-fields', function (event) {
+      $(event.target).closest('.input-fields').remove();
+      updateGrandTotal();
+    });
+
+    $form.on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function () {
+      var $inputFields = $(this).closest('.input-fields');
+      var quantity = parseFloat($inputFields.find('input[name="quantity[]"]').val());
+      var unit_price = parseFloat($inputFields.find('input[name="unit_price[]"]').val());
+      var total = calculateTotal(quantity, unit_price);
+      $inputFields.find('#total').val(total.toFixed(2));
+      updateGrandTotal();
+    });
+
+    // Initial calculation of the grand total
+    updateGrandTotal();
+  });
+</script>
+
+{% comment %} 
+<script>
+  $(function () {
+    var FIELDS_TEMPLATE = $('#fields-templates').text();
+    var $form = $('#my-form');
+    var $fields = $form.find('.fields');
+
+    function calculateTotal(quantity, unit_price) {
+      return parseFloat(quantity) * parseFloat(unit_price);
+    }
+
+    function calculateGrandTotal() {
+      var total = 0;
+      $fields.find('input[name="totals[]"]').each(function () {
+        total += parseFloat($(this).val());
+        //element.setAttribute('grand-total', total);
+
+      });
+      return total.toFixed(2);
+    }
+
+    $form.on('click', '.add-fields', function () {
+      $fields.prepend($(FIELDS_TEMPLATE));
+      updateGrandTotal();
+    });
+
+    $form.on('click', '.remove-fields', function (event) {
+      $(event.target).closest('.input-fields').remove();
+      updateGrandTotal();
+    });
+
+    $form.on('input', 'input[name="quantity[]"], input[name="unit_price[]"]', function () {
+      var $inputFields = $(this).closest('.input-fields');
+      var quantity = parseFloat($inputFields.find('input[name="quantity[]"]').val());
+      var unit_price = parseFloat($inputFields.find('input[name="unit_price[]"]').val());
+      var total = calculateTotal(quantity, unit_price);
+      $inputFields.find('#total').val(total.toFixed(2));
+      updateGrandTotal();
+    });
+
+    function updateGrandTotal() {
+      var grandTotal = calculateGrandTotal();
+      $('#grand-total').text("Total is equal to " + grandTotal);
+      actual =$('#grand-total').val();
+      element.setAttribute('grand-total', actual);
+
+      console.log(grandTotal);
+    }
+
+    // Initial calculation of the grand total
+    updateGrandTotal();
+  });
+</script> {% endcomment %}
+{% comment %} 
+<script>
+
 $(function () {
     var FIELDS_TEMPLATE = $('#fields-templates').text();
     var $form = $('#my-form');
@@ -160,12 +274,21 @@ $(function () {
   function calculateTotal(quantity, unit_price) {
     return parseFloat(quantity) * parseFloat(unit_price);
   }
+
+
 });
 
+function total(){
+  var table = document.getElementById('table'),Total =0
+  for (var i = 0; i < table.rows.length; i++) {
+   Total + = parseFloat(table.rows[i].cells[2].innerHTML)
+  }
+  document.getElementById('Total').innerHTML = "Total is equal to" + Total
+  console,log(Total)
 
+}
 
-
-</script>
+</script> {% endcomment %}
 
 {% comment %} <script>
 let products =[
