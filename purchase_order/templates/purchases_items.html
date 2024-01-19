@@ -11,7 +11,7 @@
       <th class ="serial"> #</th>
       <th> Order ID</th>
       <th>Supplier</th>
-      <th>Total</th>
+      <th>Total:{{purchase.order.grand_total}}</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -29,6 +29,7 @@
       </td>
     </tr>
     {% endfor %}
+
   </tbody>
 </table>
 

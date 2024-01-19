@@ -82,6 +82,7 @@ def receipt(request, order_id):
     products = Purchase.objects.filter(order = order_id)
     supplier = get_object_or_404(Purchase,id= order_id)
     context= {
+        'order': order,
         'supplier':supplier,
        'products':products,       
     }

@@ -9,7 +9,7 @@ class EditRoomForm(forms.ModelForm):
             'room_number': forms.TextInput(attrs={'class': 'form-control'}),
             'capacity': forms.NumberInput(attrs={'class': 'form-control'}),
             'price_per_night': forms.NumberInput(attrs={'class': 'form-control'}),
-            'is_available': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_available': forms.CheckboxInput(attrs={'class': 'form-check-input m-1'}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
@@ -22,7 +22,7 @@ class EditBookingForm(forms.ModelForm):
             'room': forms.Select(attrs={'class': 'form-control'}),
             'check_in_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'check_out_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'is_paid': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'is_paid': forms.CheckboxInput(attrs={'class': 'form-check-input m-1'}),
         }
 
 class EditCustomerForm(forms.ModelForm):

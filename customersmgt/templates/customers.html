@@ -2,77 +2,92 @@
 {% load static %}
 {% block title %}Customer Management Dashboard - Point of Sale System{% endblock %}
 {% include 'base/style.html' %}
-{% block content %}
-<style>
-    @keyframes blink {
-  0% { opacity: 1; color: yellow; letter-spacing: 5px}
-  50% { opacity: 0; letter-spacing: 2.5px }
-  100% { opacity: 1; color: yellow; letter-spacing: 5px;}
-}
+{% block content%}
+<div class = "d-flex flex-row justify-content-around">
+    <div class="card card-primary">
 
-.blinking {
-  animation: blink 1s infinite;
-}
-</style>
-<div class="card">
-  <div class="card-body bg-danger">
-    <h5 class="card-title blinking">Development in Progress</h5>
-    <p class="card-text">This feature is currently under development.</p>
-    <p class="card-text">Please check back later for updates.</p>
-  </div>
-<link rel="stylesheet" href="{% static 'css/style' %}" />
-    <div class="row justify-content-center">
-        <div class="col-lg-3 col-md-6">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="card-title">{{ total_customers }}</h3>
-                            <h6 class="card-subtitle">Total Customers</h6>
-                        </div>
-                        <i class="fa fa-users fa-3x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="card-title">${{ total_sales }}</h3>
-                            <h6 class="card-subtitle">Total Sales</h6>
-                        </div>
-                        <i class="fa fa-dollar fa-3x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card bg-danger text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="card-title">{{ total_orders }}</h3>
-                            <h6 class="card-subtitle">Total Orders</h6>
-                        </div>
-                        <i class="fa fa-shopping-cart fa-3x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="card bg-warning text-white">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <h3 class="card-title">{{ new_customers }}</h3>
-                            <h6 class="card-subtitle">New Customers</h6>
-                        </div>
-                        <i class="fa fa-user-plus fa-3x"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- /.card-header -->
+    <div class="card-footer">
+        Add Customer
     </div>
-{% endblock content %}
+    <!-- /.card-body -->
+    <div class="card-footer">
+        <a style = "text-decoration:none" class ="btn btn-info" href="{%url 'accommodation:add_customer'%}">Add</a>
+    </div>
+    <!-- /.card-footer -->
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Default Card Example</h3>
+            <div class="card-tools">
+            <!-- Buttons, labels, and many other things can be placed here! -->
+            <!-- Here is a label for example -->
+            <span class="badge badge-primary">Label</span>
+            </div>
+            <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        {% comment %} <div class="card-body card-primary">
+            The body of the card
+        </div> {% endcomment %}
+        <!-- /.card-body -->
+        <div class="card-footer">
+            <a style = "text-decoration:none" class ="btn btn-info" href="{%url 'accounts:login'%}">Add</a>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+</div>
+<!-- /.card -->
+<table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for customer in customers %}
+        <tr>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone_number }}</td>
+          <td>
+            <a href="{% url 'accommodation:edit_customer' customer.id %}" class="btn btn-sm btn-primary" title="Edit Customer">
+              <i class="fas fa-edit"></i>
+            </a>
+            <a href="#deleteModal{{ customer.id }}" class="btn btn-sm btn-danger" title="Delete Customer" data-toggle="modal">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </td>
+        </tr>
+        <!-- Delete Modal -->
+        <div class="modal fade" id="deleteModal{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel{{ customer.id }}" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel{{ customer.id }}">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to delete the customer "{{ customer }}"?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{% url 'accommodation:delete_customer' customer.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
